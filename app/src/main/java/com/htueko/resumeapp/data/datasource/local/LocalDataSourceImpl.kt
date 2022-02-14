@@ -1,4 +1,4 @@
-package com.htueko.resumeapp.data.datasoruce.local
+package com.htueko.resumeapp.data.datasource.local
 
 import com.htueko.resumeapp.data.local.dao.ResumeDao
 import com.htueko.resumeapp.data.mapper.LocalMapper
