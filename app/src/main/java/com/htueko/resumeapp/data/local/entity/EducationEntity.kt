@@ -2,6 +2,7 @@ package com.htueko.resumeapp.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.htueko.resumeapp.data.local.LocalConstant
 
@@ -22,7 +23,8 @@ import com.htueko.resumeapp.data.local.LocalConstant
             childColumns = arrayOf("parentId"),
             onDelete = ForeignKey.CASCADE
         )
-    ]
+    ],
+    indices = [Index("parentId")]
 )
 data class EducationEntity(
     @PrimaryKey(autoGenerate = true)

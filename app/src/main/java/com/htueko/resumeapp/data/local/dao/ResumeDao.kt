@@ -43,7 +43,7 @@ abstract class ResumeDao {
     abstract fun getResumeWithWorks(): List<ResumeWithWorks>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertOrUpdateResume(resume: ResumeEntity): Int
+    abstract fun insertOrUpdateResume(resume: ResumeEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertOrUpdateEducations(educations: List<EducationEntity>)
