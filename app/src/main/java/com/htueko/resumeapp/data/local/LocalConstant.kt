@@ -1,4 +1,4 @@
-package com.htueko.resumeapp.domain.data.local
+package com.htueko.resumeapp.data.local
 
 /**
  * constants for local database

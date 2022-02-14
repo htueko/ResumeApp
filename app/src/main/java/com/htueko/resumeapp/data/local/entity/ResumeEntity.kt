@@ -1,8 +1,8 @@
-package com.htueko.resumeapp.domain.data.local.entity
+package com.htueko.resumeapp.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.htueko.resumeapp.domain.data.local.LocalConstant
+import com.htueko.resumeapp.data.local.LocalConstant
 
 /**
  * Resume model for local database.

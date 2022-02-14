@@ -1,10 +1,10 @@
-package com.htueko.resumeapp.domain.data.di
+package com.htueko.resumeapp.data.di
 
 import android.content.Context
 import androidx.room.Room
-import com.htueko.resumeapp.domain.data.local.LocalConstant
-import com.htueko.resumeapp.domain.data.local.dao.ResumeDao
-import com.htueko.resumeapp.domain.data.local.database.ResumeDatabase
+import com.htueko.resumeapp.data.local.LocalConstant
+import com.htueko.resumeapp.data.local.dao.ResumeDao
+import com.htueko.resumeapp.data.local.database.ResumeDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

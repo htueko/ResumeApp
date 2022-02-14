@@ -1,4 +1,4 @@
-package com.htueko.resumeapp.domain.data.local.dao
+package com.htueko.resumeapp.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -6,15 +6,15 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.htueko.resumeapp.domain.data.local.entity.EducationEntity
-import com.htueko.resumeapp.domain.data.local.entity.ProjectEntity
-import com.htueko.resumeapp.domain.data.local.entity.ResumeEntity
-import com.htueko.resumeapp.domain.data.local.entity.SkillEntity
-import com.htueko.resumeapp.domain.data.local.entity.WorkEntity
-import com.htueko.resumeapp.domain.data.local.entity.relationship.ResumeWithEducations
-import com.htueko.resumeapp.domain.data.local.entity.relationship.ResumeWithProjects
-import com.htueko.resumeapp.domain.data.local.entity.relationship.ResumeWithSkills
-import com.htueko.resumeapp.domain.data.local.entity.relationship.ResumeWithWorks
+import com.htueko.resumeapp.data.local.entity.EducationEntity
+import com.htueko.resumeapp.data.local.entity.ProjectEntity
+import com.htueko.resumeapp.data.local.entity.ResumeEntity
+import com.htueko.resumeapp.data.local.entity.SkillEntity
+import com.htueko.resumeapp.data.local.entity.WorkEntity
+import com.htueko.resumeapp.data.local.entity.relationship.ResumeWithEducations
+import com.htueko.resumeapp.data.local.entity.relationship.ResumeWithProjects
+import com.htueko.resumeapp.data.local.entity.relationship.ResumeWithSkills
+import com.htueko.resumeapp.data.local.entity.relationship.ResumeWithWorks
 
 @Dao
 abstract class ResumeDao {
