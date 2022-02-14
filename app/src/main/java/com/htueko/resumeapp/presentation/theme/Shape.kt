@@ -1,4 +1,4 @@
-package com.htueko.resumeapp.ui.theme
+package com.htueko.resumeapp.presentation.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
