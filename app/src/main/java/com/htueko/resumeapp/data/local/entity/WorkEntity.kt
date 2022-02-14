@@ -25,7 +25,7 @@ import com.htueko.resumeapp.data.local.LocalConstant
 )
 data class WorkEntity(
     @PrimaryKey(autoGenerate = true)
-    val workId: Int,
+    val workId: Int = 0,
     val parentId: Int,
     val companyName: String,
     val duration: Int

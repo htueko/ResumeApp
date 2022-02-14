@@ -28,7 +28,7 @@ import com.htueko.resumeapp.data.local.LocalConstant
 )
 data class ProjectEntity(
     @PrimaryKey(autoGenerate = true)
-    val projectId: Int,
+    val projectId: Int = 0,
     val parentId: Int,
     val projectName: String,
     val teamSize: Int,

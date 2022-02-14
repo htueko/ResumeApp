@@ -18,7 +18,7 @@ import com.htueko.resumeapp.data.local.LocalConstant
 @Entity(tableName = LocalConstant.tableResume)
 data class ResumeEntity(
     @PrimaryKey(autoGenerate = true)
-    val resumeId: Int,
+    val resumeId: Int = 0,
     val name: String,
     val avatarUrl: String,
     val mobileNumber: String,

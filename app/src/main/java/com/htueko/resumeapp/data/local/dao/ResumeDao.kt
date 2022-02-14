@@ -15,9 +15,13 @@ import com.htueko.resumeapp.data.local.entity.relationship.ResumeWithEducations
 import com.htueko.resumeapp.data.local.entity.relationship.ResumeWithProjects
 import com.htueko.resumeapp.data.local.entity.relationship.ResumeWithSkills
 import com.htueko.resumeapp.data.local.entity.relationship.ResumeWithWorks
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 abstract class ResumeDao {
+
+    @Query("SELECT * FROM table_resume ORDER BY resumeId DESC")
+    abstract fun getResumes(): Flow<List<ResumeEntity>>
 
     @Query("SELECT * FROM table_resume where resumeId = :resumeId")
     abstract fun getResumeById(resumeId: Int): ResumeEntity?

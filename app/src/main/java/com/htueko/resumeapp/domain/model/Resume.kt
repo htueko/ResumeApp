@@ -12,8 +12,4 @@ data class Resume(
     val careerObjective: String = "",
     val totalYearsOfExperience: Int = 0,
     val address: String = "",
-    val educations: List<Education> = emptyList(),
-    val projects: List<Project> = emptyList(),
-    val skills: List<Skill> = emptyList(),
-    val works: List<Work> = emptyList()
 )

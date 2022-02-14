@@ -26,7 +26,7 @@ import com.htueko.resumeapp.data.local.LocalConstant
 )
 data class EducationEntity(
     @PrimaryKey(autoGenerate = true)
-    val educationId: Int,
+    val educationId: Int = 0,
     val parentId: Int,
     val schoolClass: String,
     val passingYear: Int,

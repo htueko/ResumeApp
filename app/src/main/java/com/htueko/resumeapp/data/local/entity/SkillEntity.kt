@@ -24,7 +24,7 @@ import com.htueko.resumeapp.data.local.LocalConstant
 )
 data class SkillEntity(
     @PrimaryKey(autoGenerate = true)
-    val skillId: Int,
+    val skillId: Int = 0,
     val parentId: Int,
     val skillName: String
 )
