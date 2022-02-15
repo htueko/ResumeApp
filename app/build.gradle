@@ -94,4 +94,9 @@ dependencies {
     // coil
     implementation "io.coil-kt:coil-compose:1.4.0"
 
+    // testing flow
+    // turbine
+    testImplementation "app.cash.turbine:turbine:0.7.0"
+    androidTestImplementation "app.cash.turbine:turbine:0.7.0"
+
 }
