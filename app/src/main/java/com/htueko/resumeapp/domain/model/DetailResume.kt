@@ -1,5 +1,8 @@
 package com.htueko.resumeapp.domain.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 /**
  * detail model for displaying everything related to
  * [Resume], [Education], [Project], [Skill] and [Work]
@@ -9,10 +12,11 @@ package com.htueko.resumeapp.domain.model
  * @param [skills] a list of skill instance.
  * @param [works] a list of work instance.
  */
+@Parcelize
 data class DetailResume(
     val resume: Resume,
     val educations: List<Education>,
     val projects: List<Project>,
     val skills: List<Skill>,
     val works: List<Work>
-)
+): Parcelable

@@ -1,8 +1,12 @@
 package com.htueko.resumeapp.domain.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 /**
  * domain model for resume properties
  */
+@Parcelize
 data class Resume(
     val resumeId: Int,
     val name: String = "",
@@ -12,4 +16,4 @@ data class Resume(
     val careerObjective: String = "",
     val totalYearsOfExperience: Int = 0,
     val address: String = "",
-)
+): Parcelable
