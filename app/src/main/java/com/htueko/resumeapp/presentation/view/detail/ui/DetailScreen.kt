@@ -63,7 +63,6 @@ fun DetailScreen(
     val textProject = stringResource(id = R.string.project)
     val textSkill = stringResource(id = R.string.skill)
     val textWork = stringResource(id = R.string.work)
-    val textAdd = stringResource(id = R.string.add)
     val textMore = stringResource(id = R.string.more)
     val textEdit = stringResource(id = R.string.edit)
 
@@ -155,7 +154,7 @@ fun DetailScreen(
             }
             // to add new education
             ButtonPrimary(
-                text = textAdd,
+                text = textMore,
                 onClick = {
                     // to navigate the add education screen with resume id,
                     // because this is the existing resume, not new one.
@@ -189,7 +188,7 @@ fun DetailScreen(
             }
             // to add new project
             ButtonPrimary(
-                text = textAdd,
+                text = textMore,
                 onClick = {
                     // to navigate the add project screen with resume id,
                     // because this is the existing resume, not new one.
@@ -219,7 +218,7 @@ fun DetailScreen(
             }
             // to add new skill
             ButtonPrimary(
-                text = textAdd,
+                text = textMore,
                 onClick = {
                     // to navigate the add skill screen with resume id,
                     // because this is the existing resume, not new one.
@@ -250,7 +249,7 @@ fun DetailScreen(
             }
             // to add new work
             ButtonPrimary(
-                text = textAdd,
+                text = textMore,
                 onClick = {
                     // to navigate the add work screen with resume id,
                     // because this is the existing resume, not new one.

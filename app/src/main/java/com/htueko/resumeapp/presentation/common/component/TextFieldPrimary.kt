@@ -12,6 +12,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -25,6 +27,10 @@ import com.htueko.resumeapp.presentation.theme.ResumeAppTheme
  * @param [text] Text of the text field like hint
  * @param [labelText] Label of this text field
  * @param [onTextChanged] lambda operation when the user typed string
+ * @param [hasError] to show the error message or not.
+ * @param [errorMessage] the message to show about the error.
+ * @param [keyboardType] type of the keyboard. default is Text
+ * @param [imeAction] how the enter key react. default is next.
  */
 @Composable
 fun TextFieldPrimary(
@@ -32,8 +38,11 @@ fun TextFieldPrimary(
     text: String,
     labelText: String,
     onTextChanged: (String) -> Unit,
+    hasError: Boolean = false,
     errorMessage: String? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    imeAction: ImeAction = ImeAction.Next,
 ) {
     Column {
         // height of the text field
@@ -52,9 +61,9 @@ fun TextFieldPrimary(
                 .height(textFieldHeight),
         )
         // error message
-        if (errorMessage != null) {
+        if (hasError) {
             Text(
-                text = errorMessage,
+                text = errorMessage!!,
                 color = MaterialTheme.colors.error,
                 modifier = Modifier
                     .padding(
