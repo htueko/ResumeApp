@@ -10,8 +10,6 @@ import com.htueko.resumeapp.domain.model.Work
  * a model that represented everything that user can do on detail screen.
  */
 sealed class DetailUserEvent {
-    // to fetch the resume detail.
-    data class FetchDetailResume(val resume: Resume) : DetailUserEvent()
 
     // to edit the educations.
     data class OnEducationsEditClick(val educations: List<Education>) : DetailUserEvent()

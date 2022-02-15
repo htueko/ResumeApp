@@ -21,6 +21,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.htueko.resumeapp.R
 import com.htueko.resumeapp.presentation.common.commonstate.CommonUiEvent
+import com.htueko.resumeapp.presentation.view.destinations.AddResumeScreenDestination
+import com.htueko.resumeapp.presentation.view.destinations.DetailScreenDestination
 import com.htueko.resumeapp.presentation.view.main.state.DashboardUserEvent
 import com.htueko.resumeapp.presentation.view.main.viewmodel.DashboardViewModel
 import com.ramcosta.composedestinations.annotation.Destination
@@ -66,7 +68,7 @@ fun MainScreen(
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 // navigate to add resume screen
-               // navigator.navigate(AddResumeScreenDestination())
+                navigator.navigate(AddResumeScreenDestination())
             }) {
                 Icon(
                     imageVector = Icons.Default.Add,
@@ -84,9 +86,9 @@ fun MainScreen(
                 ResumeItem(
                     resume = resume,
                     onResumeClick = {
-//                        navigator.navigate(
-//                            DetailScreenDestination()
-//                        )
+                        navigator.navigate(
+                            DetailScreenDestination(resume.resumeId)
+                        )
                     },
                     onDeleteResumeClick = {
                         viewModel.onEvent(

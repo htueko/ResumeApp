@@ -17,9 +17,7 @@ import com.htueko.resumeapp.R
 import com.htueko.resumeapp.domain.model.Resume
 import com.htueko.resumeapp.presentation.common.navargs.ResumeNavArgs
 
-@Destination(
-    navArgsDelegate = ResumeNavArgs::class
-)
+@Destination
 @Composable
 fun AddResumeScreen(
     navigator: DestinationsNavigator,
