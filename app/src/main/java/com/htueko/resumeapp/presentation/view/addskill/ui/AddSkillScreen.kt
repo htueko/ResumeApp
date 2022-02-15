@@ -15,11 +15,15 @@ import com.htueko.resumeapp.presentation.view.destinations.AddResumeScreenDestin
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.htueko.resumeapp.R
+import com.htueko.resumeapp.domain.model.Skill
+import com.htueko.resumeapp.presentation.common.navargs.ResumeNavArgs
 
-@Destination
+@Destination(
+    navArgsDelegate = ResumeNavArgs::class
+)
 @Composable
 fun AddSkillScreen(
-    navigator: DestinationsNavigator
+    navigator: DestinationsNavigator,
 ) {
 // to get the state of the scaffold
     val scaffoldState = rememberScaffoldState()
@@ -34,7 +38,7 @@ fun AddSkillScreen(
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 // navigate to add resume screen
-                navigator.navigate(AddResumeScreenDestination())
+               // navigator.navigate(AddResumeScreenDestination())
             }) {
                 Icon(
                     imageVector = Icons.Default.Check,

@@ -11,15 +11,18 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.htueko.resumeapp.presentation.view.destinations.AddResumeScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.htueko.resumeapp.R
+import com.htueko.resumeapp.domain.model.Resume
+import com.htueko.resumeapp.presentation.common.navargs.ResumeNavArgs
 
-@Destination
+@Destination(
+    navArgsDelegate = ResumeNavArgs::class
+)
 @Composable
 fun AddResumeScreen(
-    navigator: DestinationsNavigator
+    navigator: DestinationsNavigator,
 ) {
 // to get the state of the scaffold
     val scaffoldState = rememberScaffoldState()
@@ -34,7 +37,7 @@ fun AddResumeScreen(
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 // navigate to add resume screen
-                navigator.navigate(AddResumeScreenDestination())
+                //navigator.navigate(AddResumeScreenDestination())
             }) {
                 Icon(
                     imageVector = Icons.Default.Check,
