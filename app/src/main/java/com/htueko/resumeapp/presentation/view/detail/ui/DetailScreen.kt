@@ -22,11 +22,17 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.htueko.resumeapp.R
 import com.htueko.resumeapp.presentation.common.component.BodyText
+import com.htueko.resumeapp.presentation.common.component.ButtonPrimary
 import com.htueko.resumeapp.presentation.common.component.RoundAvatarImage
 import com.htueko.resumeapp.presentation.common.component.TitleText
 import com.htueko.resumeapp.presentation.common.component.VerticalSpacer
 import com.htueko.resumeapp.presentation.common.navargs.ResumeNavArgs
 import com.htueko.resumeapp.presentation.theme.spacing
+import com.htueko.resumeapp.presentation.view.destinations.AddEducationScreenDestination
+import com.htueko.resumeapp.presentation.view.destinations.AddProjectScreenDestination
+import com.htueko.resumeapp.presentation.view.destinations.AddResumeScreenDestination
+import com.htueko.resumeapp.presentation.view.destinations.AddSkillScreenDestination
+import com.htueko.resumeapp.presentation.view.destinations.AddWorkScreenDestination
 import com.htueko.resumeapp.presentation.view.detail.viewmodel.DetailViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -112,6 +118,16 @@ fun DetailScreen(
                 BodyText(text = it.careerObjective)
                 BodyText(text = it.totalYearsOfExperience.toString())
                 BodyText(text = it.address)
+                VerticalSpacer(height = smallVerticalSpacer)
+                // to edit the resume
+                ButtonPrimary(
+                    text = textEdit,
+                    onClick = {
+                        // to navigate the add resume screen with resume id,
+                        // because this is the existing resume, not new one.
+                        navigator.navigate(AddResumeScreenDestination(resume.resumeId))
+                    },
+                )
                 VerticalSpacer(height = mediumVerticalSpacer)
             }
 
@@ -125,8 +141,27 @@ fun DetailScreen(
                     BodyText(text = education.percentageOrCgpa.toString())
                     VerticalSpacer(height = smallVerticalSpacer)
                 }
+                VerticalSpacer(height = smallVerticalSpacer)
+                // to edit the education
+                ButtonPrimary(
+                    text = textEdit,
+                    onClick = {
+                        // to navigate the add education screen with resume id,
+                        // because this is the existing resume, not new one.
+                        navigator.navigate(AddEducationScreenDestination(resume!!.resumeId))
+                    },
+                )
                 VerticalSpacer(height = mediumVerticalSpacer)
             }
+            // to add new education
+            ButtonPrimary(
+                text = textAdd,
+                onClick = {
+                    // to navigate the add education screen with resume id,
+                    // because this is the existing resume, not new one.
+                    navigator.navigate(AddEducationScreenDestination(resume!!.resumeId))
+                },
+            )
 
             // Project properties section
             TitleText(text = textProject)
@@ -140,8 +175,27 @@ fun DetailScreen(
                     BodyText(text = project.technology)
                     VerticalSpacer(height = smallVerticalSpacer)
                 }
+                VerticalSpacer(height = smallVerticalSpacer)
+                // to edit the education
+                ButtonPrimary(
+                    text = textEdit,
+                    onClick = {
+                        // to navigate the add project screen with resume id,
+                        // because this is the existing resume, not new one.
+                        navigator.navigate(AddProjectScreenDestination(resume!!.resumeId))
+                    },
+                )
                 VerticalSpacer(height = mediumVerticalSpacer)
             }
+            // to add new project
+            ButtonPrimary(
+                text = textAdd,
+                onClick = {
+                    // to navigate the add project screen with resume id,
+                    // because this is the existing resume, not new one.
+                    navigator.navigate(AddProjectScreenDestination(resume!!.resumeId))
+                },
+            )
 
             // Skill property section
             TitleText(text = textSkill)
@@ -151,8 +205,27 @@ fun DetailScreen(
                     BodyText(text = skill.skillName)
                     VerticalSpacer(height = smallVerticalSpacer)
                 }
+                VerticalSpacer(height = smallVerticalSpacer)
+                // to edit the skill
+                ButtonPrimary(
+                    text = textEdit,
+                    onClick = {
+                        // to navigate the add skill screen with resume id,
+                        // because this is the existing resume, not new one.
+                        navigator.navigate(AddSkillScreenDestination(resume!!.resumeId))
+                    },
+                )
                 VerticalSpacer(height = mediumVerticalSpacer)
             }
+            // to add new skill
+            ButtonPrimary(
+                text = textAdd,
+                onClick = {
+                    // to navigate the add skill screen with resume id,
+                    // because this is the existing resume, not new one.
+                    navigator.navigate(AddSkillScreenDestination(resume!!.resumeId))
+                },
+            )
 
             // Work properties section
             TitleText(text = textWork)
@@ -163,9 +236,27 @@ fun DetailScreen(
                     BodyText(text = "${work.duration} months")
                     VerticalSpacer(height = smallVerticalSpacer)
                 }
+                VerticalSpacer(height = smallVerticalSpacer)
+                // to edit the skill
+                ButtonPrimary(
+                    text = textEdit,
+                    onClick = {
+                        // to navigate the add work screen with resume id,
+                        // because this is the existing resume, not new one.
+                        navigator.navigate(AddWorkScreenDestination(resume!!.resumeId))
+                    },
+                )
                 VerticalSpacer(height = mediumVerticalSpacer)
             }
-
+            // to add new work
+            ButtonPrimary(
+                text = textAdd,
+                onClick = {
+                    // to navigate the add work screen with resume id,
+                    // because this is the existing resume, not new one.
+                    navigator.navigate(AddWorkScreenDestination(resume!!.resumeId))
+                },
+            )
 
         }
     }

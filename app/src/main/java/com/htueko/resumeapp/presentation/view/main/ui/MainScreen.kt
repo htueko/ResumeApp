@@ -68,7 +68,8 @@ fun MainScreen(
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 // navigate to add resume screen
-                navigator.navigate(AddResumeScreenDestination())
+                // workaround, if the resumeId is -1, that means to add new resume not existing one.
+                navigator.navigate(AddResumeScreenDestination(resumeId = -1))
             }) {
                 Icon(
                     imageVector = Icons.Default.Add,
