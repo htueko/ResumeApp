@@ -12,9 +12,4 @@ sealed class DashboardUserEvent {
     // to undelete a resume from main screen.
     object OnUndoDeleteResumeClick : DashboardUserEvent()
 
-    // to add a new resume from main screen.
-    object OnAddResumeClick : DashboardUserEvent()
-
-    // to display the detail resume.
-    data class OnResumeClick(val resume: Resume) : DashboardUserEvent()
 }
