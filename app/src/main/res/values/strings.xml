@@ -1,3 +1,47 @@
 <resources>
     <string name="app_name">ResumeApp</string>
+    <string name="name">Name</string>
+    <string name="mobileNumber">Mobile Number</string>
+    <string name="emailAddress">Email Address</string>
+    <string name="careerObjective">Career Objective</string>
+    <string name="totalYearsOfExperience">Total years of experience</string>
+    <string name="residenceAddress">Residence Address</string>
+    <string name="schoolClass">School Class</string>
+    <string name="passingYear">Passing Year</string>
+    <string name="percentageOrCgpa">Percentage or CGPA</string>
+    <string name="projectName">Project Name</string>
+    <string name="teamSize">Team Size</string>
+    <string name="projectSummary">Project Summary</string>
+    <string name="role">Role</string>
+    <string name="defaultRole">Freelance</string>
+    <string name="technology">Technology</string>
+    <string name="skillName">Skill Name</string>
+    <string name="companyName">Company Name</string>
+    <string name="duration">Duration</string>
+    <string name="error_common_text">invalid input</string>
+    <string name="error_common_number">invalid number</string>
+    <string name="error_email">invalid email address</string>
+    <string name="error_required">this field is required</string>
+    <string name="error_regex">value does not match the requirement</string>
+    <string name="resume">Resume</string>
+    <string name="education">Education</string>
+    <string name="project">Project</string>
+    <string name="skill">Skill</string>
+    <string name="work">Work</string>
+    <string name="save_education">Save Education</string>
+    <string name="more_education">More Education</string>
+    <string name="save_project">Save project</string>
+    <string name="more_project">More project</string>
+    <string name="save_skill">Save skill</string>
+    <string name="more_skill">More skill</string>
+    <string name="save_work">Save work</string>
+    <string name="more_work">More work</string>
+
+    <string name="delete">Delete</string>
+    <string name="deleteResume">Resume deleted</string>
+    <string name="undo">Undo</string>
+    <string name="addResume">Add Resume</string>
+    <string name="edit">Edit</string>
+    <string name="save">Save</string>
+
 </resources>

@@ -14,9 +14,9 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class DetailResume(
-    val resume: Resume,
-    val educations: List<Education>,
-    val projects: List<Project>,
-    val skills: List<Skill>,
-    val works: List<Work>
+    val resume: Resume = Resume(),
+    val educations: List<Education> = emptyList(),
+    val projects: List<Project> = emptyList(),
+    val skills: List<Skill> = emptyList(),
+    val works: List<Work> = emptyList()
 ): Parcelable
