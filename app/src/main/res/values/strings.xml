@@ -41,6 +41,15 @@
     <string name="deleteResume">Resume deleted</string>
     <string name="undo">Undo</string>
     <string name="addResume">Add Resume</string>
+    <string name="addEducation">Add Education</string>
+    <string name="addProject">Add Project</string>
+    <string name="addSkill">Add Skill</string>
+    <string name="addWork">Add Work</string>
+    <string name="editResume">Edit Resume</string>
+    <string name="editEducation">Edit Education</string>
+    <string name="editProject">Edit Project</string>
+    <string name="editSkill">Edit Skill</string>
+    <string name="editWork">Edit Work</string>
     <string name="edit">Edit</string>
     <string name="save">Save</string>
     <string name="add">Add</string>

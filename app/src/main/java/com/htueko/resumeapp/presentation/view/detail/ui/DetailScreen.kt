@@ -50,21 +50,29 @@ fun DetailScreen(
 
     // to collect the resume as state
     val data = viewModel.resume.collectAsState().value
-    val resume = data?.resume
-    val educations = data?.educations
-    val projects = data?.projects
-    val skills = data?.skills
-    val works = data?.works
+    val resume = data.resume
+    val educations = data.educations
+    val projects = data.projects
+    val skills = data.skills
+    val works = data.works
 
     // string to shows
-    val toolbarTitle = resume?.name?.uppercase() ?: stringResource(id = R.string.resume)
+    val toolbarTitle =
+        resume.name.replaceFirstChar { it.uppercase() } ?: stringResource(id = R.string.resume)
     val textResume = stringResource(id = R.string.resume)
     val textEducation = stringResource(id = R.string.education)
     val textProject = stringResource(id = R.string.project)
     val textSkill = stringResource(id = R.string.skill)
     val textWork = stringResource(id = R.string.work)
-    val textAdd = stringResource(id = R.string.add)
-    val textEdit = stringResource(id = R.string.edit)
+    val textEditResume = stringResource(id = R.string.editResume)
+    val textAddEducation = stringResource(id = R.string.addEducation)
+    val textEditEducation = stringResource(id = R.string.editEducation)
+    val textAddProject = stringResource(id = R.string.addProject)
+    val textEditProject = stringResource(id = R.string.editProject)
+    val textAddSkill = stringResource(id = R.string.addSkill)
+    val textEditSkill = stringResource(id = R.string.editSkill)
+    val textAddWork = stringResource(id = R.string.addWork)
+    val textEditWork = stringResource(id = R.string.editWork)
 
     // dimens
     val mediumPadding = MaterialTheme.spacing.medium
@@ -96,13 +104,15 @@ fun DetailScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                if (resume?.avatarUrl?.isNotBlank() == true) {
+                if (resume.avatarUrl.isNotBlank()) {
                     RoundAvatarImage(
                         imageUrl = resume.avatarUrl,
                         contentDescription = resume.name
                     )
                 } else {
-                    RoundAvatarImage()
+                    RoundAvatarImage(
+                        drawableResId = R.drawable.ic_launcher_foreground
+                    )
                 }
             }
             VerticalSpacer(height = mediumVerticalSpacer)
@@ -110,7 +120,7 @@ fun DetailScreen(
             // Resume properties section
             TitleText(text = textResume)
             VerticalSpacer(height = smallVerticalSpacer)
-            resume?.let {
+            resume.let {
                 BodyText(text = it.name)
                 BodyText(text = it.mobileNumber)
                 BodyText(text = it.emailAddress)
@@ -120,7 +130,7 @@ fun DetailScreen(
                 VerticalSpacer(height = smallVerticalSpacer)
                 // to edit the resume
                 ButtonPrimary(
-                    text = textEdit,
+                    text = textEditResume,
                     onClick = {
                         // to navigate the add resume screen with resume id,
                         // because this is the existing resume, not new one.
@@ -133,8 +143,8 @@ fun DetailScreen(
             // Educations properties section
             TitleText(text = textEducation)
             VerticalSpacer(height = smallVerticalSpacer)
-            educations?.let { list ->
-                list.forEach { education ->
+            if (educations.isNotEmpty()) {
+                educations.forEach { education ->
                     BodyText(text = education.schoolClass)
                     BodyText(text = education.passingYear.toString())
                     BodyText(text = education.percentageOrCgpa.toString())
@@ -143,22 +153,22 @@ fun DetailScreen(
                 VerticalSpacer(height = smallVerticalSpacer)
                 // to edit the education
                 ButtonPrimary(
-                    text = textEdit,
+                    text = textEditEducation,
                     onClick = {
                         // to navigate the add education screen with resume id,
                         // because this is the existing resume, not new one.
-                        navigator.navigate(AddEducationScreenDestination(resume!!.resumeId))
+                        navigator.navigate(AddEducationScreenDestination(resume.resumeId))
                     },
                 )
                 VerticalSpacer(height = mediumVerticalSpacer)
             }
             // to add new education
             ButtonPrimary(
-                text = textAdd,
+                text = textAddEducation,
                 onClick = {
                     // to navigate the add education screen with resume id,
                     // because this is the existing resume, not new one.
-                    navigator.navigate(AddEducationScreenDestination(resume!!.resumeId))
+                    navigator.navigate(AddEducationScreenDestination(resume.resumeId))
                 },
             )
             VerticalSpacer(height = mediumVerticalSpacer)
@@ -166,8 +176,8 @@ fun DetailScreen(
             // Project properties section
             TitleText(text = textProject)
             VerticalSpacer(height = smallVerticalSpacer)
-            projects?.let { list ->
-                list.forEach { project ->
+            if (projects.isNotEmpty()) {
+                projects.forEach { project ->
                     BodyText(text = project.projectName)
                     BodyText(text = project.teamSize.toString())
                     BodyText(text = project.projectSummary)
@@ -178,22 +188,22 @@ fun DetailScreen(
                 VerticalSpacer(height = smallVerticalSpacer)
                 // to edit the education
                 ButtonPrimary(
-                    text = textEdit,
+                    text = textEditProject,
                     onClick = {
                         // to navigate the add project screen with resume id,
                         // because this is the existing resume, not new one.
-                        navigator.navigate(AddProjectScreenDestination(resume!!.resumeId))
+                        navigator.navigate(AddProjectScreenDestination(resume.resumeId))
                     },
                 )
                 VerticalSpacer(height = mediumVerticalSpacer)
             }
             // to add new project
             ButtonPrimary(
-                text = textAdd,
+                text = textAddProject,
                 onClick = {
                     // to navigate the add project screen with resume id,
                     // because this is the existing resume, not new one.
-                    navigator.navigate(AddProjectScreenDestination(resume!!.resumeId))
+                    navigator.navigate(AddProjectScreenDestination(resume.resumeId))
                 },
             )
             VerticalSpacer(height = mediumVerticalSpacer)
@@ -201,30 +211,30 @@ fun DetailScreen(
             // Skill property section
             TitleText(text = textSkill)
             VerticalSpacer(height = smallVerticalSpacer)
-            skills?.let { list ->
-                list.forEach { skill ->
+            if (skills.isNotEmpty()) {
+                skills.forEach { skill ->
                     BodyText(text = skill.skillName)
                     VerticalSpacer(height = smallVerticalSpacer)
                 }
                 VerticalSpacer(height = smallVerticalSpacer)
                 // to edit the skill
                 ButtonPrimary(
-                    text = textEdit,
+                    text = textEditSkill,
                     onClick = {
                         // to navigate the add skill screen with resume id,
                         // because this is the existing resume, not new one.
-                        navigator.navigate(AddSkillScreenDestination(resume!!.resumeId))
+                        navigator.navigate(AddSkillScreenDestination(resume.resumeId))
                     },
                 )
                 VerticalSpacer(height = mediumVerticalSpacer)
             }
             // to add new skill
             ButtonPrimary(
-                text = textAdd,
+                text = textAddSkill,
                 onClick = {
                     // to navigate the add skill screen with resume id,
                     // because this is the existing resume, not new one.
-                    navigator.navigate(AddSkillScreenDestination(resume!!.resumeId))
+                    navigator.navigate(AddSkillScreenDestination(resume.resumeId))
                 },
             )
             VerticalSpacer(height = mediumVerticalSpacer)
@@ -232,8 +242,8 @@ fun DetailScreen(
             // Work properties section
             TitleText(text = textWork)
             VerticalSpacer(height = smallVerticalSpacer)
-            works?.let { list ->
-                list.forEach { work ->
+            if (works.isNotEmpty()) {
+                works.forEach { work ->
                     BodyText(text = work.companyName)
                     BodyText(text = "${work.duration} months")
                     VerticalSpacer(height = smallVerticalSpacer)
@@ -241,22 +251,22 @@ fun DetailScreen(
                 VerticalSpacer(height = smallVerticalSpacer)
                 // to edit the skill
                 ButtonPrimary(
-                    text = textEdit,
+                    text = textEditWork,
                     onClick = {
                         // to navigate the add work screen with resume id,
                         // because this is the existing resume, not new one.
-                        navigator.navigate(AddWorkScreenDestination(resume!!.resumeId))
+                        navigator.navigate(AddWorkScreenDestination(resume.resumeId))
                     },
                 )
                 VerticalSpacer(height = mediumVerticalSpacer)
             }
             // to add new work
             ButtonPrimary(
-                text = textAdd,
+                text = textAddWork,
                 onClick = {
                     // to navigate the add work screen with resume id,
                     // because this is the existing resume, not new one.
-                    navigator.navigate(AddWorkScreenDestination(resume!!.resumeId))
+                    navigator.navigate(AddWorkScreenDestination(resume.resumeId))
                 },
             )
             VerticalSpacer(height = mediumVerticalSpacer)

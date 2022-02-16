@@ -27,7 +27,7 @@ class DetailViewModel @Inject constructor(
     }
 
     // state variables to hold the domain model
-    private val _resume = MutableStateFlow<DetailResume?>(null)
+    private val _resume = MutableStateFlow<DetailResume>(DetailResume())
     val resume = _resume.asStateFlow()
 
     // to get resume detail from database

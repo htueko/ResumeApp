@@ -1,5 +1,6 @@
 package com.htueko.resumeapp.presentation.common.component
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.size
@@ -27,12 +28,15 @@ fun RoundAvatarImage(
     imageUrl: String? = null,
     contentDescription: String? = null,
     contentScale: ContentScale = ContentScale.Crop,
-    size: Dp = 200.dp
+    size: Dp = 200.dp,
+    @DrawableRes drawableResId: Int? = null,
 ) {
     val painter = rememberImagePainter(
         data = imageUrl,
         builder = {
-            placeholder(R.drawable.ic_launcher_foreground)
+            if (drawableResId != null) {
+                placeholder(drawableResId)
+            }
         }
     )
     Image(
