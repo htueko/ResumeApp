@@ -36,7 +36,6 @@ class DetailViewModel @Inject constructor(
             val response = getResumeByIdUseCase(navArgs.resumeId)
             response?.let {
                 _resume.value = it
-              //  _resume.value.resume.resumeId = navArgs.resumeId
             }
         }
     }

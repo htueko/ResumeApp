@@ -1,29 +1,36 @@
 package com.htueko.resumeapp.presentation.view.addskill.ui
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.htueko.resumeapp.R
-import com.htueko.resumeapp.presentation.common.component.SecondaryTextField
+import com.htueko.resumeapp.presentation.common.commonstate.CommonUiEvent
+import com.htueko.resumeapp.presentation.common.component.BodyText
+import com.htueko.resumeapp.presentation.common.component.ButtonPrimary
+import com.htueko.resumeapp.presentation.common.component.TextFieldPrimary
+import com.htueko.resumeapp.presentation.common.component.TitleText
+import com.htueko.resumeapp.presentation.common.component.VerticalSpacer
 import com.htueko.resumeapp.presentation.common.navargs.ResumeNavArgs
+import com.htueko.resumeapp.presentation.theme.spacing
+import com.htueko.resumeapp.presentation.view.addskill.state.AddSkillUserEvent
+import com.htueko.resumeapp.presentation.view.addskill.viewmodel.AddSkillViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -33,13 +40,43 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Composable
 fun AddSkillScreen(
     navigator: DestinationsNavigator,
+    viewModel: AddSkillViewModel = hiltViewModel(),
 ) {
 // to get the state of the scaffold
     val scaffoldState = rememberScaffoldState()
 
+    // to collect the resume as state
+    val data = viewModel.resume.collectAsState().value
+    val skills = data.skills
+    val skillName = viewModel.skillName.collectAsState().value
+    val hasSkillNameError = viewModel.hasSkillNameError.collectAsState().value
+
     // string to shows
-    val toolbarTitle = stringResource(id = R.string.skill)
+    val toolbarTitle =
+        data.resume.name.replaceFirstChar { it.uppercase() } ?: stringResource(id = R.string.resume)
+    val textSkill = stringResource(id = R.string.skill)
     val textSave = stringResource(id = R.string.save)
+    val errorRequiredFields = stringResource(id = R.string.errorRequiredFields)
+
+    // dimens
+    val mediumPadding = MaterialTheme.spacing.medium
+    val smallVerticalSpacer = MaterialTheme.spacing.small
+    val mediumVerticalSpacer = MaterialTheme.spacing.medium
+
+    LaunchedEffect(key1 = true) {
+        viewModel.uiEvent.collect { event ->
+            when (event) {
+                CommonUiEvent.PopBackStack -> {
+                    navigator.navigateUp()
+                }
+                CommonUiEvent.ShowSnackBar -> {
+                    scaffoldState.snackbarHostState.showSnackbar(
+                        message = errorRequiredFields,
+                    )
+                }
+            }
+        }
+    }
 
     // main screen
     Scaffold(
@@ -48,7 +85,73 @@ fun AddSkillScreen(
             TopAppBar(title = { Text(text = toolbarTitle) })
         }
     ) {
-        Column(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(mediumPadding)
+        ) {
+            // existing skills column
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(mediumPadding)
+                    .verticalScroll(rememberScrollState()),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+
+                VerticalSpacer(height = mediumVerticalSpacer)
+                // Resume properties section
+                TitleText(text = textSkill)
+                VerticalSpacer(height = smallVerticalSpacer)
+                if (skills.isNotEmpty()) {
+                    skills.forEach { skill ->
+                        BodyText(text = skill.skillName)
+                        VerticalSpacer(height = smallVerticalSpacer)
+                    }
+                }
+                VerticalSpacer(height = smallVerticalSpacer)
+
+            }
+
+            // adding new skills section
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(mediumPadding)
+                    .verticalScroll(rememberScrollState()),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+
+                // name text field
+                VerticalSpacer(height = mediumVerticalSpacer)
+                TextFieldPrimary(
+                    text = skillName,
+                    labelText = stringResource(id = R.string.skillName),
+                    onTextChanged = {
+                        viewModel.onEvent(
+                            AddSkillUserEvent.OnSkillNameChanged(it)
+                        )
+                    },
+                    hasError = hasSkillNameError,
+                    errorMessage = stringResource(id = R.string.error_required),
+                    keyboardType = KeyboardType.Text,
+                )
+
+                // save button
+                VerticalSpacer(height = mediumVerticalSpacer)
+                ButtonPrimary(
+                    text = textSave,
+                    onClick = {
+                        viewModel.onEvent(
+                            AddSkillUserEvent.OnSaveClick
+                        )
+                    },
+                )
+                VerticalSpacer(height = mediumVerticalSpacer)
+
+            }
 
         }
     }

@@ -125,7 +125,7 @@ fun DetailScreen(
                 BodyText(text = it.mobileNumber)
                 BodyText(text = it.emailAddress)
                 BodyText(text = it.careerObjective)
-                BodyText(text = it.totalYearsOfExperience.toString())
+                BodyText(text = it.totalYearsOfExperience.toString() + " years")
                 BodyText(text = it.address)
                 VerticalSpacer(height = smallVerticalSpacer)
                 // to edit the resume
