@@ -59,6 +59,9 @@ fun MainScreen(
                         viewModel.onEvent(DashboardUserEvent.OnUndoDeleteResumeClick)
                     }
                 }
+                CommonUiEvent.PopBackStack -> {
+                    // nothing to do here
+                }
             }
         }
     }

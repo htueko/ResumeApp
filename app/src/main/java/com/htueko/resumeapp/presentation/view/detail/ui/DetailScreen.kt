@@ -57,17 +57,17 @@ fun DetailScreen(
     val works = data?.works
 
     // string to shows
-    val toolbarTitle = resume?.name ?: stringResource(id = R.string.resume)
+    val toolbarTitle = resume?.name?.uppercase() ?: stringResource(id = R.string.resume)
     val textResume = stringResource(id = R.string.resume)
     val textEducation = stringResource(id = R.string.education)
     val textProject = stringResource(id = R.string.project)
     val textSkill = stringResource(id = R.string.skill)
     val textWork = stringResource(id = R.string.work)
-    val textMore = stringResource(id = R.string.more)
+    val textAdd = stringResource(id = R.string.add)
     val textEdit = stringResource(id = R.string.edit)
 
     // dimens
-    val smallPadding = MaterialTheme.spacing.small
+    val mediumPadding = MaterialTheme.spacing.medium
     val imageHeight = 240.dp
     val smallVerticalSpacer = MaterialTheme.spacing.small
     val mediumVerticalSpacer = MaterialTheme.spacing.medium
@@ -84,7 +84,7 @@ fun DetailScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(smallPadding)
+                .padding(mediumPadding)
                 .verticalScroll(rememberScrollState()),
         ) {
             // Image view column
@@ -92,7 +92,7 @@ fun DetailScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(imageHeight)
-                    .padding(smallPadding),
+                    .padding(mediumPadding),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -154,13 +154,14 @@ fun DetailScreen(
             }
             // to add new education
             ButtonPrimary(
-                text = textMore,
+                text = textAdd,
                 onClick = {
                     // to navigate the add education screen with resume id,
                     // because this is the existing resume, not new one.
                     navigator.navigate(AddEducationScreenDestination(resume!!.resumeId))
                 },
             )
+            VerticalSpacer(height = mediumVerticalSpacer)
 
             // Project properties section
             TitleText(text = textProject)
@@ -188,13 +189,14 @@ fun DetailScreen(
             }
             // to add new project
             ButtonPrimary(
-                text = textMore,
+                text = textAdd,
                 onClick = {
                     // to navigate the add project screen with resume id,
                     // because this is the existing resume, not new one.
                     navigator.navigate(AddProjectScreenDestination(resume!!.resumeId))
                 },
             )
+            VerticalSpacer(height = mediumVerticalSpacer)
 
             // Skill property section
             TitleText(text = textSkill)
@@ -218,13 +220,14 @@ fun DetailScreen(
             }
             // to add new skill
             ButtonPrimary(
-                text = textMore,
+                text = textAdd,
                 onClick = {
                     // to navigate the add skill screen with resume id,
                     // because this is the existing resume, not new one.
                     navigator.navigate(AddSkillScreenDestination(resume!!.resumeId))
                 },
             )
+            VerticalSpacer(height = mediumVerticalSpacer)
 
             // Work properties section
             TitleText(text = textWork)
@@ -249,13 +252,14 @@ fun DetailScreen(
             }
             // to add new work
             ButtonPrimary(
-                text = textMore,
+                text = textAdd,
                 onClick = {
                     // to navigate the add work screen with resume id,
                     // because this is the existing resume, not new one.
                     navigator.navigate(AddWorkScreenDestination(resume!!.resumeId))
                 },
             )
+            VerticalSpacer(height = mediumVerticalSpacer)
 
         }
     }

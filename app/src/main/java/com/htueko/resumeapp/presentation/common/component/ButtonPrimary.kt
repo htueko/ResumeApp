@@ -32,6 +32,7 @@ fun ButtonPrimary(
     modifier: Modifier = Modifier,
     text: String,
     onClick: () -> Unit,
+    isEnable: Boolean = true,
     backgroundColour: Color = MaterialTheme.colors.primary,
     textColour: Color = MaterialTheme.colors.onPrimary,
 ) {
@@ -51,6 +52,7 @@ fun ButtonPrimary(
         shape = roundCornerShape,
         colors = buttonColors,
         onClick = onClick,
+        enabled = isEnable,
     ) {
         Text(
             text = text.toUpperCase(Locale.current),

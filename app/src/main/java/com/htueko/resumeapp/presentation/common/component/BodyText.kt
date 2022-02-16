@@ -24,6 +24,7 @@ fun BodyText(
     textColour: Color = MaterialTheme.colors.primaryVariant
 ) {
     Text(
+        modifier = modifier,
         text = text,
         color = textColour,
         style = TextStyle(

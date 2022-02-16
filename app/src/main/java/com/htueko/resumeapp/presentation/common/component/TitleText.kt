@@ -21,9 +21,10 @@ import androidx.compose.ui.unit.sp
 fun TitleText(
     modifier: Modifier = Modifier,
     text: String,
-    textColour: Color = MaterialTheme.colors.onPrimary
+    textColour: Color = MaterialTheme.colors.primary
 ) {
     Text(
+        modifier = modifier,
         text = text,
         color = textColour,
         style = TextStyle(

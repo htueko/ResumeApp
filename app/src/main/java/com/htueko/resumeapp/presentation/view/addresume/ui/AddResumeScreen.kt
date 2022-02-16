@@ -51,6 +51,7 @@ fun AddResumeScreen(
     val hasTotalYearsOfExperienceError =
         viewModel.hasTotalYearsOfExperienceError.collectAsState().value
     val hasAddressError = viewModel.hasAddressError.collectAsState().value
+    val hasError = viewModel.hasError.collectAsState().value
 
     val name = viewModel.name.collectAsState().value
     val avatarUrl = viewModel.avatarUrl.collectAsState().value
@@ -76,7 +77,7 @@ fun AddResumeScreen(
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect { event ->
             when (event) {
-                CommonUiEvent.PopBackStack -> { // TODO, might needed to fix.
+                CommonUiEvent.PopBackStack -> {
                     navigator.navigate(DetailScreenDestination(data.value?.resumeId ?: -1))
                 }
                 CommonUiEvent.ShowSnackBar -> {
@@ -86,122 +87,123 @@ fun AddResumeScreen(
         }
     }
 
-        // main screen
-        Scaffold(
-            scaffoldState = scaffoldState,
-            topBar = {
-                TopAppBar(title = { Text(text = toolbarTitle) })
-            }
+    // main screen
+    Scaffold(
+        scaffoldState = scaffoldState,
+        topBar = {
+            TopAppBar(title = { Text(text = toolbarTitle) })
+        }
+    ) {
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(smallPadding)
+                .verticalScroll(rememberScrollState())
         ) {
 
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(smallPadding)
-                    .verticalScroll(rememberScrollState())
-            ) {
+            // name text field
+            VerticalSpacer(height = mediumVerticalSpacer)
+            TextFieldPrimary(
+                text = name,
+                labelText = stringResource(id = R.string.name),
+                onTextChanged = {
+                    viewModel.onEvent(
+                        AddResumeUserEvent.OnNameChanged(it)
+                    )
+                },
+                hasError = hasNameError,
+                errorMessage = stringResource(id = R.string.error_required),
+                keyboardType = KeyboardType.Text,
+            )
 
-                // name text field
-                VerticalSpacer(height = mediumVerticalSpacer)
-                TextFieldPrimary(
-                    text = name,
-                    labelText = stringResource(id = R.string.name),
-                    onTextChanged = {
-                        viewModel.onEvent(
-                            AddResumeUserEvent.OnNameChanged(it)
-                        )
-                    },
-                    hasError = hasNameError,
-                    errorMessage = stringResource(id = R.string.error_required),
-                    keyboardType = KeyboardType.Text,
-                )
+            // mobile number text field
+            VerticalSpacer(height = mediumVerticalSpacer)
+            TextFieldPrimary(
+                text = mobileNumber,
+                labelText = stringResource(id = R.string.mobileNumber),
+                onTextChanged = {
+                    viewModel.onEvent(
+                        AddResumeUserEvent.OnMobileNumberChanged(it)
+                    )
+                },
+                hasError = hasMobileNumberError,
+                errorMessage = errorNumber,
+                keyboardType = KeyboardType.Number,
+            )
 
-                // mobile number text field
-                VerticalSpacer(height = mediumVerticalSpacer)
-                TextFieldPrimary(
-                    text = mobileNumber,
-                    labelText = stringResource(id = R.string.mobileNumber),
-                    onTextChanged = {
-                        viewModel.onEvent(
-                            AddResumeUserEvent.OnMobileNumberChanged(it)
-                        )
-                    },
-                    hasError = hasMobileNumberError,
-                    errorMessage = errorNumber,
-                    keyboardType = KeyboardType.Number,
-                )
+            // email address text field
+            VerticalSpacer(height = mediumVerticalSpacer)
+            TextFieldPrimary(
+                text = emailAddress,
+                labelText = stringResource(id = R.string.emailAddress),
+                onTextChanged = {
+                    viewModel.onEvent(
+                        AddResumeUserEvent.OnEmailAddressChanged(it)
+                    )
+                },
+                hasError = hasEmailAddressError,
+                errorMessage = errorEmailAddress,
+                keyboardType = KeyboardType.Email,
+            )
 
-                // email address text field
-                VerticalSpacer(height = mediumVerticalSpacer)
-                TextFieldPrimary(
-                    text = emailAddress,
-                    labelText = stringResource(id = R.string.emailAddress),
-                    onTextChanged = {
-                        viewModel.onEvent(
-                            AddResumeUserEvent.OnEmailAddressChanged(it)
-                        )
-                    },
-                    hasError = hasEmailAddressError,
-                    errorMessage = errorEmailAddress,
-                    keyboardType = KeyboardType.Email,
-                )
+            // career objective text field
+            VerticalSpacer(height = mediumVerticalSpacer)
+            TextFieldPrimary(
+                text = careerObjective,
+                labelText = stringResource(id = R.string.careerObjective),
+                onTextChanged = {
+                    viewModel.onEvent(
+                        AddResumeUserEvent.OnCareerObjectiveChanged(it)
+                    )
+                },
+                hasError = hasCareerObjectiveError,
+                errorMessage = errorRequired,
+            )
 
-                // career objective text field
-                VerticalSpacer(height = mediumVerticalSpacer)
-                TextFieldPrimary(
-                    text = careerObjective,
-                    labelText = stringResource(id = R.string.careerObjective),
-                    onTextChanged = {
-                        viewModel.onEvent(
-                            AddResumeUserEvent.OnCareerObjectiveChanged(it)
-                        )
-                    },
-                    hasError = hasCareerObjectiveError,
-                    errorMessage = errorRequired,
-                )
+            // total year of experience text field
+            VerticalSpacer(height = mediumVerticalSpacer)
+            TextFieldPrimary(
+                text = totalYearsOfExperience.toString(),
+                labelText = stringResource(id = R.string.totalYearsOfExperience),
+                onTextChanged = {
+                    viewModel.onEvent(
+                        AddResumeUserEvent.OnTotalYearsOfExperienceChanged(it)
+                    )
+                },
+                hasError = hasTotalYearsOfExperienceError,
+                errorMessage = errorNumber,
+                keyboardType = KeyboardType.Number,
+            )
 
-                // total year of experience text field
-                VerticalSpacer(height = mediumVerticalSpacer)
-                TextFieldPrimary(
-                    text = totalYearsOfExperience.toString(),
-                    labelText = stringResource(id = R.string.totalYearsOfExperience),
-                    onTextChanged = {
-                        viewModel.onEvent(
-                            AddResumeUserEvent.OnTotalYearsOfExperienceChanged(it)
-                        )
-                    },
-                    hasError = hasTotalYearsOfExperienceError,
-                    errorMessage = errorNumber,
-                    keyboardType = KeyboardType.Number,
-                )
+            // address text field
+            VerticalSpacer(height = mediumVerticalSpacer)
+            TextFieldPrimary(
+                text = address,
+                labelText = stringResource(id = R.string.residenceAddress),
+                onTextChanged = {
+                    viewModel.onEvent(
+                        AddResumeUserEvent.OnAddressChanged(it)
+                    )
+                },
+                hasError = hasAddressError,
+                errorMessage = errorRequired,
+                imeAction = ImeAction.Done
+            )
 
-                // address text field
-                VerticalSpacer(height = mediumVerticalSpacer)
-                TextFieldPrimary(
-                    text = address,
-                    labelText = stringResource(id = R.string.residenceAddress),
-                    onTextChanged = {
-                        viewModel.onEvent(
-                            AddResumeUserEvent.OnAddressChanged(it)
-                        )
-                    },
-                    hasError = hasAddressError,
-                    errorMessage = errorRequired,
-                    imeAction = ImeAction.Done
-                )
-
-                // save button
-                VerticalSpacer(height = mediumVerticalSpacer)
-                ButtonPrimary(
-                    text = textSave,
-                    onClick = {
-                        viewModel.onEvent(
-                            AddResumeUserEvent.OnSaveClick
-                        )
-                    },
-                )
-                VerticalSpacer(height = mediumVerticalSpacer)
-            }
-
+            // save button
+            VerticalSpacer(height = mediumVerticalSpacer)
+            ButtonPrimary(
+                text = textSave,
+                onClick = {
+                    viewModel.onEvent(
+                        AddResumeUserEvent.OnSaveClick
+                    )
+                },
+                isEnable = hasError,
+            )
+            VerticalSpacer(height = mediumVerticalSpacer)
         }
+
     }
+}

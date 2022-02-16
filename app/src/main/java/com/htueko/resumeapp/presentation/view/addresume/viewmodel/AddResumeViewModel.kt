@@ -10,7 +10,6 @@ import com.htueko.resumeapp.presentation.common.commonstate.CommonUiEvent
 import com.htueko.resumeapp.presentation.view.addresume.state.AddResumeUserEvent
 import com.htueko.resumeapp.presentation.view.destinations.AddResumeScreenDestination
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -55,6 +54,10 @@ class AddResumeViewModel @Inject constructor(
     // state variable to hold the address text field have error or not
     private val _hasAddressError = MutableStateFlow<Boolean>(false)
     val hasAddressError = _hasAddressError.asStateFlow()
+
+    // state variable to hold the save button, to enable or disable
+    private val _hasError = MutableStateFlow<Boolean>(false)
+    val hasError = _hasError.asStateFlow()
 
     // state variable to hold the name value
     private val _name = MutableStateFlow("")
@@ -224,11 +227,15 @@ class AddResumeViewModel @Inject constructor(
         }
     }
 
+    private fun isSaveButtonEnable() {
+        _hasError.value = !(name.value.isNotBlank() && mobileNumber.value.isNotBlank()
+                && emailAddress.value.isNotBlank() && careerObjective.value.isNotBlank()
+                && totalYearsOfExperience.value.isNotBlank() && address.value.isNotBlank())
+    }
+
     private fun onSaveButtonClick() {
-        if (name.value.isNotBlank() && mobileNumber.value.isNotBlank()
-            && emailAddress.value.isNotBlank() && careerObjective.value.isNotBlank()
-            && totalYearsOfExperience.value.isNotBlank() && address.value.isNotBlank()
-        ) {
+        isSaveButtonEnable()
+        if (!_hasError.value) {
             val data = Resume(
                 name = name.value,
                 avatarUrl = avatarUrl.value,
@@ -243,7 +250,7 @@ class AddResumeViewModel @Inject constructor(
     }
 
     private fun addResume(resume: Resume) {
-        viewModelScope.launch() {
+        viewModelScope.launch {
             insertOrUpdateResumeUseCase(resume)
             sendUiEvent(CommonUiEvent.PopBackStack)
         }
