@@ -72,6 +72,7 @@ class LocalMapper {
     fun mapToEducationModels(educations: List<EducationEntity>): List<Education> {
         val data = educations.map { education ->
             Education(
+                educationId = education.educationId,
                 schoolClass = education.schoolClass,
                 passingYear = education.passingYear,
                 percentageOrCgpa = education.percentageOrCgpa,
@@ -97,6 +98,7 @@ class LocalMapper {
     fun mapToProjectModels(projects: List<ProjectEntity>): List<Project> {
         val data = projects.map { project ->
             Project(
+                projectId = project.projectId,
                 projectName = project.projectName,
                 teamSize = project.teamSize,
                 projectSummary = project.projectSummary,
@@ -119,7 +121,10 @@ class LocalMapper {
 
     fun mapToSkillModels(skills: List<SkillEntity>): List<Skill> {
         val data = skills.map { skill ->
-            Skill(skillName = skill.skillName)
+            Skill(
+                skillId = skill.skillId,
+                skillName = skill.skillName
+            )
         }
         return data
     }
@@ -138,6 +143,7 @@ class LocalMapper {
     fun mapToWorkModels(works: List<WorkEntity>): List<Work> {
         val data = works.map { work ->
             Work(
+                workId = work.workId,
                 companyName = work.companyName,
                 duration = work.duration,
             )
