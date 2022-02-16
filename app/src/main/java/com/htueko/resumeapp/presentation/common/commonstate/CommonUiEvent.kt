@@ -8,4 +8,9 @@ sealed class CommonUiEvent {
      * to show snack bar
      */
     object ShowSnackBar : CommonUiEvent()
+
+    /**
+     * to pop backstack
+     */
+    object PopBackStack : CommonUiEvent()
 }

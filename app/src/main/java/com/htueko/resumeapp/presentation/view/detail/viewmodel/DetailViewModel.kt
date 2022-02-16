@@ -7,6 +7,7 @@ import com.htueko.resumeapp.domain.model.DetailResume
 import com.htueko.resumeapp.domain.usecase.GetResumeByIdUseCase
 import com.htueko.resumeapp.presentation.view.destinations.DetailScreenDestination
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -31,7 +32,7 @@ class DetailViewModel @Inject constructor(
 
     // to get resume detail from database
     private fun getResumeDetail() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val response = getResumeByIdUseCase(navArgs.resumeId)
             response?.let { _resume.value = it }
         }

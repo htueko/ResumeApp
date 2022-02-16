@@ -3,25 +3,23 @@ package com.htueko.resumeapp.presentation.view.addresume.ui
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.Dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.htueko.resumeapp.R
-import com.htueko.resumeapp.domain.model.Resume
+import com.htueko.resumeapp.presentation.common.commonstate.CommonUiEvent
 import com.htueko.resumeapp.presentation.common.component.ButtonPrimary
 import com.htueko.resumeapp.presentation.common.component.TextFieldPrimary
 import com.htueko.resumeapp.presentation.common.component.VerticalSpacer
@@ -29,6 +27,7 @@ import com.htueko.resumeapp.presentation.common.navargs.ResumeNavArgs
 import com.htueko.resumeapp.presentation.theme.spacing
 import com.htueko.resumeapp.presentation.view.addresume.state.AddResumeUserEvent
 import com.htueko.resumeapp.presentation.view.addresume.viewmodel.AddResumeViewModel
+import com.htueko.resumeapp.presentation.view.destinations.DetailScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -44,7 +43,7 @@ fun AddResumeScreen(
     val scaffoldState = rememberScaffoldState()
 
     // to collect the resume as state
-    val data = viewModel.resume.collectAsState().value
+    val data = viewModel.resume.collectAsState()
     val hasNameError = viewModel.hasNameError.collectAsState().value
     val hasMobileNumberError = viewModel.hasMobileNumberError.collectAsState().value
     val hasEmailAddressError = viewModel.hasEmailAddressError.collectAsState().value
@@ -53,202 +52,156 @@ fun AddResumeScreen(
         viewModel.hasTotalYearsOfExperienceError.collectAsState().value
     val hasAddressError = viewModel.hasAddressError.collectAsState().value
 
+    val name = viewModel.name.collectAsState().value
+    val avatarUrl = viewModel.avatarUrl.collectAsState().value
+    val mobileNumber = viewModel.mobileNumber.collectAsState().value
+    val emailAddress = viewModel.emailAddress.collectAsState().value
+    val careerObjective = viewModel.careerObjective.collectAsState().value
+    val totalYearsOfExperience = viewModel.totalYearsOfExperience.collectAsState().value
+    val address = viewModel.address.collectAsState().value
+    val textSave = stringResource(id = R.string.save)
+    val errorRequired = stringResource(id = R.string.error_required)
+    val errorEmailAddress = stringResource(id = R.string.error_email)
+    val errorNumber = stringResource(id = R.string.error_common_number)
+
 
     // string to shows
-    val toolbarTitle = data?.name ?: stringResource(id = R.string.resume)
-    val textSave = stringResource(id = R.string.save)
+    val toolbarTitle = data.value?.name ?: stringResource(id = R.string.resume)
 
     // dimens
     val smallPadding = MaterialTheme.spacing.small
+    val smallVerticalSpacer = MaterialTheme.spacing.small
+    val mediumVerticalSpacer = MaterialTheme.spacing.medium
 
-    // main screen
-    Scaffold(
-        scaffoldState = scaffoldState,
-        floatingActionButton = {
-            FloatingActionButton(onClick = {
-                // navigate to add resume screen
-                //navigator.navigate(AddResumeScreenDestination())
-            }) {
-                Icon(
-                    imageVector = Icons.Default.Check,
-                    contentDescription = textSave
-                )
+    LaunchedEffect(key1 = true) {
+        viewModel.uiEvent.collect { event ->
+            when (event) {
+                CommonUiEvent.PopBackStack -> { // TODO, might needed to fix.
+                    navigator.navigate(DetailScreenDestination(data.value?.resumeId ?: -1))
+                }
+                CommonUiEvent.ShowSnackBar -> {
+                    // nothing to show
+                }
             }
-        },
-        topBar = {
-            TopAppBar(title = { Text(text = toolbarTitle) })
         }
-    ) {
-        // add resume form
-        ResumeForm(
-            formPadding = smallPadding,
-            resume = data,
-            onNameChanged = {
-                viewModel.onEvent(
-                    AddResumeUserEvent.OnNameChanged(it)
-                )
-            },
-            isNameError = hasNameError,
-            onAvatarUrlChanged = {
-                viewModel.onEvent(
-                    AddResumeUserEvent.OnImageUrlChanged(it)
-                )
-            },
-            onMobileNumberChanged = {
-                viewModel.onEvent(
-                    AddResumeUserEvent.OnMobileNumberChanged(it)
-                )
-            },
-            isMobileNumberError = hasMobileNumberError,
-            onEmailAddressChanged = {
-                viewModel.onEvent(
-                    AddResumeUserEvent.OnEmailAddressChanged(it)
-                )
-            },
-            isEmailAddressError = hasEmailAddressError,
-            onCareerObjectiveChanged = {
-                viewModel.onEvent(
-                    AddResumeUserEvent.OnCareerObjectiveChanged(it)
-                )
-            },
-            isCareerObjectiveError = hasCareerObjectiveError,
-            onTotalYearOfExperienceChanged = {
-                viewModel.onEvent(
-                    AddResumeUserEvent.OnTotalYearsOfExperienceChanged(it)
-                )
-            },
-            isTotalYearOfExperienceError = hasTotalYearsOfExperienceError,
-            onAddressChanged = {
-                viewModel.onEvent(
-                    AddResumeUserEvent.OnAddressChanged(it)
-                )
-            },
-            isAddressError = hasAddressError,
-            onSaveClicked = {
-                viewModel.onEvent(
-                    AddResumeUserEvent.OnSaveClick
-                )
+    }
+
+        // main screen
+        Scaffold(
+            scaffoldState = scaffoldState,
+            topBar = {
+                TopAppBar(title = { Text(text = toolbarTitle) })
             }
-        )
+        ) {
 
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(smallPadding)
+                    .verticalScroll(rememberScrollState())
+            ) {
 
+                // name text field
+                VerticalSpacer(height = mediumVerticalSpacer)
+                TextFieldPrimary(
+                    text = name,
+                    labelText = stringResource(id = R.string.name),
+                    onTextChanged = {
+                        viewModel.onEvent(
+                            AddResumeUserEvent.OnNameChanged(it)
+                        )
+                    },
+                    hasError = hasNameError,
+                    errorMessage = stringResource(id = R.string.error_required),
+                    keyboardType = KeyboardType.Text,
+                )
+
+                // mobile number text field
+                VerticalSpacer(height = mediumVerticalSpacer)
+                TextFieldPrimary(
+                    text = mobileNumber,
+                    labelText = stringResource(id = R.string.mobileNumber),
+                    onTextChanged = {
+                        viewModel.onEvent(
+                            AddResumeUserEvent.OnMobileNumberChanged(it)
+                        )
+                    },
+                    hasError = hasMobileNumberError,
+                    errorMessage = errorNumber,
+                    keyboardType = KeyboardType.Number,
+                )
+
+                // email address text field
+                VerticalSpacer(height = mediumVerticalSpacer)
+                TextFieldPrimary(
+                    text = emailAddress,
+                    labelText = stringResource(id = R.string.emailAddress),
+                    onTextChanged = {
+                        viewModel.onEvent(
+                            AddResumeUserEvent.OnEmailAddressChanged(it)
+                        )
+                    },
+                    hasError = hasEmailAddressError,
+                    errorMessage = errorEmailAddress,
+                    keyboardType = KeyboardType.Email,
+                )
+
+                // career objective text field
+                VerticalSpacer(height = mediumVerticalSpacer)
+                TextFieldPrimary(
+                    text = careerObjective,
+                    labelText = stringResource(id = R.string.careerObjective),
+                    onTextChanged = {
+                        viewModel.onEvent(
+                            AddResumeUserEvent.OnCareerObjectiveChanged(it)
+                        )
+                    },
+                    hasError = hasCareerObjectiveError,
+                    errorMessage = errorRequired,
+                )
+
+                // total year of experience text field
+                VerticalSpacer(height = mediumVerticalSpacer)
+                TextFieldPrimary(
+                    text = totalYearsOfExperience.toString(),
+                    labelText = stringResource(id = R.string.totalYearsOfExperience),
+                    onTextChanged = {
+                        viewModel.onEvent(
+                            AddResumeUserEvent.OnTotalYearsOfExperienceChanged(it)
+                        )
+                    },
+                    hasError = hasTotalYearsOfExperienceError,
+                    errorMessage = errorNumber,
+                    keyboardType = KeyboardType.Number,
+                )
+
+                // address text field
+                VerticalSpacer(height = mediumVerticalSpacer)
+                TextFieldPrimary(
+                    text = address,
+                    labelText = stringResource(id = R.string.residenceAddress),
+                    onTextChanged = {
+                        viewModel.onEvent(
+                            AddResumeUserEvent.OnAddressChanged(it)
+                        )
+                    },
+                    hasError = hasAddressError,
+                    errorMessage = errorRequired,
+                    imeAction = ImeAction.Done
+                )
+
+                // save button
+                VerticalSpacer(height = mediumVerticalSpacer)
+                ButtonPrimary(
+                    text = textSave,
+                    onClick = {
+                        viewModel.onEvent(
+                            AddResumeUserEvent.OnSaveClick
+                        )
+                    },
+                )
+                VerticalSpacer(height = mediumVerticalSpacer)
+            }
+
+        }
     }
-}
-
-@Composable
-fun ResumeForm(
-    formPadding: Dp,
-    resume: Resume? = null,
-    onNameChanged: (String) -> Unit,
-    isNameError: Boolean,
-    onAvatarUrlChanged: (String) -> Unit,
-    onMobileNumberChanged: (String) -> Unit,
-    isMobileNumberError: Boolean,
-    onEmailAddressChanged: (String) -> Unit,
-    isEmailAddressError: Boolean,
-    onCareerObjectiveChanged: (String) -> Unit,
-    isCareerObjectiveError: Boolean,
-    onTotalYearOfExperienceChanged: (String) -> Unit,
-    isTotalYearOfExperienceError: Boolean,
-    onAddressChanged: (String) -> Unit,
-    isAddressError: Boolean,
-    onSaveClicked: () -> Unit,
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(formPadding)
-    ) {
-
-        val name = resume?.name ?: stringResource(id = R.string.name)
-        val avatarUrl = resume?.avatarUrl ?: ""
-        val mobileNumber = resume?.mobileNumber ?: stringResource(id = R.string.mobileNumber)
-        val emailAddress = resume?.emailAddress ?: stringResource(id = R.string.emailAddress)
-        val careerObjective =
-            resume?.careerObjective ?: stringResource(id = R.string.careerObjective)
-        val totalYearsOfExperience =
-            resume?.totalYearsOfExperience ?: stringResource(id = R.string.totalYearsOfExperience)
-        val address = resume?.address ?: stringResource(id = R.string.residenceAddress)
-        val textSave = stringResource(id = R.string.save)
-        val errorRequired = stringResource(id = R.string.error_required)
-        val errorEmailAddress = stringResource(id = R.string.error_email)
-        val errorNumber = stringResource(id = R.string.error_common_number)
-
-        // dimens
-        val smallVerticalSpacer = MaterialTheme.spacing.small
-        val mediumVerticalSpacer = MaterialTheme.spacing.medium
-
-        VerticalSpacer(height = smallVerticalSpacer)
-
-        // name text field
-        VerticalSpacer(height = mediumVerticalSpacer)
-        TextFieldPrimary(
-            text = name,
-            labelText = stringResource(id = R.string.name),
-            onTextChanged = onNameChanged,
-            hasError = isNameError,
-            errorMessage = errorRequired,
-        )
-
-        // mobile number text field
-        VerticalSpacer(height = mediumVerticalSpacer)
-        TextFieldPrimary(
-            text = mobileNumber,
-            labelText = stringResource(id = R.string.mobileNumber),
-            onTextChanged = onMobileNumberChanged,
-            hasError = isMobileNumberError,
-            errorMessage = errorNumber,
-            keyboardType = KeyboardType.Number,
-        )
-
-        // email address text field
-        VerticalSpacer(height = mediumVerticalSpacer)
-        TextFieldPrimary(
-            text = emailAddress,
-            labelText = stringResource(id = R.string.emailAddress),
-            onTextChanged = onEmailAddressChanged,
-            hasError = isEmailAddressError,
-            errorMessage = errorEmailAddress,
-            keyboardType = KeyboardType.Email,
-        )
-
-        // career objective text field
-        VerticalSpacer(height = mediumVerticalSpacer)
-        TextFieldPrimary(
-            text = careerObjective,
-            labelText = stringResource(id = R.string.careerObjective),
-            onTextChanged = onCareerObjectiveChanged,
-            hasError = isCareerObjectiveError,
-            errorMessage = errorRequired,
-        )
-
-        // total year of experience text field
-        VerticalSpacer(height = mediumVerticalSpacer)
-        TextFieldPrimary(
-            text = totalYearsOfExperience.toString(),
-            labelText = stringResource(id = R.string.totalYearsOfExperience),
-            onTextChanged = onTotalYearOfExperienceChanged,
-            hasError = isTotalYearOfExperienceError,
-            errorMessage = errorNumber,
-            keyboardType = KeyboardType.Number,
-        )
-
-        // address text field
-        VerticalSpacer(height = mediumVerticalSpacer)
-        TextFieldPrimary(
-            text = address,
-            labelText = stringResource(id = R.string.residenceAddress),
-            onTextChanged = onAddressChanged,
-            hasError = isAddressError,
-            errorMessage = errorRequired,
-            imeAction = ImeAction.Done
-        )
-
-        // save button
-        ButtonPrimary(
-            text = textSave,
-            onClick = onSaveClicked,
-        )
-
-    }
-}

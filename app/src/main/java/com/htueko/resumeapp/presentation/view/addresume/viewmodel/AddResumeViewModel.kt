@@ -2,20 +2,28 @@ package com.htueko.resumeapp.presentation.view.addresume.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.htueko.resumeapp.domain.model.Resume
+import com.htueko.resumeapp.domain.usecase.GetResumeByIdUseCase
 import com.htueko.resumeapp.domain.usecase.InsertOrUpdateResumeUseCase
+import com.htueko.resumeapp.presentation.common.commonstate.CommonUiEvent
 import com.htueko.resumeapp.presentation.view.addresume.state.AddResumeUserEvent
 import com.htueko.resumeapp.presentation.view.destinations.AddResumeScreenDestination
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AddResumeViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
+    private val getResumeByIdUseCase: GetResumeByIdUseCase,
     private val insertOrUpdateResumeUseCase: InsertOrUpdateResumeUseCase,
-): ViewModel() {
+) : ViewModel() {
 
     // to get the navigation args from other screen.
     val navArgs = AddResumeScreenDestination.argsFrom(savedStateHandle)
@@ -48,17 +56,65 @@ class AddResumeViewModel @Inject constructor(
     private val _hasAddressError = MutableStateFlow<Boolean>(false)
     val hasAddressError = _hasAddressError.asStateFlow()
 
+    // state variable to hold the name value
+    private val _name = MutableStateFlow("")
+    val name = _name.asStateFlow()
+
+    // state variable to hold the image url value
+    private val _avatarUrl = MutableStateFlow("")
+    val avatarUrl = _avatarUrl.asStateFlow()
+
+    // state variable to hold the mobile number value
+    private val _mobileNumber = MutableStateFlow("")
+    val mobileNumber = _mobileNumber.asStateFlow()
+
+    // state variable to hold the email address value
+    private val _emailAddress = MutableStateFlow("")
+    val emailAddress = _emailAddress.asStateFlow()
+
+    // state variable to hold the career objective value
+    private val _careerObjective = MutableStateFlow("")
+    val careerObjective = _careerObjective.asStateFlow()
+
+    // state variable to hold the total year of experience value
+    private val _totalYearsOfExperience = MutableStateFlow("")
+    val totalYearsOfExperience = _totalYearsOfExperience.asStateFlow()
+
+    // state variable to hold the address value
+    private val _address = MutableStateFlow("")
+    val address = _address.asStateFlow()
+
+    init {
+        getResume()
+    }
+
+    // to check whether the resume is new one or existing one.
     private fun isNewResume(): Boolean {
         return navArgs.resumeId == -1
     }
 
     // to get resume detail from database
-    private fun saveResume() {
+    private fun getResume() {
         viewModelScope.launch {
-            val response = getResumeByIdUseCase(navArgs.resumeId)
-            response?.let { _resume.value = it }
+            if (!isNewResume()) {
+                val response = getResumeByIdUseCase(navArgs.resumeId)
+                response?.let {
+                    it.resume.apply {
+                        _name.value = this.name
+                        _avatarUrl.value = this.avatarUrl
+                        _mobileNumber.value = this.mobileNumber
+                        _emailAddress.value = this.emailAddress
+                        _careerObjective.value = this.careerObjective
+                        _totalYearsOfExperience.value = this.totalYearsOfExperience.toString()
+                        _address.value = this.address
+                    }
+                }
+            }
         }
     }
+
+    private val _uiEvent = Channel<CommonUiEvent>()
+    val uiEvent = _uiEvent.receiveAsFlow()
 
     /**
      * to perform relative task when user do some ui operation.
@@ -66,14 +122,136 @@ class AddResumeViewModel @Inject constructor(
      */
     fun onEvent(event: AddResumeUserEvent) {
         when (event) {
-            is AddResumeUserEvent.OnAddressChanged -> TODO()
-            is AddResumeUserEvent.OnCareerObjectiveChanged -> TODO()
-            is AddResumeUserEvent.OnEmailAddressChanged -> TODO()
-            is AddResumeUserEvent.OnImageUrlChanged -> TODO()
-            is AddResumeUserEvent.OnMobileNumberChanged -> TODO()
-            is AddResumeUserEvent.OnNameChanged -> TODO()
-            AddResumeUserEvent.OnSaveClick -> TODO()
-            is AddResumeUserEvent.OnTotalYearsOfExperienceChanged -> TODO()
+            is AddResumeUserEvent.OnNameChanged -> {
+                onNameChanged(event.name)
+            }
+            is AddResumeUserEvent.OnImageUrlChanged -> {
+                onAvatarUrlChanged(event.imageUrl)
+            }
+            is AddResumeUserEvent.OnMobileNumberChanged -> {
+                onMobileNumberChanged(event.mobileNumber)
+            }
+            is AddResumeUserEvent.OnEmailAddressChanged -> {
+                onEmailAddressChanged(event.emailAddress)
+            }
+            is AddResumeUserEvent.OnCareerObjectiveChanged -> {
+                onCareerObjectiveChanged(event.careerObjective)
+            }
+            is AddResumeUserEvent.OnTotalYearsOfExperienceChanged -> {
+                onTotalYearsOfExperienceChanged(event.totalYearsOfExperience)
+            }
+            is AddResumeUserEvent.OnAddressChanged -> {
+                onAddressChanged(event.address)
+            }
+            AddResumeUserEvent.OnSaveClick -> {
+                onSaveButtonClick()
+            }
+        }
+    }
+
+    private fun basicValidationForText(value: String) = value.isBlank()
+    private fun basicValidationForEmail(value: String): Boolean {
+        return !value.contains("@")
+    }
+
+    private fun onNameChanged(value: String) {
+        if (basicValidationForText(value)) {
+            // the name value is blank, so set the error to true to show error message.
+            _hasNameError.value = !_hasNameError.value
+        } else {
+            // name value is not blank, set the value.
+            _name.value = value
+            _hasNameError.value = false
+        }
+    }
+
+    private fun onMobileNumberChanged(value: String) {
+        if (basicValidationForText(value)) {
+            // the mobile number value is blank, so set the error to true to show error message.
+            _hasMobileNumberError.value = !_hasMobileNumberError.value
+        } else {
+            // mobile number value is not blank, set the value.
+            _mobileNumber.value = value
+            _hasMobileNumberError.value = false
+        }
+    }
+
+    private fun onAvatarUrlChanged(value: String) {
+        _avatarUrl.value = value
+    }
+
+    private fun onEmailAddressChanged(value: String) {
+        if (basicValidationForEmail(value)) {
+            // the email value is blank, so set the error to true to show error message.
+            _hasEmailAddressError.value = !_hasEmailAddressError.value
+        } else {
+            // email value is not blank, set the value.
+            _emailAddress.value = value
+            _hasEmailAddressError.value = false
+        }
+    }
+
+    private fun onCareerObjectiveChanged(value: String) {
+        if (basicValidationForText(value)) {
+            // the career value is blank, so set the error to true to show error message.
+            _hasCareerObjectiveError.value = !_hasCareerObjectiveError.value
+        } else {
+            // career value is not blank, set the value.
+            _careerObjective.value = value
+            _hasCareerObjectiveError.value = false
+        }
+    }
+
+    private fun onTotalYearsOfExperienceChanged(value: String) {
+        if (basicValidationForText(value)) {
+            // the experience value is blank, so set the error to true to show error message.
+            _hasTotalYearsOfExperienceError.value = !_hasTotalYearsOfExperienceError.value
+        } else {
+            // experience value is not blank, set the value.
+            _totalYearsOfExperience.value = value
+            _hasTotalYearsOfExperienceError.value = false
+        }
+    }
+
+    private fun onAddressChanged(value: String) {
+        if (basicValidationForText(value)) {
+            // the address value is blank, so set the error to true to show error message.
+            _hasAddressError.value = !_hasAddressError.value
+        } else {
+            // address value is not blank, set the value.
+            _address.value = value
+            _hasAddressError.value = false
+        }
+    }
+
+    private fun onSaveButtonClick() {
+        if (name.value.isNotBlank() && mobileNumber.value.isNotBlank()
+            && emailAddress.value.isNotBlank() && careerObjective.value.isNotBlank()
+            && totalYearsOfExperience.value.isNotBlank() && address.value.isNotBlank()
+        ) {
+            val data = Resume(
+                name = name.value,
+                avatarUrl = avatarUrl.value,
+                mobileNumber = mobileNumber.value,
+                emailAddress = emailAddress.value,
+                careerObjective = careerObjective.value,
+                totalYearsOfExperience = totalYearsOfExperience.value.toInt(),
+                address = address.value
+            )
+            addResume(data)
+        }
+    }
+
+    private fun addResume(resume: Resume) {
+        viewModelScope.launch() {
+            insertOrUpdateResumeUseCase(resume)
+            sendUiEvent(CommonUiEvent.PopBackStack)
+        }
+    }
+
+    private fun sendUiEvent(event: CommonUiEvent) {
+        viewModelScope.launch {
+            _uiEvent.send(event)
         }
     }
 

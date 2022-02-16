@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
@@ -36,6 +37,8 @@ import com.htueko.resumeapp.presentation.theme.ResumeAppTheme
 fun TextFieldPrimary(
     modifier: Modifier = Modifier,
     text: String,
+    isSingleLine: Boolean = true,
+    maxLines: Int = 1,
     labelText: String,
     onTextChanged: (String) -> Unit,
     hasError: Boolean = false,
@@ -46,11 +49,13 @@ fun TextFieldPrimary(
 ) {
     Column {
         // height of the text field
-        val textFieldHeight = dimensionResource(id = R.dimen.button_height)
+        val textFieldHeight = dimensionResource(id = R.dimen.text_field_height)
         // shape of the text field
         val textFieldShape = MaterialTheme.shapes.medium
         OutlinedTextField(
             value = text,
+            singleLine = isSingleLine,
+            maxLines = maxLines,
             label = {
                 Text(text = labelText)
             },
@@ -59,6 +64,11 @@ fun TextFieldPrimary(
             modifier = modifier
                 .fillMaxWidth()
                 .height(textFieldHeight),
+            visualTransformation = visualTransformation,
+            keyboardOptions = KeyboardOptions(
+                keyboardType = keyboardType,
+                imeAction = imeAction
+            )
         )
         // error message
         if (hasError) {
