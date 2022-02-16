@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class Resume(
-    val resumeId: Int = -1,
+    var resumeId: Int = -1,
     val name: String = "",
     val avatarUrl: String = "",
     val mobileNumber: String = "",

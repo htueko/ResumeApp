@@ -8,6 +8,7 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class Education(
+    val educationId: Int = 0,
     val schoolClass: String = "",
     val passingYear: Int = 0,
     val percentageOrCgpa: Double= 0.0

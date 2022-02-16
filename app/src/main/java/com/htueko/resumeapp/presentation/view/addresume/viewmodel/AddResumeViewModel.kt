@@ -56,7 +56,7 @@ class AddResumeViewModel @Inject constructor(
     val hasAddressError = _hasAddressError.asStateFlow()
 
     // state variable to hold the save button, to enable or disable
-    private val _hasError = MutableStateFlow<Boolean>(false)
+    private val _hasError = MutableStateFlow<Boolean>(true)
     val hasError = _hasError.asStateFlow()
 
     // state variable to hold the name value
@@ -102,15 +102,13 @@ class AddResumeViewModel @Inject constructor(
             if (!isNewResume()) {
                 val response = getResumeByIdUseCase(navArgs.resumeId)
                 response?.let {
-                    it.resume.apply {
-                        _name.value = this.name
-                        _avatarUrl.value = this.avatarUrl
-                        _mobileNumber.value = this.mobileNumber
-                        _emailAddress.value = this.emailAddress
-                        _careerObjective.value = this.careerObjective
-                        _totalYearsOfExperience.value = this.totalYearsOfExperience.toString()
-                        _address.value = this.address
-                    }
+                    _name.value = it.resume.name
+                    _avatarUrl.value = it.resume.avatarUrl
+                    _mobileNumber.value = it.resume.mobileNumber
+                    _emailAddress.value = it.resume.emailAddress
+                    _careerObjective.value = it.resume.careerObjective
+                    _totalYearsOfExperience.value = it.resume.totalYearsOfExperience.toString()
+                    _address.value = it.resume.address
                 }
             }
         }
@@ -184,14 +182,16 @@ class AddResumeViewModel @Inject constructor(
     }
 
     private fun onEmailAddressChanged(value: String) {
-        if (basicValidationForEmail(value)) {
-            // the email value is blank, so set the error to true to show error message.
-            _hasEmailAddressError.value = !_hasEmailAddressError.value
-        } else {
-            // email value is not blank, set the value.
-            _emailAddress.value = value
-            _hasEmailAddressError.value = false
-        }
+//        if (basicValidationForEmail(value)) {
+//            // the email value is blank, so set the error to true to show error message.
+//            _hasEmailAddressError.value = !_hasEmailAddressError.value
+//        } else {
+//            // email value is not blank, set the value.
+//            _emailAddress.value = value
+//            _hasEmailAddressError.value = false
+//        }
+        // fixme, setup a better way to validate email address with android sdk in viewmodel.
+        _emailAddress.value = value
     }
 
     private fun onCareerObjectiveChanged(value: String) {
@@ -228,24 +228,37 @@ class AddResumeViewModel @Inject constructor(
     }
 
     private fun isSaveButtonEnable() {
-        _hasError.value = !(name.value.isNotBlank() && mobileNumber.value.isNotBlank()
-                && emailAddress.value.isNotBlank() && careerObjective.value.isNotBlank()
-                && totalYearsOfExperience.value.isNotBlank() && address.value.isNotBlank())
+        _hasError.value = !(!hasNameError.value || !hasMobileNumberError.value
+                || !hasEmailAddressError.value || !hasCareerObjectiveError.value
+                || !hasTotalYearsOfExperienceError.value || !hasAddressError.value)
+    }
+
+    private fun hasAnyBlankInput(): Boolean {
+        return (_name.value.isBlank() || _mobileNumber.value.isBlank()
+                || _emailAddress.value.isBlank() || _careerObjective.value.isBlank()
+                || _totalYearsOfExperience.value.isBlank() || _address.value.isBlank())
     }
 
     private fun onSaveButtonClick() {
         isSaveButtonEnable()
         if (!_hasError.value) {
-            val data = Resume(
-                name = name.value,
-                avatarUrl = avatarUrl.value,
-                mobileNumber = mobileNumber.value,
-                emailAddress = emailAddress.value,
-                careerObjective = careerObjective.value,
-                totalYearsOfExperience = totalYearsOfExperience.value.toInt(),
-                address = address.value
-            )
-            addResume(data)
+            // don't have any error, check again for blank input
+            if (!hasAnyBlankInput()){
+                val data = Resume(
+                    name = _name.value,
+                    avatarUrl = _avatarUrl.value,
+                    mobileNumber = _mobileNumber.value,
+                    emailAddress = _emailAddress.value,
+                    careerObjective = _careerObjective.value,
+                    totalYearsOfExperience = _totalYearsOfExperience.value.toInt(),
+                    address = _address.value
+                )
+                addResume(data)
+            }else{
+                sendUiEvent(CommonUiEvent.ShowSnackBar)
+            }
+        }else{
+            sendUiEvent(CommonUiEvent.ShowSnackBar)
         }
     }
 

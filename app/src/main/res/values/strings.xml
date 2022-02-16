@@ -54,6 +54,6 @@
     <string name="save">Save</string>
     <string name="add">Add</string>
     <string name="more">More</string>
-
+    <string name="errorRequiredFields">Required Field shouldn\'t be blank.</string>
 
 </resources>

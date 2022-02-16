@@ -18,7 +18,6 @@ class LocalMapper {
 
     fun mapToResumeEntity(resume: Resume): ResumeEntity {
         return ResumeEntity(
-            resumeId = resume.resumeId,
             name = resume.name,
             avatarUrl = resume.avatarUrl,
             mobileNumber = resume.mobileNumber,

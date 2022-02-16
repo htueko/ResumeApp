@@ -51,7 +51,6 @@ fun AddResumeScreen(
     val hasTotalYearsOfExperienceError =
         viewModel.hasTotalYearsOfExperienceError.collectAsState().value
     val hasAddressError = viewModel.hasAddressError.collectAsState().value
-    val hasError = viewModel.hasError.collectAsState().value
 
     val name = viewModel.name.collectAsState().value
     val avatarUrl = viewModel.avatarUrl.collectAsState().value
@@ -68,6 +67,7 @@ fun AddResumeScreen(
 
     // string to shows
     val toolbarTitle = data.value?.name ?: stringResource(id = R.string.resume)
+    val errorRequiredFields = stringResource(id = R.string.errorRequiredFields)
 
     // dimens
     val smallPadding = MaterialTheme.spacing.small
@@ -78,10 +78,12 @@ fun AddResumeScreen(
         viewModel.uiEvent.collect { event ->
             when (event) {
                 CommonUiEvent.PopBackStack -> {
-                    navigator.navigate(DetailScreenDestination(data.value?.resumeId ?: -1))
+                    navigator.navigateUp()
                 }
                 CommonUiEvent.ShowSnackBar -> {
-                    // nothing to show
+                    scaffoldState.snackbarHostState.showSnackbar(
+                        message = errorRequiredFields,
+                    )
                 }
             }
         }
@@ -138,6 +140,7 @@ fun AddResumeScreen(
                 text = emailAddress,
                 labelText = stringResource(id = R.string.emailAddress),
                 onTextChanged = {
+                    println(it)
                     viewModel.onEvent(
                         AddResumeUserEvent.OnEmailAddressChanged(it)
                     )
@@ -200,7 +203,6 @@ fun AddResumeScreen(
                         AddResumeUserEvent.OnSaveClick
                     )
                 },
-                isEnable = hasError,
             )
             VerticalSpacer(height = mediumVerticalSpacer)
         }

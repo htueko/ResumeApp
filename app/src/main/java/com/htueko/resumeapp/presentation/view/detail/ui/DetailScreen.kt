@@ -133,8 +133,7 @@ fun DetailScreen(
                     text = textEditResume,
                     onClick = {
                         // to navigate the add resume screen with resume id,
-                        // because this is the existing resume, not new one.
-                        navigator.navigate(AddResumeScreenDestination(resume.resumeId))
+                        navigator.navigate(AddResumeScreenDestination(data.resume.resumeId))
                     },
                 )
                 VerticalSpacer(height = mediumVerticalSpacer)
