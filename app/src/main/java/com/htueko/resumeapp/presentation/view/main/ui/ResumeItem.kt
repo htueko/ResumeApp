@@ -43,7 +43,6 @@ fun ResumeItem(
         onClick = onResumeClick
     ) {
         Column() {
-            val careerObjective = resume.careerObjective
             Row(){
                 Column(modifier = Modifier.weight(5f)) {
                     TitleText(text = resume.name, modifier = Modifier.padding(elevationModifier))
@@ -57,7 +56,10 @@ fun ResumeItem(
                     }
                 }
             }
-            BodyText(text = careerObjective, modifier = Modifier.padding(elevationModifier))
+            BodyText(text = resume.mobileNumber, modifier = Modifier.padding(elevationModifier))
+            BodyText(text = resume.emailAddress, modifier = Modifier.padding(elevationModifier))
+            BodyText(text = resume.careerObjective, modifier = Modifier.padding(elevationModifier))
+            BodyText(text = resume.address, modifier = Modifier.padding(elevationModifier))
         }
     }
 
