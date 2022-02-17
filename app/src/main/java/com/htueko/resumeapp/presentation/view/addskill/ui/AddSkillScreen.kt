@@ -31,7 +31,9 @@ import com.htueko.resumeapp.presentation.common.navargs.ResumeNavArgs
 import com.htueko.resumeapp.presentation.theme.spacing
 import com.htueko.resumeapp.presentation.view.addskill.state.AddSkillUserEvent
 import com.htueko.resumeapp.presentation.view.addskill.viewmodel.AddSkillViewModel
+import com.htueko.resumeapp.presentation.view.destinations.DetailScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.dynamic.within
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Destination(
@@ -67,7 +69,14 @@ fun AddSkillScreen(
         viewModel.uiEvent.collect { event ->
             when (event) {
                 CommonUiEvent.PopBackStack -> {
-                    navigator.navigateUp()
+                    // go back to detail screen with resume id
+                    // remove the skill screen from back stack
+//                    navigator.navigate(DetailScreenDestination(data.resume.resumeId))
+                    // fixme fix this issue.
+                    navigator.popBackStack(
+                        DetailScreenDestination(data.resume.resumeId).route,
+                        inclusive = true
+                    )
                 }
                 CommonUiEvent.ShowSnackBar -> {
                     scaffoldState.snackbarHostState.showSnackbar(
@@ -89,37 +98,16 @@ fun AddSkillScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(mediumPadding)
+                .verticalScroll(rememberScrollState())
         ) {
-            // existing skills column
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(mediumPadding)
-                    .verticalScroll(rememberScrollState()),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-
-                VerticalSpacer(height = mediumVerticalSpacer)
-                // Resume properties section
-                TitleText(text = textSkill)
-                VerticalSpacer(height = smallVerticalSpacer)
-                if (skills.isNotEmpty()) {
-                    skills.forEach { skill ->
-                        BodyText(text = skill.skillName)
-                        VerticalSpacer(height = smallVerticalSpacer)
-                    }
-                }
-                VerticalSpacer(height = smallVerticalSpacer)
-
-            }
 
             // adding new skills section
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(mediumPadding)
-                    .verticalScroll(rememberScrollState()),
+                    .verticalScroll(rememberScrollState())
+                    .weight(1f),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -150,6 +138,31 @@ fun AddSkillScreen(
                     },
                 )
                 VerticalSpacer(height = mediumVerticalSpacer)
+
+            }
+
+            // existing skills column
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(mediumPadding)
+                    .verticalScroll(rememberScrollState())
+                    .weight(1f),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+
+                VerticalSpacer(height = mediumVerticalSpacer)
+                // Resume properties section
+                TitleText(text = textSkill)
+                VerticalSpacer(height = smallVerticalSpacer)
+                if (skills.isNotEmpty()) {
+                    skills.forEach { skill ->
+                        BodyText(text = skill.skillName)
+                        VerticalSpacer(height = smallVerticalSpacer)
+                    }
+                }
+                VerticalSpacer(height = smallVerticalSpacer)
 
             }
 

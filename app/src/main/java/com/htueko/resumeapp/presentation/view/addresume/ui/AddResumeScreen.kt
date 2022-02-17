@@ -78,7 +78,8 @@ fun AddResumeScreen(
         viewModel.uiEvent.collect { event ->
             when (event) {
                 CommonUiEvent.PopBackStack -> {
-                    navigator.navigateUp()
+                    // go back to Detail Resume Screen.
+                    navigator.popBackStack()
                 }
                 CommonUiEvent.ShowSnackBar -> {
                     scaffoldState.snackbarHostState.showSnackbar(

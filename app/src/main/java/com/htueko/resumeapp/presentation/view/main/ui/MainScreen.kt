@@ -96,7 +96,7 @@ fun MainScreen(
                     },
                     onDeleteResumeClick = {
                         viewModel.onEvent(
-                            DashboardUserEvent.OnDeleteResumeClick(resume)
+                            DashboardUserEvent.OnDeleteResumeClick(it)
                         )
                     }
                 )

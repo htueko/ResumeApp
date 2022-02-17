@@ -59,7 +59,23 @@ class LocalRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deleteResume(resume: Resume) {
-        localDataSource.deleteResume(resume)
+        localDataSource.deleteResumeCascadeByResumeId(resume)
+    }
+
+    override suspend fun deleteEducationById(education: Education) {
+        localDataSource.deleteEducationById(education)
+    }
+
+    override suspend fun deleteProjectById(project: Project) {
+        localDataSource.deleteProjectById(project)
+    }
+
+    override suspend fun deleteSkillById(skill: Skill) {
+        localDataSource.deleteSkillById(skill)
+    }
+
+    override suspend fun deleteWorkById(work: Work) {
+        localDataSource.deleteWorkById(work)
     }
 
     override fun getResumeById(resumeId: Int): Resume? {

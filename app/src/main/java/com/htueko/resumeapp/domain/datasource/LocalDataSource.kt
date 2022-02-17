@@ -32,7 +32,15 @@ interface LocalDataSource {
 
     suspend fun insertOrUpdateWorks(resumeId: Int, works: List<Work>)
 
-    suspend fun deleteResume(resume: Resume)
+    suspend fun deleteResumeCascadeByResumeId(resume: Resume)
+
+    suspend fun deleteEducationById(education: Education)
+
+    suspend fun deleteProjectById(project: Project)
+
+    suspend fun deleteSkillById(skill: Skill)
+
+    suspend fun deleteWorkById(work: Work)
 
     fun getResumeById(resumeId: Int): Resume?
 

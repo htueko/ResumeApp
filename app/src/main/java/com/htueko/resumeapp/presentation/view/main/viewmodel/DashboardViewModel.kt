@@ -9,6 +9,7 @@ import com.htueko.resumeapp.domain.usecase.InsertOrUpdateResumeUseCase
 import com.htueko.resumeapp.presentation.common.commonstate.CommonUiEvent
 import com.htueko.resumeapp.presentation.view.main.state.DashboardUserEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -60,8 +61,6 @@ class DashboardViewModel @Inject constructor(
                 deletedResume = event.resume
                 // delete the resume that user selected
                 onDeleteResumeClicked(event)
-                // show the snack bar with message and action that can restore the recently deleted resume.
-                sendUiEvent(CommonUiEvent.ShowSnackBar)
             }
             DashboardUserEvent.OnUndoDeleteResumeClick -> {
                 // restore (insert) previously deleted resume
@@ -71,9 +70,11 @@ class DashboardViewModel @Inject constructor(
     }
 
     private fun onDeleteResumeClicked(event: DashboardUserEvent.OnDeleteResumeClick) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             deleteResumeUseCase(event.resume)
         }
+        // show the snack bar with message and action that can restore the recently deleted resume.
+        sendUiEvent(CommonUiEvent.ShowSnackBar)
     }
 
     private fun onUndoDeleteResumeClicked() {

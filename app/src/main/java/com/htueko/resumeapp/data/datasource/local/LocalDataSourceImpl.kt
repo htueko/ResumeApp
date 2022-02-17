@@ -105,10 +105,51 @@ class LocalDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun deleteResume(resume: Resume) {
+    override suspend fun deleteResumeCascadeByResumeId(resume: Resume) {
         withContext(Dispatchers.IO) {
             try {
-                resumeDao.deleteResume(localMapper.mapToResumeEntity(resume))
+                val data = localMapper.mapToResumeEntity(resume)
+                resumeDao.deleteResumeWithCascadeById(resume.resumeId)
+            } catch (e: Exception) {
+            }
+        }
+    }
+
+    override suspend fun deleteEducationById(education: Education) {
+        withContext(Dispatchers.IO) {
+            try {
+                val data = localMapper.mapToEducationEntity(education)
+                resumeDao.deleteEducationById(data.educationId)
+            } catch (e: Exception) {
+            }
+        }
+    }
+
+    override suspend fun deleteProjectById(project: Project) {
+        withContext(Dispatchers.IO) {
+            try {
+                val data = localMapper.mapToProjectEntity(project)
+                resumeDao.deleteProjectById(data.projectId)
+            } catch (e: Exception) {
+            }
+        }
+    }
+
+    override suspend fun deleteSkillById(skill: Skill) {
+        withContext(Dispatchers.IO) {
+            try {
+                val data = localMapper.mapToSkillEntity(skill)
+                resumeDao.deleteSkillById(data.skillId)
+            } catch (e: Exception) {
+            }
+        }
+    }
+
+    override suspend fun deleteWorkById(work: Work) {
+        withContext(Dispatchers.IO) {
+            try {
+                val data = localMapper.mapToWorkEntity(work)
+                resumeDao.deleteWorkById(data.workId)
             } catch (e: Exception) {
             }
         }

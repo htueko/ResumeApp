@@ -34,6 +34,14 @@ interface LocalRepository {
 
     suspend fun deleteResume(resume: Resume)
 
+    suspend fun deleteEducationById(education: Education)
+
+    suspend fun deleteProjectById(project: Project)
+
+    suspend fun deleteSkillById(skill: Skill)
+
+    suspend fun deleteWorkById(work: Work)
+
     fun getResumeById(resumeId: Int): Resume?
 
 }

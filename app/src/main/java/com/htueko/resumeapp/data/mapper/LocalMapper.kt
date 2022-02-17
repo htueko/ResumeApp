@@ -69,6 +69,16 @@ class LocalMapper {
         return data
     }
 
+    fun mapToEducationEntity(education: Education): EducationEntity {
+        return EducationEntity(
+            educationId = education.educationId,
+            parentId = education.educationId, // this field is not true, not resume id.
+            schoolClass = education.schoolClass,
+            passingYear = education.passingYear,
+            percentageOrCgpa = education.percentageOrCgpa,
+        )
+    }
+
     fun mapToEducationModels(educations: List<EducationEntity>): List<Education> {
         val data = educations.map { education ->
             Education(
@@ -95,6 +105,17 @@ class LocalMapper {
         return data
     }
 
+    fun mapToProjectEntity(project: Project): ProjectEntity {
+        return ProjectEntity(
+            parentId = project.projectId, // this field is not true, not resume id.
+            projectName = project.projectName,
+            teamSize = project.teamSize,
+            projectSummary = project.projectSummary,
+            role = project.role,
+            technology = project.technology,
+        )
+    }
+
     fun mapToProjectModels(projects: List<ProjectEntity>): List<Project> {
         val data = projects.map { project ->
             Project(
@@ -113,10 +134,19 @@ class LocalMapper {
         val data = skills.map { skill ->
             SkillEntity(
                 parentId = resumeId,
+                skillId = skill.skillId,
                 skillName = skill.skillName
             )
         }
         return data
+    }
+
+    fun mapToSkillEntity(skill: Skill): SkillEntity {
+        return SkillEntity(
+            parentId = skill.skillId, // this field is not true, not resume id.
+            skillId = skill.skillId,
+            skillName = skill.skillName
+        )
     }
 
     fun mapToSkillModels(skills: List<SkillEntity>): List<Skill> {
@@ -138,6 +168,14 @@ class LocalMapper {
             )
         }
         return data
+    }
+
+    fun mapToWorkEntity(work: Work): WorkEntity {
+        return WorkEntity(
+            parentId = work.workId, // this field is not true, not resume id.
+            companyName = work.companyName,
+            duration = work.duration,
+        )
     }
 
     fun mapToWorkModels(works: List<WorkEntity>): List<Work> {

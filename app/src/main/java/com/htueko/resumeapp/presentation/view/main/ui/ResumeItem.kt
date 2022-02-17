@@ -28,7 +28,7 @@ fun ResumeItem(
     modifier: Modifier = Modifier,
     resume: Resume,
     onResumeClick: () -> Unit,
-    onDeleteResumeClick: () -> Unit,
+    onDeleteResumeClick: (Resume) -> Unit,
 ) {
     val paddingModifier = MaterialTheme.spacing.medium
     val elevationModifier = MaterialTheme.elevation.small
@@ -45,7 +45,7 @@ fun ResumeItem(
                     TitleText(text = resume.name, modifier = Modifier.padding(elevationModifier))
                 }
                 Column(modifier = Modifier.weight(1f)) {
-                    IconButton(onClick = onDeleteResumeClick) {
+                    IconButton(onClick = { onDeleteResumeClick(resume) }) {
                         Icon(
                             imageVector = Icons.Default.Delete,
                             contentDescription = stringResource(id = R.string.delete)

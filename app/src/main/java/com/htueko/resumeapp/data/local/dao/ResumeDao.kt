@@ -1,7 +1,6 @@
 package com.htueko.resumeapp.data.local.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -57,8 +56,44 @@ abstract class ResumeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract fun insertOrUpdateWorks(works: List<WorkEntity>)
 
-    @Delete
-    abstract suspend fun deleteResume(resume: ResumeEntity)
+    @Query("DELETE FROM table_resume WHERE resumeId = :resumeId")
+    abstract fun deleteResumeById(resumeId: Int)
+
+    @Query("DELETE FROM table_education WHERE parentId = :resumeId")
+    abstract fun deleteEducationsByParentId(resumeId: Int)
+
+    @Query("DELETE FROM table_project WHERE parentId = :resumeId")
+    abstract fun deleteProjectsByParentId(resumeId: Int)
+
+    @Query("DELETE FROM table_skill WHERE parentId = :resumeId")
+    abstract fun deleteSkillsByParentId(resumeId: Int)
+
+    @Query("DELETE FROM table_work WHERE parentId = :resumeId")
+    abstract fun deleteWorksByParentId(resumeId: Int)
+
+    @Query("DELETE FROM table_education WHERE educationId = :educationId")
+    abstract fun deleteEducationById(educationId: Int)
+
+    @Query("DELETE FROM table_project WHERE projectId = :projectId")
+    abstract fun deleteProjectById(projectId: Int)
+
+    @Query("DELETE FROM table_skill WHERE skillId = :skillId")
+    abstract fun deleteSkillById(skillId: Int)
+
+    @Query("DELETE FROM table_work WHERE workId = :workId")
+    abstract fun deleteWorkById(workId: Int)
+
+    // delete cascade walk around because abstract class usage.
+    // https://stackoverflow.com/questions/70134307/cascade-delete-in-android-room-database-kotlin
+    @Transaction
+    @Query("")
+    fun deleteResumeWithCascadeById(resumeId: Int) {
+        deleteEducationsByParentId(resumeId)
+        deleteProjectsByParentId(resumeId)
+        deleteSkillsByParentId(resumeId)
+        deleteWorksByParentId(resumeId)
+        deleteResumeById(resumeId)
+    }
 
 
 }

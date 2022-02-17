@@ -21,7 +21,8 @@ import com.htueko.resumeapp.data.local.LocalConstant
             entity = ResumeEntity::class,
             parentColumns = arrayOf("resumeId"),
             childColumns = arrayOf("parentId"),
-            onDelete = ForeignKey.CASCADE
+            onDelete = ForeignKey.CASCADE,
+            onUpdate = ForeignKey.CASCADE
         )
     ],
     indices = [Index("parentId")]
