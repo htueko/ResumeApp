@@ -10,18 +10,18 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavController
 import com.htueko.resumeapp.R
 import com.htueko.resumeapp.presentation.common.navargs.ResumeNavArgs
 import com.htueko.resumeapp.presentation.view.destinations.AddResumeScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
-@Destination(
-    navArgsDelegate = ResumeNavArgs::class
-)
+
 @Composable
 fun AddEducationScreen(
-    navigator: DestinationsNavigator,
+    navController: NavController,
+    resumeId: Int? = null,
 ) {
 // to get the state of the scaffold
     val scaffoldState = rememberScaffoldState()

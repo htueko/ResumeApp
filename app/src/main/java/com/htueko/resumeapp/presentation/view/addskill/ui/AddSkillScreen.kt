@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.htueko.resumeapp.R
 import com.htueko.resumeapp.presentation.common.commonstate.CommonUiEvent
 import com.htueko.resumeapp.presentation.common.component.BodyText
@@ -35,12 +36,11 @@ import com.htueko.resumeapp.presentation.view.destinations.DetailScreenDestinati
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
-@Destination(
-    navArgsDelegate = ResumeNavArgs::class
-)
+
 @Composable
 fun AddSkillScreen(
-    navigator: DestinationsNavigator,
+    navController: NavController,
+    resumeId: Int? = null,
     viewModel: AddSkillViewModel = hiltViewModel(),
 ) {
 // to get the state of the scaffold

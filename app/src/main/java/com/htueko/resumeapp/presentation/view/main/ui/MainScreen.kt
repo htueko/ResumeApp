@@ -19,8 +19,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.htueko.resumeapp.R
 import com.htueko.resumeapp.presentation.common.commonstate.CommonUiEvent
+import com.htueko.resumeapp.presentation.navigation.Screen
 import com.htueko.resumeapp.presentation.view.destinations.AddResumeScreenDestination
 import com.htueko.resumeapp.presentation.view.destinations.DetailScreenDestination
 import com.htueko.resumeapp.presentation.view.main.state.DashboardUserEvent
@@ -28,11 +30,11 @@ import com.htueko.resumeapp.presentation.view.main.viewmodel.DashboardViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
+
 @ExperimentalMaterialApi
-@Destination(start = true)
 @Composable
 fun MainScreen(
-    navigator: DestinationsNavigator,
+    navController: NavController,
     viewModel: DashboardViewModel = hiltViewModel()
 ) {
 
@@ -72,7 +74,7 @@ fun MainScreen(
             FloatingActionButton(onClick = {
                 // navigate to add resume screen
                 // workaround, if the resumeId is -1, that means to add new resume not existing one.
-                navigator.navigate(AddResumeScreenDestination(resumeId = -1))
+                navController.navigate(Screen.AddResumeScreen.route)
             }) {
                 Icon(
                     imageVector = Icons.Default.Add,
