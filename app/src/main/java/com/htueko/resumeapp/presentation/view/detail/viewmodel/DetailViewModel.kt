@@ -11,12 +11,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.io.PipedReader
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val getResumeByIdUseCase: GetResumeByIdUseCase
+    private val getResumeByIdUseCase: GetResumeByIdUseCase,
 ) : ViewModel() {
 
     // to get the navigation args from other screen.

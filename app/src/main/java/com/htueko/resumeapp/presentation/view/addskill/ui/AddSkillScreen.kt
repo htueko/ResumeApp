@@ -33,7 +33,6 @@ import com.htueko.resumeapp.presentation.view.addskill.state.AddSkillUserEvent
 import com.htueko.resumeapp.presentation.view.addskill.viewmodel.AddSkillViewModel
 import com.htueko.resumeapp.presentation.view.destinations.DetailScreenDestination
 import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.dynamic.within
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Destination(
@@ -69,14 +68,18 @@ fun AddSkillScreen(
         viewModel.uiEvent.collect { event ->
             when (event) {
                 CommonUiEvent.PopBackStack -> {
+                    navigator.navigateUp()
                     // go back to detail screen with resume id
                     // remove the skill screen from back stack
-//                    navigator.navigate(DetailScreenDestination(data.resume.resumeId))
+//                    navigator.navigate(
+//                        DetailScreenDestination(data.resume.resumeId)){
+//                        popUpTo(DetailScreenDestination.routeId)
+//                    }
                     // fixme fix this issue.
-                    navigator.popBackStack(
-                        DetailScreenDestination(data.resume.resumeId).route,
-                        inclusive = true
-                    )
+//                    navigator.popBackStack(
+//                        DetailScreenDestination(data.resume.resumeId).route,
+//                        inclusive = true
+//                    )
                 }
                 CommonUiEvent.ShowSnackBar -> {
                     scaffoldState.snackbarHostState.showSnackbar(

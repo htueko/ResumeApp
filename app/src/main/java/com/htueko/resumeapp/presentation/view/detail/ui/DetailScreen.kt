@@ -222,7 +222,7 @@ fun DetailScreen(
                     onClick = {
                         // to navigate the add skill screen with resume id,
                         // because this is the existing resume, not new one.
-                        navigator.navigate(AddSkillScreenDestination(resume.resumeId))
+                        navigator.navigate(AddSkillScreenDestination(data.resume.resumeId))
                     },
                 )
                 VerticalSpacer(height = mediumVerticalSpacer)
@@ -233,7 +233,7 @@ fun DetailScreen(
                 onClick = {
                     // to navigate the add skill screen with resume id,
                     // because this is the existing resume, not new one.
-                    navigator.navigate(AddSkillScreenDestination(resume.resumeId))
+                    navigator.navigate(AddSkillScreenDestination(data.resume.resumeId))
                 },
             )
             VerticalSpacer(height = mediumVerticalSpacer)
