@@ -13,52 +13,47 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.htueko.resumeapp.R
 import com.htueko.resumeapp.presentation.common.commonstate.CommonUiEvent
 import com.htueko.resumeapp.presentation.common.component.ButtonPrimary
 import com.htueko.resumeapp.presentation.common.component.TextFieldPrimary
 import com.htueko.resumeapp.presentation.common.component.VerticalSpacer
-import com.htueko.resumeapp.presentation.common.navargs.ResumeNavArgs
 import com.htueko.resumeapp.presentation.theme.spacing
 import com.htueko.resumeapp.presentation.view.addresume.state.AddResumeUserEvent
 import com.htueko.resumeapp.presentation.view.addresume.viewmodel.AddResumeViewModel
-import com.htueko.resumeapp.presentation.view.destinations.DetailScreenDestination
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 
 @Composable
 fun AddResumeScreen(
-    navController: NavController,
-    resumeId: Int? = null,
+    onSaveResumeClick: (Int) -> Unit,
     viewModel: AddResumeViewModel = hiltViewModel()
 ) {
     // to get the state of the scaffold
     val scaffoldState = rememberScaffoldState()
 
     // to collect the resume as state
-    val data = viewModel.resume.collectAsState()
-    val hasNameError = viewModel.hasNameError.collectAsState().value
-    val hasMobileNumberError = viewModel.hasMobileNumberError.collectAsState().value
-    val hasEmailAddressError = viewModel.hasEmailAddressError.collectAsState().value
-    val hasCareerObjectiveError = viewModel.hasCareerObjectiveError.collectAsState().value
-    val hasTotalYearsOfExperienceError =
-        viewModel.hasTotalYearsOfExperienceError.collectAsState().value
-    val hasAddressError = viewModel.hasAddressError.collectAsState().value
+    val data by viewModel.resume.collectAsState()
+    val hasNameError by viewModel.hasNameError.collectAsState()
+    val hasMobileNumberError by viewModel.hasMobileNumberError.collectAsState()
+    val hasEmailAddressError by viewModel.hasEmailAddressError.collectAsState()
+    val hasCareerObjectiveError by viewModel.hasCareerObjectiveError.collectAsState()
+    val hasTotalYearsOfExperienceError by
+    viewModel.hasTotalYearsOfExperienceError.collectAsState()
+    val hasAddressError by viewModel.hasAddressError.collectAsState()
 
-    val name = viewModel.name.collectAsState().value
-    val avatarUrl = viewModel.avatarUrl.collectAsState().value
-    val mobileNumber = viewModel.mobileNumber.collectAsState().value
-    val emailAddress = viewModel.emailAddress.collectAsState().value
-    val careerObjective = viewModel.careerObjective.collectAsState().value
-    val totalYearsOfExperience = viewModel.totalYearsOfExperience.collectAsState().value
-    val address = viewModel.address.collectAsState().value
+    val name by viewModel.name.collectAsState()
+    val avatarUrl by viewModel.avatarUrl.collectAsState()
+    val mobileNumber by viewModel.mobileNumber.collectAsState()
+    val emailAddress by viewModel.emailAddress.collectAsState()
+    val careerObjective by viewModel.careerObjective.collectAsState()
+    val totalYearsOfExperience by viewModel.totalYearsOfExperience.collectAsState()
+    val address by viewModel.address.collectAsState()
     val textSave = stringResource(id = R.string.save)
     val errorRequired = stringResource(id = R.string.error_required)
     val errorEmailAddress = stringResource(id = R.string.error_email)
@@ -66,7 +61,7 @@ fun AddResumeScreen(
 
 
     // string to shows
-    val toolbarTitle = data.value?.name ?: stringResource(id = R.string.resume)
+    val toolbarTitle = data?.name ?: stringResource(id = R.string.resume)
     val errorRequiredFields = stringResource(id = R.string.errorRequiredFields)
 
     // dimens
@@ -78,13 +73,16 @@ fun AddResumeScreen(
         viewModel.uiEvent.collect { event ->
             when (event) {
                 CommonUiEvent.PopBackStack -> {
-                    // go back to Detail Resume Screen.
-                    navigator.popBackStack()
+                    // do nothing here
                 }
                 CommonUiEvent.ShowSnackBar -> {
                     scaffoldState.snackbarHostState.showSnackbar(
                         message = errorRequiredFields,
                     )
+                }
+                is CommonUiEvent.PopBackStackAndSendData -> {
+                    // go back to Detail Resume Screen.
+                    onSaveResumeClick(event.resumeId)
                 }
             }
         }

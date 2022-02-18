@@ -3,18 +3,20 @@ package com.htueko.resumeapp.presentation.view.addresume.viewmodel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.htueko.resumeapp.domain.model.DetailResume
 import com.htueko.resumeapp.domain.model.Resume
 import com.htueko.resumeapp.domain.usecase.GetResumeByIdUseCase
 import com.htueko.resumeapp.domain.usecase.InsertOrUpdateResumeUseCase
 import com.htueko.resumeapp.presentation.common.commonstate.CommonUiEvent
 import com.htueko.resumeapp.presentation.view.addresume.state.AddResumeUserEvent
-import com.htueko.resumeapp.presentation.view.destinations.AddResumeScreenDestination
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,7 +27,7 @@ class AddResumeViewModel @Inject constructor(
 ) : ViewModel() {
 
     // to get the navigation args from other screen.
-    val navArgs = AddResumeScreenDestination.argsFrom(savedStateHandle)
+    val resumeId = savedStateHandle.get<Int>("resumeId")
 
     // state variables to hold the domain model
     private val _resume = MutableStateFlow<Resume?>(null)
@@ -91,26 +93,23 @@ class AddResumeViewModel @Inject constructor(
         getResume()
     }
 
-    // to check whether the resume is new one or existing one.
-    private fun isNewResume(): Boolean {
-        return navArgs.resumeId == -1
-    }
-
     // to get resume detail from database
     private fun getResume() {
-        viewModelScope.launch {
-            if (!isNewResume()) {
-                val response = getResumeByIdUseCase(navArgs.resumeId)
-                response?.let {
-                    _name.value = it.resume.name
-                    _avatarUrl.value = it.resume.avatarUrl
-                    _mobileNumber.value = it.resume.mobileNumber
-                    _emailAddress.value = it.resume.emailAddress
-                    _careerObjective.value = it.resume.careerObjective
-                    _totalYearsOfExperience.value = it.resume.totalYearsOfExperience.toString()
-                    _address.value = it.resume.address
-                }
+        viewModelScope.launch() {
+            var response: DetailResume? = null
+            withContext(Dispatchers.IO) {
+                response = resumeId?.let { getResumeByIdUseCase(it) }
             }
+            response?.let {
+                _name.value = it.resume.name
+                _avatarUrl.value = it.resume.avatarUrl
+                _mobileNumber.value = it.resume.mobileNumber
+                _emailAddress.value = it.resume.emailAddress
+                _careerObjective.value = it.resume.careerObjective
+                _totalYearsOfExperience.value = it.resume.totalYearsOfExperience.toString()
+                _address.value = it.resume.address
+            }
+
         }
     }
 
@@ -243,7 +242,7 @@ class AddResumeViewModel @Inject constructor(
         isSaveButtonEnable()
         if (!_hasError.value) {
             // don't have any error, check again for blank input
-            if (!hasAnyBlankInput()){
+            if (!hasAnyBlankInput()) {
                 val data = Resume(
                     name = _name.value,
                     avatarUrl = _avatarUrl.value,
@@ -254,18 +253,25 @@ class AddResumeViewModel @Inject constructor(
                     address = _address.value
                 )
                 addResume(data)
-            }else{
+            } else {
                 sendUiEvent(CommonUiEvent.ShowSnackBar)
             }
-        }else{
+        } else {
             sendUiEvent(CommonUiEvent.ShowSnackBar)
         }
     }
 
     private fun addResume(resume: Resume) {
         viewModelScope.launch {
-            insertOrUpdateResumeUseCase(resume)
-            sendUiEvent(CommonUiEvent.PopBackStack)
+            withContext(Dispatchers.IO) {
+                insertOrUpdateResumeUseCase(resume)
+                val data = getResumeByIdUseCase(resume.resumeId)
+                withContext(Dispatchers.Main) {
+                    data?.let {
+                        sendUiEvent(CommonUiEvent.PopBackStackAndSendData(it.resume.resumeId))
+                    }
+                }
+            }
         }
     }
 

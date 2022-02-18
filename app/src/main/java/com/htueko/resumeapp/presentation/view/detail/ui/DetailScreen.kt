@@ -15,41 +15,40 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.htueko.resumeapp.R
 import com.htueko.resumeapp.presentation.common.component.BodyText
 import com.htueko.resumeapp.presentation.common.component.ButtonPrimary
 import com.htueko.resumeapp.presentation.common.component.RoundAvatarImage
 import com.htueko.resumeapp.presentation.common.component.TitleText
 import com.htueko.resumeapp.presentation.common.component.VerticalSpacer
-import com.htueko.resumeapp.presentation.common.navargs.ResumeNavArgs
 import com.htueko.resumeapp.presentation.theme.spacing
-import com.htueko.resumeapp.presentation.view.destinations.AddEducationScreenDestination
-import com.htueko.resumeapp.presentation.view.destinations.AddProjectScreenDestination
-import com.htueko.resumeapp.presentation.view.destinations.AddResumeScreenDestination
-import com.htueko.resumeapp.presentation.view.destinations.AddSkillScreenDestination
-import com.htueko.resumeapp.presentation.view.destinations.AddWorkScreenDestination
 import com.htueko.resumeapp.presentation.view.detail.viewmodel.DetailViewModel
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 
 @Composable
 fun DetailScreen(
-    navController: NavController,
-    resumeId: Int? = null,
+    onEditResumeClick: () -> Unit,
+    onEditEducationClick: () -> Unit,
+    onAddEducationClick: () -> Unit,
+    onEditProjectClick: () -> Unit,
+    onAddProjectClick: () -> Unit,
+    onEditSkillClick: () -> Unit,
+    onAddSkillClick: () -> Unit,
+    onEditWorkClick: () -> Unit,
+    onAddWorkClick: () -> Unit,
     viewModel: DetailViewModel = hiltViewModel()
 ) {
     // to get the state of the scaffold
     val scaffoldState = rememberScaffoldState()
 
     // to collect the resume as state
-    val data = viewModel.resume.collectAsState().value
+    val data by viewModel.resume.collectAsState()
     val resume = data.resume
     val educations = data.educations
     val projects = data.projects
@@ -58,7 +57,7 @@ fun DetailScreen(
 
     // string to shows
     val toolbarTitle =
-        resume.name.replaceFirstChar { it.uppercase() } ?: stringResource(id = R.string.resume)
+        resume.name.replaceFirstChar { it.uppercase() }
     val textResume = stringResource(id = R.string.resume)
     val textEducation = stringResource(id = R.string.education)
     val textProject = stringResource(id = R.string.project)
@@ -133,7 +132,7 @@ fun DetailScreen(
                     text = textEditResume,
                     onClick = {
                         // to navigate the add resume screen with resume id,
-                        navigator.navigate(AddResumeScreenDestination(data.resume.resumeId))
+                        onEditResumeClick()
                     },
                 )
                 VerticalSpacer(height = mediumVerticalSpacer)
@@ -156,7 +155,7 @@ fun DetailScreen(
                     onClick = {
                         // to navigate the add education screen with resume id,
                         // because this is the existing resume, not new one.
-                        navigator.navigate(AddEducationScreenDestination(resume.resumeId))
+                        onEditEducationClick()
                     },
                 )
                 VerticalSpacer(height = mediumVerticalSpacer)
@@ -167,7 +166,7 @@ fun DetailScreen(
                 onClick = {
                     // to navigate the add education screen with resume id,
                     // because this is the existing resume, not new one.
-                    navigator.navigate(AddEducationScreenDestination(resume.resumeId))
+                    onAddEducationClick()
                 },
             )
             VerticalSpacer(height = mediumVerticalSpacer)
@@ -191,7 +190,7 @@ fun DetailScreen(
                     onClick = {
                         // to navigate the add project screen with resume id,
                         // because this is the existing resume, not new one.
-                        navigator.navigate(AddProjectScreenDestination(resume.resumeId))
+                        onEditProjectClick()
                     },
                 )
                 VerticalSpacer(height = mediumVerticalSpacer)
@@ -202,7 +201,7 @@ fun DetailScreen(
                 onClick = {
                     // to navigate the add project screen with resume id,
                     // because this is the existing resume, not new one.
-                    navigator.navigate(AddProjectScreenDestination(resume.resumeId))
+                    onAddProjectClick()
                 },
             )
             VerticalSpacer(height = mediumVerticalSpacer)
@@ -222,7 +221,7 @@ fun DetailScreen(
                     onClick = {
                         // to navigate the add skill screen with resume id,
                         // because this is the existing resume, not new one.
-                        navigator.navigate(AddSkillScreenDestination(data.resume.resumeId))
+                        onEditSkillClick()
                     },
                 )
                 VerticalSpacer(height = mediumVerticalSpacer)
@@ -233,7 +232,7 @@ fun DetailScreen(
                 onClick = {
                     // to navigate the add skill screen with resume id,
                     // because this is the existing resume, not new one.
-                    navigator.navigate(AddSkillScreenDestination(data.resume.resumeId))
+                    onAddSkillClick()
                 },
             )
             VerticalSpacer(height = mediumVerticalSpacer)
@@ -254,7 +253,7 @@ fun DetailScreen(
                     onClick = {
                         // to navigate the add work screen with resume id,
                         // because this is the existing resume, not new one.
-                        navigator.navigate(AddWorkScreenDestination(resume.resumeId))
+                        onEditWorkClick()
                     },
                 )
                 VerticalSpacer(height = mediumVerticalSpacer)
@@ -265,7 +264,7 @@ fun DetailScreen(
                 onClick = {
                     // to navigate the add work screen with resume id,
                     // because this is the existing resume, not new one.
-                    navigator.navigate(AddWorkScreenDestination(resume.resumeId))
+                    onAddWorkClick()
                 },
             )
             VerticalSpacer(height = mediumVerticalSpacer)

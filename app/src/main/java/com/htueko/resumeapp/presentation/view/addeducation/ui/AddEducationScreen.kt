@@ -12,10 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.htueko.resumeapp.R
-import com.htueko.resumeapp.presentation.common.navargs.ResumeNavArgs
-import com.htueko.resumeapp.presentation.view.destinations.AddResumeScreenDestination
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 
 @Composable

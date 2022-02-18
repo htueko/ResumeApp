@@ -13,4 +13,9 @@ sealed class CommonUiEvent {
      * to pop backstack
      */
     object PopBackStack : CommonUiEvent()
+
+    /**
+     * to pop backstack and send data to previous one.
+     */
+    data class PopBackStackAndSendData(val resumeId: Int) : CommonUiEvent()
 }

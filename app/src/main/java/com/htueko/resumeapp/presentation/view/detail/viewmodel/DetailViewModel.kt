@@ -5,13 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.htueko.resumeapp.domain.model.DetailResume
 import com.htueko.resumeapp.domain.usecase.GetResumeByIdUseCase
-import com.htueko.resumeapp.presentation.view.destinations.DetailScreenDestination
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.io.PipedReader
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,7 +19,7 @@ class DetailViewModel @Inject constructor(
 ) : ViewModel() {
 
     // to get the navigation args from other screen.
-    val navArgs = DetailScreenDestination.argsFrom(savedStateHandle)
+    val resumeId = savedStateHandle.get<Int>("resumeId")
 
     init {
         getResumeDetail()
@@ -34,7 +32,7 @@ class DetailViewModel @Inject constructor(
     // to get resume detail from database
     private fun getResumeDetail() {
         viewModelScope.launch(Dispatchers.IO) {
-            val response = getResumeByIdUseCase(navArgs.resumeId)
+            val response = resumeId?.let { getResumeByIdUseCase(it) }
             response?.let {
                 _resume.value = it
             }

@@ -26,7 +26,13 @@ fun ResumeNavHost(navHostController: NavHostController) {
         composable(
             route = Screen.DashboardScreen.route
         ) {
-            MainScreen(navHostController)
+            MainScreen(
+                onAddResumeClick = {
+                    navHostController.navigate(Screen.AddResumeScreen.route + "/-1")
+                },
+                onResumeClick = { resumeId ->
+                    navHostController.navigate(Screen.DetailScreen.route + "/$resumeId")
+                })
         }
         // detail screen
         composable(
@@ -40,8 +46,33 @@ fun ResumeNavHost(navHostController: NavHostController) {
         ) { navBackStackEntry ->
             val resumeId: Int? = navBackStackEntry.arguments?.getInt("resumeId")
             DetailScreen(
-                navController = navHostController,
-                resumeId = resumeId
+                onEditResumeClick = {
+                    navHostController.navigate(Screen.AddResumeScreen.route + "/$resumeId")
+                },
+                onEditEducationClick = {
+                    navHostController.navigate(Screen.AddEducationScreen.route + "/$resumeId")
+                },
+                onAddEducationClick = {
+                    navHostController.navigate(Screen.AddEducationScreen.route + "/$resumeId")
+                },
+                onEditProjectClick = {
+                    navHostController.navigate(Screen.AddProjectScreen.route + "/$resumeId")
+                },
+                onAddProjectClick = {
+                    navHostController.navigate(Screen.AddProjectScreen.route + "/$resumeId")
+                },
+                onEditSkillClick = {
+                    navHostController.navigate(Screen.AddSkillScreen.route + "/$resumeId")
+                },
+                onAddSkillClick = {
+                    navHostController.navigate(Screen.AddSkillScreen.route + "/$resumeId")
+                },
+                onEditWorkClick = {
+                    navHostController.navigate(Screen.AddWorkScreen.route + "/$resumeId")
+                },
+                onAddWorkClick = {
+                    navHostController.navigate(Screen.AddWorkScreen.route + "/$resumeId")
+                }
             )
         }
         // add resume screen
@@ -56,13 +87,17 @@ fun ResumeNavHost(navHostController: NavHostController) {
         ) { navBackStackEntry ->
             val resumeId: Int? = navBackStackEntry.arguments?.getInt("resumeId")
             AddResumeScreen(
-                navController = navHostController,
-                resumeId = resumeId
-            )
+                onSaveResumeClick = {
+                    navHostController.navigate(Screen.DetailScreen.route + "/$it") {
+                        popUpTo(Screen.DetailScreen.route) {
+                            inclusive = true
+                        }
+                    }
+                })
         }
         // add eduction screen
         composable(
-            route = Screen.AddResumeScreen.route + "/{resumeId}",
+            route = Screen.AddEducationScreen.route + "/{resumeId}",
             arguments = listOf(
                 navArgument("resumeId") {
                     type = NavType.IntType
@@ -78,7 +113,7 @@ fun ResumeNavHost(navHostController: NavHostController) {
         }
         // add project screen
         composable(
-            route = Screen.AddResumeScreen.route + "/{resumeId}",
+            route = Screen.AddProjectScreen.route + "/{resumeId}",
             arguments = listOf(
                 navArgument("resumeId") {
                     type = NavType.IntType
@@ -94,7 +129,7 @@ fun ResumeNavHost(navHostController: NavHostController) {
         }
         // add skill screen
         composable(
-            route = Screen.AddResumeScreen.route + "/{resumeId}",
+            route = Screen.AddSkillScreen.route + "/{resumeId}",
             arguments = listOf(
                 navArgument("resumeId") {
                     type = NavType.IntType
@@ -110,7 +145,7 @@ fun ResumeNavHost(navHostController: NavHostController) {
         }
         // add work screen
         composable(
-            route = Screen.AddResumeScreen.route + "/{resumeId}",
+            route = Screen.AddWorkScreen.route + "/{resumeId}",
             arguments = listOf(
                 navArgument("resumeId") {
                     type = NavType.IntType

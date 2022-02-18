@@ -9,7 +9,6 @@ import com.htueko.resumeapp.domain.usecase.GetResumeByIdUseCase
 import com.htueko.resumeapp.domain.usecase.InsertOrUpdateSkillsUseCase
 import com.htueko.resumeapp.presentation.common.commonstate.CommonUiEvent
 import com.htueko.resumeapp.presentation.view.addskill.state.AddSkillUserEvent
-import com.htueko.resumeapp.presentation.view.destinations.AddSkillScreenDestination
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -27,7 +26,7 @@ class AddSkillViewModel @Inject constructor(
 ) : ViewModel() {
 
     // to get the navigation args from other screen.
-    val navArgs = AddSkillScreenDestination.argsFrom(savedStateHandle)
+    val resumeId = savedStateHandle.get<Int>("resumeId")
 
     private val _uiEvent = Channel<CommonUiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
@@ -51,7 +50,7 @@ class AddSkillViewModel @Inject constructor(
     // to get resume detail from database
     private fun getResumeDetail() {
         viewModelScope.launch(Dispatchers.IO) {
-            val response = getResumeByIdUseCase(navArgs.resumeId)
+            val response = resumeId?.let { getResumeByIdUseCase(it) }
             response?.let {
                 _resume.value = it
             }
@@ -104,7 +103,9 @@ class AddSkillViewModel @Inject constructor(
 
     private fun addSkill(skill: Skill) {
         viewModelScope.launch {
-            insertOrUpdateSkillsUseCase(navArgs.resumeId, listOf(skill))
+            if (resumeId != null) {
+                insertOrUpdateSkillsUseCase(resumeId, listOf(skill))
+            }
             sendUiEvent(CommonUiEvent.PopBackStack)
         }
     }

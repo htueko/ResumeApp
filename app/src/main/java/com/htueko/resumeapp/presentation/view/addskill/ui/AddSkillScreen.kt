@@ -28,13 +28,11 @@ import com.htueko.resumeapp.presentation.common.component.ButtonPrimary
 import com.htueko.resumeapp.presentation.common.component.TextFieldPrimary
 import com.htueko.resumeapp.presentation.common.component.TitleText
 import com.htueko.resumeapp.presentation.common.component.VerticalSpacer
-import com.htueko.resumeapp.presentation.common.navargs.ResumeNavArgs
+import com.htueko.resumeapp.presentation.navigation.Screen
 import com.htueko.resumeapp.presentation.theme.spacing
 import com.htueko.resumeapp.presentation.view.addskill.state.AddSkillUserEvent
 import com.htueko.resumeapp.presentation.view.addskill.viewmodel.AddSkillViewModel
-import com.htueko.resumeapp.presentation.view.destinations.DetailScreenDestination
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import androidx.compose.runtime.getValue
 
 
 @Composable
@@ -47,14 +45,14 @@ fun AddSkillScreen(
     val scaffoldState = rememberScaffoldState()
 
     // to collect the resume as state
-    val data = viewModel.resume.collectAsState().value
+    val data by viewModel.resume.collectAsState()
     val skills = data.skills
-    val skillName = viewModel.skillName.collectAsState().value
-    val hasSkillNameError = viewModel.hasSkillNameError.collectAsState().value
+    val skillName by viewModel.skillName.collectAsState()
+    val hasSkillNameError by viewModel.hasSkillNameError.collectAsState()
 
     // string to shows
     val toolbarTitle =
-        data.resume.name.replaceFirstChar { it.uppercase() } ?: stringResource(id = R.string.resume)
+        data.resume.name.replaceFirstChar { it.uppercase() }
     val textSkill = stringResource(id = R.string.skill)
     val textSave = stringResource(id = R.string.save)
     val errorRequiredFields = stringResource(id = R.string.errorRequiredFields)
@@ -68,18 +66,13 @@ fun AddSkillScreen(
         viewModel.uiEvent.collect { event ->
             when (event) {
                 CommonUiEvent.PopBackStack -> {
-                    navigator.navigateUp()
                     // go back to detail screen with resume id
                     // remove the skill screen from back stack
-//                    navigator.navigate(
-//                        DetailScreenDestination(data.resume.resumeId)){
-//                        popUpTo(DetailScreenDestination.routeId)
-//                    }
-                    // fixme fix this issue.
-//                    navigator.popBackStack(
-//                        DetailScreenDestination(data.resume.resumeId).route,
-//                        inclusive = true
-//                    )
+                    navController.navigate(route = Screen.DetailScreen.route) {
+                        this.popUpTo(route = Screen.DetailScreen.route) {
+                            inclusive = true
+                        }
+                    }
                 }
                 CommonUiEvent.ShowSnackBar -> {
                     scaffoldState.snackbarHostState.showSnackbar(

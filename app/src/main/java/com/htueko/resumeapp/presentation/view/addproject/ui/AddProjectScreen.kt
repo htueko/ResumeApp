@@ -6,17 +6,12 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
-import com.htueko.resumeapp.presentation.view.destinations.AddResumeScreenDestination
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.htueko.resumeapp.R
-import com.htueko.resumeapp.presentation.common.navargs.ResumeNavArgs
 
 
 @Composable
@@ -37,7 +32,7 @@ fun AddProjectScreen(
         floatingActionButton = {
             FloatingActionButton(onClick = {
                 // navigate to add resume screen
-               // navigator.navigate(AddResumeScreenDestination())
+                // navigator.navigate(AddResumeScreenDestination())
             }) {
                 Icon(
                     imageVector = Icons.Default.Check,
@@ -48,7 +43,7 @@ fun AddProjectScreen(
         topBar = {
             TopAppBar(title = { Text(text = toolbarTitle) })
         }
-    ){
+    ) {
 
     }
 }

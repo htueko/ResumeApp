@@ -16,30 +16,26 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.htueko.resumeapp.R
 import com.htueko.resumeapp.presentation.common.commonstate.CommonUiEvent
-import com.htueko.resumeapp.presentation.navigation.Screen
-import com.htueko.resumeapp.presentation.view.destinations.AddResumeScreenDestination
-import com.htueko.resumeapp.presentation.view.destinations.DetailScreenDestination
 import com.htueko.resumeapp.presentation.view.main.state.DashboardUserEvent
 import com.htueko.resumeapp.presentation.view.main.viewmodel.DashboardViewModel
-import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 
 @ExperimentalMaterialApi
 @Composable
 fun MainScreen(
-    navController: NavController,
+    onAddResumeClick: () -> Unit,
+    onResumeClick: (Int) -> Unit,
     viewModel: DashboardViewModel = hiltViewModel()
 ) {
 
     // to collect the resume list as state
-    val resumes = viewModel.resumes.collectAsState()
+    val resumes by viewModel.resumes.collectAsState()
     // to get the state of the scaffold
     val scaffoldState = rememberScaffoldState()
 
@@ -64,6 +60,9 @@ fun MainScreen(
                 CommonUiEvent.PopBackStack -> {
                     // nothing to do here
                 }
+                is CommonUiEvent.PopBackStackAndSendData -> {
+                    // nothing to do here
+                }
             }
         }
     }
@@ -71,11 +70,14 @@ fun MainScreen(
     Scaffold(
         scaffoldState = scaffoldState,
         floatingActionButton = {
-            FloatingActionButton(onClick = {
-                // navigate to add resume screen
-                // workaround, if the resumeId is -1, that means to add new resume not existing one.
-                navController.navigate(Screen.AddResumeScreen.route)
-            }) {
+            FloatingActionButton(
+                onClick = {
+                    // navigate to add resume screen
+                    // workaround, if the resumeId is -1, that means to add new resume not existing one.
+                    onAddResumeClick()
+                }
+            )
+            {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = addResume
@@ -88,13 +90,11 @@ fun MainScreen(
     ) {
         // list of show resumes
         LazyColumn(modifier = Modifier.fillMaxSize()) {
-            items(resumes.value) { resume ->
+            items(resumes) { resume ->
                 ResumeItem(
                     resume = resume,
                     onResumeClick = {
-                        navigator.navigate(
-                            DetailScreenDestination(resume.resumeId)
-                        )
+                        onResumeClick(resume.resumeId)
                     },
                     onDeleteResumeClick = {
                         viewModel.onEvent(
