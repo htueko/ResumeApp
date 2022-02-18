@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -51,8 +52,12 @@ class AddSkillViewModel @Inject constructor(
     private fun getResumeDetail() {
         viewModelScope.launch(Dispatchers.IO) {
             val response = resumeId?.let { getResumeByIdUseCase(it) }
-            response?.let {
-                _resume.value = it
+            response?.let {detailResume ->
+                detailResume.skills.forEach { skill ->
+                    if (skill.parentId == resumeId){
+                        _resume.value = detailResume
+                    }
+                }
             }
         }
     }
@@ -68,6 +73,9 @@ class AddSkillViewModel @Inject constructor(
             }
             AddSkillUserEvent.OnSaveClick -> {
                 onSaveButtonClick()
+            }
+            else -> {
+                // nothing to do here
             }
         }
     }
@@ -103,10 +111,12 @@ class AddSkillViewModel @Inject constructor(
 
     private fun addSkill(skill: Skill) {
         viewModelScope.launch {
-            if (resumeId != null) {
-                insertOrUpdateSkillsUseCase(resumeId, listOf(skill))
+            withContext(Dispatchers.IO) {
+                println(resume.value.resume.resumeId)
+                val data = insertOrUpdateSkillsUseCase(resume.value.resume.resumeId, listOf(skill))
+                val temp = getResumeByIdUseCase(resume.value.resume.resumeId)
             }
-            sendUiEvent(CommonUiEvent.PopBackStack)
+            //sendUiEvent(CommonUiEvent.PopBackStack)
         }
     }
 

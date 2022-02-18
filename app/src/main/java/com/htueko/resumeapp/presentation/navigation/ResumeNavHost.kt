@@ -139,8 +139,12 @@ fun ResumeNavHost(navHostController: NavHostController) {
         ) { navBackStackEntry ->
             val resumeId: Int? = navBackStackEntry.arguments?.getInt("resumeId")
             AddSkillScreen(
-                navController = navHostController,
-                resumeId = resumeId
+                resumeId = resumeId,
+                onSaveSkillClick = {
+                    // navigate back to detail screen with newly updated resumeId
+                    // remove AddSkillScreen from backstack
+                    
+                }
             )
         }
         // add work screen

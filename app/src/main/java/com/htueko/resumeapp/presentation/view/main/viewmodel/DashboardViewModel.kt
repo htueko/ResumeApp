@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -42,11 +43,12 @@ class DashboardViewModel @Inject constructor(
     // to get all resume from database
     private fun getResumes() {
         viewModelScope.launch {
-            getResumeUseCase()
-                .collect { list ->
-                    _resumes.value = list
-                }
-
+            withContext(Dispatchers.IO){
+                getResumeUseCase()
+                    .collect { list ->
+                        _resumes.value = list
+                    }
+            }
         }
     }
 

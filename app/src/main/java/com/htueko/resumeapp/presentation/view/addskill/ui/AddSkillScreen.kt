@@ -37,8 +37,8 @@ import androidx.compose.runtime.getValue
 
 @Composable
 fun AddSkillScreen(
-    navController: NavController,
-    resumeId: Int? = null,
+    resumeId: Int?,
+    onSaveSkillClick: (Int) -> Unit,
     viewModel: AddSkillViewModel = hiltViewModel(),
 ) {
 // to get the state of the scaffold
@@ -68,17 +68,18 @@ fun AddSkillScreen(
                 CommonUiEvent.PopBackStack -> {
                     // go back to detail screen with resume id
                     // remove the skill screen from back stack
-                    navController.navigate(route = Screen.DetailScreen.route) {
-                        this.popUpTo(route = Screen.DetailScreen.route) {
-                            inclusive = true
-                        }
-                    }
+//                    navController.navigate(route = Screen.DetailScreen.route) {
+//                        this.popUpTo(route = Screen.DetailScreen.route) {
+//                            inclusive = true
+//                        }
+//                    }
                 }
                 CommonUiEvent.ShowSnackBar -> {
                     scaffoldState.snackbarHostState.showSnackbar(
                         message = errorRequiredFields,
                     )
                 }
+                is CommonUiEvent.PopBackStackAndSendData -> TODO()
             }
         }
     }

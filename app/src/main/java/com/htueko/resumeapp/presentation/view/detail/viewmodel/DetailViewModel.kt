@@ -33,6 +33,7 @@ class DetailViewModel @Inject constructor(
     private fun getResumeDetail() {
         viewModelScope.launch(Dispatchers.IO) {
             val response = resumeId?.let { getResumeByIdUseCase(it) }
+            println(response)
             response?.let {
                 _resume.value = it
             }

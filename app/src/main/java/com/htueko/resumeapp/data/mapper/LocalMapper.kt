@@ -72,7 +72,7 @@ class LocalMapper {
     fun mapToEducationEntity(education: Education): EducationEntity {
         return EducationEntity(
             educationId = education.educationId,
-            parentId = education.educationId, // this field is not true, not resume id.
+            parentId = education.parentId, // this field is not true, not resume id.
             schoolClass = education.schoolClass,
             passingYear = education.passingYear,
             percentageOrCgpa = education.percentageOrCgpa,
@@ -153,6 +153,7 @@ class LocalMapper {
         val data = skills.map { skill ->
             Skill(
                 skillId = skill.skillId,
+                parentId = skill.parentId,
                 skillName = skill.skillName
             )
         }
