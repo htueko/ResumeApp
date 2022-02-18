@@ -83,6 +83,7 @@ class LocalMapper {
         val data = educations.map { education ->
             Education(
                 educationId = education.educationId,
+                parentId = education.parentId,
                 schoolClass = education.schoolClass,
                 passingYear = education.passingYear,
                 percentageOrCgpa = education.percentageOrCgpa,
@@ -120,6 +121,7 @@ class LocalMapper {
         val data = projects.map { project ->
             Project(
                 projectId = project.projectId,
+                parentId = project.parentId,
                 projectName = project.projectName,
                 teamSize = project.teamSize,
                 projectSummary = project.projectSummary,
@@ -183,6 +185,7 @@ class LocalMapper {
         val data = works.map { work ->
             Work(
                 workId = work.workId,
+                parentId = work.parentId,
                 companyName = work.companyName,
                 duration = work.duration,
             )
