@@ -15,12 +15,12 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.htueko.resumeapp.R
 import com.htueko.resumeapp.presentation.common.commonstate.CommonUiEvent
 import com.htueko.resumeapp.presentation.common.component.BodyText
@@ -28,11 +28,9 @@ import com.htueko.resumeapp.presentation.common.component.ButtonPrimary
 import com.htueko.resumeapp.presentation.common.component.TextFieldPrimary
 import com.htueko.resumeapp.presentation.common.component.TitleText
 import com.htueko.resumeapp.presentation.common.component.VerticalSpacer
-import com.htueko.resumeapp.presentation.navigation.Screen
 import com.htueko.resumeapp.presentation.theme.spacing
 import com.htueko.resumeapp.presentation.view.addskill.state.AddSkillUserEvent
 import com.htueko.resumeapp.presentation.view.addskill.viewmodel.AddSkillViewModel
-import androidx.compose.runtime.getValue
 
 
 @Composable
@@ -79,7 +77,9 @@ fun AddSkillScreen(
                         message = errorRequiredFields,
                     )
                 }
-                is CommonUiEvent.PopBackStackAndSendData -> TODO()
+                is CommonUiEvent.PopBackStackAndSendData -> {
+                    onSaveSkillClick(event.resumeId)
+                }
             }
         }
     }

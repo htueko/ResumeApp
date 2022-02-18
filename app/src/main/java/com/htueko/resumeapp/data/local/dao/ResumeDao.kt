@@ -26,20 +26,20 @@ abstract class ResumeDao {
     abstract fun getResumeById(resumeId: Int): ResumeEntity?
 
     @Transaction
-    @Query("SELECT * FROM table_resume ORDER BY resumeId DESC")
-    abstract fun getResumeWithEducations(): List<ResumeWithEducations>
+    @Query("SELECT * FROM table_resume WHERE resumeId = :resumeId ORDER BY resumeId DESC")
+    abstract fun getResumeWithEducations(resumeId: Int): List<ResumeWithEducations>
 
     @Transaction
-    @Query("SELECT * FROM table_resume ORDER BY resumeId DESC")
-    abstract fun getResumeWithProjects(): List<ResumeWithProjects>
+    @Query("SELECT * FROM table_resume WHERE resumeId = :resumeId ORDER BY resumeId DESC")
+    abstract fun getResumeWithProjects(resumeId: Int): List<ResumeWithProjects>
 
     @Transaction
-    @Query("SELECT * FROM table_resume ORDER BY resumeId DESC")
-    abstract fun getResumeWithSkills(): List<ResumeWithSkills>
+    @Query("SELECT * FROM table_resume WHERE resumeId = :resumeId ORDER BY resumeId DESC")
+    abstract fun getResumeWithSkills(resumeId: Int): List<ResumeWithSkills>
 
     @Transaction
-    @Query("SELECT * FROM table_resume ORDER BY resumeId DESC")
-    abstract fun getResumeWithWorks(): List<ResumeWithWorks>
+    @Query("SELECT * FROM table_resume WHERE resumeId = :resumeId ORDER BY resumeId DESC")
+    abstract fun getResumeWithWorks(resumeId: Int): List<ResumeWithWorks>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     abstract suspend fun insertOrUpdateResume(resume: ResumeEntity): Long

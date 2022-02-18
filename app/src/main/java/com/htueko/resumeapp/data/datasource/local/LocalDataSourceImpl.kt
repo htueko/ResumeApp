@@ -30,25 +30,46 @@ class LocalDataSourceImpl @Inject constructor(
         return response.map { localMapper.mapToResumeModels(it) }
     }
 
-    override fun getEducations(): List<Education> {
-        val response = resumeDao.getResumeWithEducations()
-        return response.flatMap { localMapper.mapToEducationModels(it.educations) }
-    }
+    override suspend fun getEducationByResumeId(resumeId: Int): List<Education> =
+        withContext(Dispatchers.IO) {
+            try {
+                val response = resumeDao.getResumeWithEducations(resumeId)
+                response.flatMap { localMapper.mapToEducationModels(it.educations) }
+            } catch (e: Exception) {
+                emptyList<Education>()
+            }
+        }
 
-    override fun getProjects(): List<Project> {
-        val response = resumeDao.getResumeWithProjects()
-        return response.flatMap { localMapper.mapToProjectModels(it.projects) }
-    }
+    override suspend fun getProjectsByResumeId(resumeId: Int): List<Project> =
+        withContext(Dispatchers.IO) {
+            try {
+                val response = resumeDao.getResumeWithProjects(resumeId)
+                response.flatMap { localMapper.mapToProjectModels(it.projects) }
+            } catch (e: Exception) {
+                emptyList<Project>()
+            }
+        }
 
-    override fun getSkills(): List<Skill> {
-        val response = resumeDao.getResumeWithSkills()
-        return response.flatMap { localMapper.mapToSkillModels(it.skills) }
-    }
+    override suspend fun getSkillsByResumeId(resumeId: Int): List<Skill> =
+        withContext(Dispatchers.IO) {
+            try {
+                val response = resumeDao.getResumeWithSkills(resumeId)
+                response.flatMap { localMapper.mapToSkillModels(it.skills) }
+            } catch (e: Exception) {
+                emptyList<Skill>()
+            }
+        }
 
-    override fun getWorks(): List<Work> {
-        val response = resumeDao.getResumeWithWorks()
-        return response.flatMap { localMapper.mapToWorkModels(it.works) }
-    }
+
+    override suspend fun getWorksByResumeId(resumeId: Int): List<Work> =
+        withContext(Dispatchers.IO) {
+            try {
+                val response = resumeDao.getResumeWithWorks(resumeId)
+                response.flatMap { localMapper.mapToWorkModels(it.works) }
+            } catch (e: Exception) {
+                emptyList<Work>()
+            }
+        }
 
     override suspend fun insertOrUpdateResume(resume: Resume): Int? =
         withContext(Dispatchers.IO) {
@@ -104,7 +125,8 @@ class LocalDataSourceImpl @Inject constructor(
     override suspend fun insertOrUpdateSkills(resumeId: Int, skills: List<Skill>): Int? =
         withContext(Dispatchers.IO) {
             try {
-                val data = resumeDao.insertOrUpdateSkills(localMapper.mapToSkillEntities(resumeId, skills))
+                val data =
+                    resumeDao.insertOrUpdateSkills(localMapper.mapToSkillEntities(resumeId, skills))
                 // return the rowId of the firs index
                 data[0].toInt()
             } catch (e: Exception) {
@@ -116,7 +138,8 @@ class LocalDataSourceImpl @Inject constructor(
     override suspend fun insertOrUpdateWorks(resumeId: Int, works: List<Work>): Int? =
         withContext(Dispatchers.IO) {
             try {
-                val data = resumeDao.insertOrUpdateWorks(localMapper.mapToWorkEntities(resumeId, works))
+                val data =
+                    resumeDao.insertOrUpdateWorks(localMapper.mapToWorkEntities(resumeId, works))
                 // return the rowId of the firs index
                 data[0].toInt()
             } catch (e: Exception) {

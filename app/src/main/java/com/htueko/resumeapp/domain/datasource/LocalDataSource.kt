@@ -14,21 +14,21 @@ interface LocalDataSource {
 
     fun getResumes(): Flow<List<Resume>>
 
-    fun getEducations(): List<Education>
+    suspend fun getEducationByResumeId(resumeId: Int): List<Education>
 
-    fun getProjects(): List<Project>
+    suspend fun getProjectsByResumeId(resumeId: Int): List<Project>
 
-    fun getSkills(): List<Skill>
+    suspend fun getSkillsByResumeId(resumeId: Int): List<Skill>
 
-    fun getWorks(): List<Work>
+    suspend fun getWorksByResumeId(resumeId: Int): List<Work>
 
-    suspend fun insertOrUpdateResume(resume: Resume) : Int?
+    suspend fun insertOrUpdateResume(resume: Resume): Int?
 
-    suspend fun insertOrUpdateEducations(resumeId: Int, educations: List<Education>) : Int?
+    suspend fun insertOrUpdateEducations(resumeId: Int, educations: List<Education>): Int?
 
     suspend fun insertOrUpdateProjects(resumeId: Int, projects: List<Project>): Int?
 
-    suspend fun insertOrUpdateSkills(resumeId: Int, skills: List<Skill>) : Int?
+    suspend fun insertOrUpdateSkills(resumeId: Int, skills: List<Skill>): Int?
 
     suspend fun insertOrUpdateWorks(resumeId: Int, works: List<Work>): Int?
 

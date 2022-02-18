@@ -22,20 +22,20 @@ class LocalRepositoryImpl @Inject constructor(
         return localDataSource.getResumes()
     }
 
-    override fun getEducations(): List<Education> {
-        return localDataSource.getEducations()
+    override suspend fun getEducationsByResumeId(resumeId: Int): List<Education> {
+        return localDataSource.getEducationByResumeId(resumeId)
     }
 
-    override fun getProjects(): List<Project> {
-        return localDataSource.getProjects()
+    override suspend fun getProjectsByResumeId(resumeId: Int): List<Project> {
+        return localDataSource.getProjectsByResumeId(resumeId)
     }
 
-    override fun getSkills(): List<Skill> {
-        return localDataSource.getSkills()
+    override suspend fun getSkillsByResumeId(resumeId: Int): List<Skill> {
+        return localDataSource.getSkillsByResumeId(resumeId)
     }
 
-    override fun getWorks(): List<Work> {
-        return localDataSource.getWorks()
+    override suspend fun getWorksByResumeId(resumeId: Int): List<Work> {
+        return localDataSource.getWorksByResumeId(resumeId)
     }
 
     override suspend fun insertOrUpdateResume(resume: Resume): Int? {

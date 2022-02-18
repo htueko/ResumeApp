@@ -13,7 +13,7 @@ class GetSkillsUseCase @Inject constructor(
 ) {
 
     operator fun invoke(): List<Skill> {
-        return localRepository.getSkills()
+        return localRepository.getSkillsByResumeId()
     }
 
 }

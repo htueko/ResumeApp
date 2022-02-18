@@ -13,13 +13,13 @@ class GetResumeByIdUseCase @Inject constructor(
     private val localRepository: LocalRepository
 ) {
 
-    operator fun invoke(resumeId: Int): DetailResume? {
+    suspend operator fun invoke(resumeId: Int): DetailResume? {
         val resume = localRepository.getResumeById(resumeId)
         return if (resume != null) {
-            val educations = localRepository.getEducations()
-            val projects = localRepository.getProjects()
-            val skills = localRepository.getSkills()
-            val works = localRepository.getWorks()
+            val educations = localRepository.getEducationsByResumeId(resumeId)
+            val projects = localRepository.getProjectsByResumeId(resumeId)
+            val skills = localRepository.getSkillsByResumeId(resumeId)
+            val works = localRepository.getWorksByResumeId(resumeId)
             DetailResume(
                 resume = resume,
                 educations = educations,

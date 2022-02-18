@@ -52,9 +52,9 @@ class AddSkillViewModel @Inject constructor(
     private fun getResumeDetail() {
         viewModelScope.launch(Dispatchers.IO) {
             val response = resumeId?.let { getResumeByIdUseCase(it) }
-            response?.let {detailResume ->
+            response?.let { detailResume ->
                 detailResume.skills.forEach { skill ->
-                    if (skill.parentId == resumeId){
+                    if (skill.parentId == resumeId) {
                         _resume.value = detailResume
                     }
                 }
@@ -113,10 +113,9 @@ class AddSkillViewModel @Inject constructor(
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 println(resume.value.resume.resumeId)
-                val data = insertOrUpdateSkillsUseCase(resume.value.resume.resumeId, listOf(skill))
-                val temp = getResumeByIdUseCase(resume.value.resume.resumeId)
+                insertOrUpdateSkillsUseCase(resume.value.resume.resumeId, listOf(skill))
             }
-            //sendUiEvent(CommonUiEvent.PopBackStack)
+            sendUiEvent(CommonUiEvent.PopBackStackAndSendData(resume.value.resume.resumeId))
         }
     }
 

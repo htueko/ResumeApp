@@ -13,7 +13,7 @@ class GetEducationsUseCase @Inject constructor(
 ) {
 
     operator fun invoke(): List<Education> {
-        return localRepository.getEducations()
+        return localRepository.getEducationsByResumeId()
     }
 
 }

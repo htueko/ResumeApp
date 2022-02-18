@@ -13,7 +13,7 @@ class GetProjectsUseCase @Inject constructor(
 ) {
 
     operator fun invoke(): List<Project> {
-        return localRepository.getProjects()
+        return localRepository.getProjectsByResumeId()
     }
 
 }
