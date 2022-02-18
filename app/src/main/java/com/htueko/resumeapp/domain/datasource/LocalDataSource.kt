@@ -22,15 +22,15 @@ interface LocalDataSource {
 
     fun getWorks(): List<Work>
 
-    suspend fun insertOrUpdateResume(resume: Resume)
+    suspend fun insertOrUpdateResume(resume: Resume) : Int?
 
-    suspend fun insertOrUpdateEducations(resumeId: Int, educations: List<Education>)
+    suspend fun insertOrUpdateEducations(resumeId: Int, educations: List<Education>) : Int?
 
-    suspend fun insertOrUpdateProjects(resumeId: Int, projects: List<Project>)
+    suspend fun insertOrUpdateProjects(resumeId: Int, projects: List<Project>): Int?
 
-    suspend fun insertOrUpdateSkills(resumeId: Int, skills: List<Skill>)
+    suspend fun insertOrUpdateSkills(resumeId: Int, skills: List<Skill>) : Int?
 
-    suspend fun insertOrUpdateWorks(resumeId: Int, works: List<Work>)
+    suspend fun insertOrUpdateWorks(resumeId: Int, works: List<Work>): Int?
 
     suspend fun deleteResumeCascadeByResumeId(resume: Resume)
 

@@ -50,16 +50,24 @@ class LocalDataSourceImpl @Inject constructor(
         return response.flatMap { localMapper.mapToWorkModels(it.works) }
     }
 
-    override suspend fun insertOrUpdateResume(resume: Resume) {
+    override suspend fun insertOrUpdateResume(resume: Resume): Int? =
         withContext(Dispatchers.IO) {
             try {
-                resumeDao.insertOrUpdateResume(localMapper.mapToResumeEntity(resume))
+                resumeDao.insertOrUpdateResume(
+                    localMapper.mapToResumeEntity(
+                        resume
+                    )
+                )
             } catch (e: Exception) {
+                null
             }
         }
-    }
 
-    override suspend fun insertOrUpdateEducations(resumeId: Int, educations: List<Education>) {
+
+    override suspend fun insertOrUpdateEducations(
+        resumeId: Int,
+        educations: List<Education>
+    ): Int? =
         withContext(Dispatchers.IO) {
             try {
                 resumeDao.insertOrUpdateEducations(
@@ -69,11 +77,12 @@ class LocalDataSourceImpl @Inject constructor(
                     )
                 )
             } catch (e: Exception) {
+                null
             }
-        }
-    }
 
-    override suspend fun insertOrUpdateProjects(resumeId: Int, projects: List<Project>) {
+        }
+
+    override suspend fun insertOrUpdateProjects(resumeId: Int, projects: List<Project>): Int? =
         withContext(Dispatchers.IO) {
             try {
                 resumeDao.insertOrUpdateProjects(
@@ -83,27 +92,30 @@ class LocalDataSourceImpl @Inject constructor(
                     )
                 )
             } catch (e: Exception) {
+                null
             }
         }
-    }
 
-    override suspend fun insertOrUpdateSkills(resumeId: Int, skills: List<Skill>) {
+
+    override suspend fun insertOrUpdateSkills(resumeId: Int, skills: List<Skill>): Int? =
         withContext(Dispatchers.IO) {
             try {
                 resumeDao.insertOrUpdateSkills(localMapper.mapToSkillEntities(resumeId, skills))
             } catch (e: Exception) {
+                null
             }
         }
-    }
 
-    override suspend fun insertOrUpdateWorks(resumeId: Int, works: List<Work>) {
+
+    override suspend fun insertOrUpdateWorks(resumeId: Int, works: List<Work>): Int? =
         withContext(Dispatchers.IO) {
             try {
                 resumeDao.insertOrUpdateWorks(localMapper.mapToWorkEntities(resumeId, works))
             } catch (e: Exception) {
+                null
             }
         }
-    }
+
 
     override suspend fun deleteResumeCascadeByResumeId(resume: Resume) {
         withContext(Dispatchers.IO) {

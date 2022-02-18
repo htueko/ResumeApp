@@ -38,24 +38,27 @@ class LocalRepositoryImpl @Inject constructor(
         return localDataSource.getWorks()
     }
 
-    override suspend fun insertOrUpdateResume(resume: Resume) {
-        localDataSource.insertOrUpdateResume(resume)
+    override suspend fun insertOrUpdateResume(resume: Resume): Int? {
+        return localDataSource.insertOrUpdateResume(resume)
     }
 
-    override suspend fun insertOrUpdateEducations(resumeId: Int, educations: List<Education>) {
-        localDataSource.insertOrUpdateEducations(resumeId, educations)
+    override suspend fun insertOrUpdateEducations(
+        resumeId: Int,
+        educations: List<Education>
+    ): Int? {
+        return localDataSource.insertOrUpdateEducations(resumeId, educations)
     }
 
-    override suspend fun insertOrUpdateProjects(resumeId: Int, projects: List<Project>) {
-        localDataSource.insertOrUpdateProjects(resumeId, projects)
+    override suspend fun insertOrUpdateProjects(resumeId: Int, projects: List<Project>): Int? {
+        return localDataSource.insertOrUpdateProjects(resumeId, projects)
     }
 
-    override suspend fun insertOrUpdateSkills(resumeId: Int, skills: List<Skill>) {
-        localDataSource.insertOrUpdateSkills(resumeId, skills)
+    override suspend fun insertOrUpdateSkills(resumeId: Int, skills: List<Skill>): Int? {
+        return localDataSource.insertOrUpdateSkills(resumeId, skills)
     }
 
-    override suspend fun insertOrUpdateWorks(resumeId: Int, works: List<Work>) {
-        localDataSource.insertOrUpdateWorks(resumeId, works)
+    override suspend fun insertOrUpdateWorks(resumeId: Int, works: List<Work>): Int? {
+        return localDataSource.insertOrUpdateWorks(resumeId, works)
     }
 
     override suspend fun deleteResume(resume: Resume) {

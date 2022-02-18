@@ -89,7 +89,7 @@ fun ResumeNavHost(navHostController: NavHostController) {
             AddResumeScreen(
                 onSaveResumeClick = {
                     navHostController.navigate(Screen.DetailScreen.route + "/$it") {
-                        popUpTo(Screen.DetailScreen.route) {
+                        popUpTo(Screen.DetailScreen.route + "/$it") {
                             inclusive = true
                         }
                     }

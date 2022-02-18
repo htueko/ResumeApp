@@ -12,8 +12,8 @@ class InsertOrUpdateSkillsUseCase @Inject constructor(
     private val localRepository: LocalRepository
 ) {
 
-    suspend operator fun invoke(resumeId: Int, skills: List<Skill>) {
-        localRepository.insertOrUpdateSkills(resumeId, skills)
+    suspend operator fun invoke(resumeId: Int, skills: List<Skill>): Int? {
+        return localRepository.insertOrUpdateSkills(resumeId, skills)
     }
 
 }

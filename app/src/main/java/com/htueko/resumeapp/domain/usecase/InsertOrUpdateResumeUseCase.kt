@@ -12,8 +12,8 @@ class InsertOrUpdateResumeUseCase @Inject constructor(
     private val localRepository: LocalRepository
 ) {
 
-    suspend operator fun invoke(resume: Resume) {
-        localRepository.insertOrUpdateResume(resume)
+    suspend operator fun invoke(resume: Resume): Int? {
+        return localRepository.insertOrUpdateResume(resume)
     }
 
 }
