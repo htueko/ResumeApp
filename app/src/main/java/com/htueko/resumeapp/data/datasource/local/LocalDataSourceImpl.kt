@@ -57,7 +57,7 @@ class LocalDataSourceImpl @Inject constructor(
                     localMapper.mapToResumeEntity(
                         resume
                     )
-                )
+                ).toInt()
             } catch (e: Exception) {
                 null
             }
@@ -70,12 +70,14 @@ class LocalDataSourceImpl @Inject constructor(
     ): Int? =
         withContext(Dispatchers.IO) {
             try {
-                resumeDao.insertOrUpdateEducations(
+                val data = resumeDao.insertOrUpdateEducations(
                     localMapper.mapToEducationEntities(
                         resumeId,
                         educations
                     )
                 )
+                // return the rowId of the firs index
+                data[0].toInt()
             } catch (e: Exception) {
                 null
             }
@@ -85,12 +87,14 @@ class LocalDataSourceImpl @Inject constructor(
     override suspend fun insertOrUpdateProjects(resumeId: Int, projects: List<Project>): Int? =
         withContext(Dispatchers.IO) {
             try {
-                resumeDao.insertOrUpdateProjects(
+                val data = resumeDao.insertOrUpdateProjects(
                     localMapper.mapToProjectEntities(
                         resumeId,
                         projects
                     )
                 )
+                // return the rowId of the firs index
+                data[0].toInt()
             } catch (e: Exception) {
                 null
             }
@@ -100,7 +104,9 @@ class LocalDataSourceImpl @Inject constructor(
     override suspend fun insertOrUpdateSkills(resumeId: Int, skills: List<Skill>): Int? =
         withContext(Dispatchers.IO) {
             try {
-                resumeDao.insertOrUpdateSkills(localMapper.mapToSkillEntities(resumeId, skills))
+                val data = resumeDao.insertOrUpdateSkills(localMapper.mapToSkillEntities(resumeId, skills))
+                // return the rowId of the firs index
+                data[0].toInt()
             } catch (e: Exception) {
                 null
             }
@@ -110,7 +116,9 @@ class LocalDataSourceImpl @Inject constructor(
     override suspend fun insertOrUpdateWorks(resumeId: Int, works: List<Work>): Int? =
         withContext(Dispatchers.IO) {
             try {
-                resumeDao.insertOrUpdateWorks(localMapper.mapToWorkEntities(resumeId, works))
+                val data = resumeDao.insertOrUpdateWorks(localMapper.mapToWorkEntities(resumeId, works))
+                // return the rowId of the firs index
+                data[0].toInt()
             } catch (e: Exception) {
                 null
             }

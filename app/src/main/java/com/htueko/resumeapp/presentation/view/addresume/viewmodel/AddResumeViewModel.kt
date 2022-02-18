@@ -263,14 +263,12 @@ class AddResumeViewModel @Inject constructor(
 
     private fun addResume(resume: Resume) {
         viewModelScope.launch {
+            var returnData: Int? = null
             withContext(Dispatchers.IO) {
-                insertOrUpdateResumeUseCase(resume)
-                val data = getResumeByIdUseCase(resume.resumeId)
-                withContext(Dispatchers.Main) {
-                    data?.let {
-                        sendUiEvent(CommonUiEvent.PopBackStackAndSendData(it.resume.resumeId))
-                    }
-                }
+                returnData = insertOrUpdateResumeUseCase(resume)
+            }
+            returnData?.let { resumeId ->
+                sendUiEvent(CommonUiEvent.PopBackStackAndSendData(resumeId))
             }
         }
     }

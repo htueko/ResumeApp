@@ -82,6 +82,7 @@ fun AddResumeScreen(
                 }
                 is CommonUiEvent.PopBackStackAndSendData -> {
                     // go back to Detail Resume Screen.
+                    println("************ ${event.resumeId} ****************")
                     onSaveResumeClick(event.resumeId)
                 }
             }

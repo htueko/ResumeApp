@@ -42,19 +42,19 @@ abstract class ResumeDao {
     abstract fun getResumeWithWorks(): List<ResumeWithWorks>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertOrUpdateResume(resume: ResumeEntity): Int
+    abstract suspend fun insertOrUpdateResume(resume: ResumeEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertOrUpdateEducations(educations: List<EducationEntity>): Int
+    abstract suspend fun insertOrUpdateEducations(educations: List<EducationEntity>): List<Long>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertOrUpdateProjects(projects: List<ProjectEntity>): Int
+    abstract suspend fun insertOrUpdateProjects(projects: List<ProjectEntity>): List<Long>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertOrUpdateSkills(skills: List<SkillEntity>): Int
+    abstract suspend fun insertOrUpdateSkills(skills: List<SkillEntity>): List<Long>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insertOrUpdateWorks(works: List<WorkEntity>): Int
+    abstract suspend fun insertOrUpdateWorks(works: List<WorkEntity>): List<Long>
 
     @Query("DELETE FROM table_resume WHERE resumeId = :resumeId")
     abstract fun deleteResumeById(resumeId: Int)

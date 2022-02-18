@@ -90,6 +90,7 @@ fun MainScreen(
     ) {
         // list of show resumes
         LazyColumn(modifier = Modifier.fillMaxSize()) {
+            println(resumes)
             items(resumes) { resume ->
                 ResumeItem(
                     resume = resume,
