@@ -148,6 +148,12 @@ fun ResumeNavHost(navHostController: NavHostController) {
 //                            inclusive = true
 //                        }
 //                    }
+//                    navHostController.popBackStack(
+//                        Screen.AddSkillScreen.route + "/$it",
+//                        inclusive = true
+//                    )
+//                    navHostController.popBackStack()
+//                    navHostController.navigate(Screen.DetailScreen.route + "/$it")
                     navHostController.popBackStack(
                         Screen.DetailScreen.route + "/$it",
                         inclusive = true

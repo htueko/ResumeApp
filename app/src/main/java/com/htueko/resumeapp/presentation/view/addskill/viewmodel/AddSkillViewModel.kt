@@ -53,6 +53,7 @@ class AddSkillViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val response = resumeId?.let { getResumeByIdUseCase(it) }
             response?.let { detailResume ->
+                println(Thread.currentThread().name)
                 detailResume.skills.forEach { skill ->
                     if (skill.parentId == resumeId) {
                         _resume.value = detailResume
@@ -97,10 +98,13 @@ class AddSkillViewModel @Inject constructor(
         if (!_hasSkillNameError.value) {
             // don't have any error, check again for blank input
             if (_skillName.value.isNotBlank()) {
-                val data = Skill(
-                    skillName = _skillName.value
-                )
-                addSkill(data)
+                resumeId?.let {
+                    val data = Skill(
+                        parentId = it,
+                        skillName = _skillName.value
+                    )
+                    addSkill(it, data)
+                }
             } else {
                 sendUiEvent(CommonUiEvent.ShowSnackBar)
             }
@@ -109,13 +113,15 @@ class AddSkillViewModel @Inject constructor(
         }
     }
 
-    private fun addSkill(skill: Skill) {
+    private fun addSkill(resumeId: Int, skill: Skill) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 println(resume.value.resume.resumeId)
-                insertOrUpdateSkillsUseCase(resume.value.resume.resumeId, listOf(skill))
+                val data = insertOrUpdateSkillsUseCase(resumeId, listOf(skill))
+                data?.let {
+                    sendUiEvent(CommonUiEvent.PopBackStackAndSendData(resumeId))
+                }
             }
-            sendUiEvent(CommonUiEvent.PopBackStackAndSendData(resume.value.resume.resumeId))
         }
     }
 

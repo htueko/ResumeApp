@@ -9,7 +9,6 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class Resume(
     var resumeId: Int = 0,
-    val parentId: Int = 0,
     val name: String = "",
     val avatarUrl: String = "",
     val mobileNumber: String = "",
