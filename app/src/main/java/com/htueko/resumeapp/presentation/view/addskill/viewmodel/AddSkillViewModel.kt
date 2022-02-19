@@ -53,7 +53,6 @@ class AddSkillViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val response = resumeId?.let { getResumeByIdUseCase(it) }
             response?.let { detailResume ->
-                println(Thread.currentThread().name)
                 detailResume.skills.forEach { skill ->
                     if (skill.parentId == resumeId) {
                         _resume.value = detailResume
@@ -74,9 +73,6 @@ class AddSkillViewModel @Inject constructor(
             }
             AddSkillUserEvent.OnSaveClick -> {
                 onSaveButtonClick()
-            }
-            else -> {
-                // nothing to do here
             }
         }
     }
@@ -116,7 +112,6 @@ class AddSkillViewModel @Inject constructor(
     private fun addSkill(resumeId: Int, skill: Skill) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-                println(resume.value.resume.resumeId)
                 // to get the last inserted skill id from database.
                 val data = insertOrUpdateSkillsUseCase(resumeId, listOf(skill))
                 // do have data (skillId) means we successfully insert the data,

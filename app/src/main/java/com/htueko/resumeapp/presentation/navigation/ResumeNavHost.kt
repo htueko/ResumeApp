@@ -152,7 +152,7 @@ fun ResumeNavHost(navHostController: NavHostController) {
                         }
                     }
                     // so backstack will be dashboard -> detail for now.
-                }
+                },
             )
         }
         // add work screen
@@ -167,8 +167,17 @@ fun ResumeNavHost(navHostController: NavHostController) {
         ) { navBackStackEntry ->
             val resumeId: Int? = navBackStackEntry.arguments?.getInt("resumeId")
             AddWorkScreen(
-                navController = navHostController,
-                resumeId = resumeId
+                resumeId = resumeId,
+                onSaveWorkClick = {
+                    // navigate back to detail screen with newly updated resumeId
+                    // remove AddWorkScreen from backstack
+                    navHostController.apply {
+                        navigate(Screen.DetailScreen.route + "/$it") {
+                            popBackStack(Screen.DashboardScreen.route, inclusive = false)
+                        }
+                    }
+                    // so backstack will be dashboard -> detail for now.
+                },
             )
         }
 
