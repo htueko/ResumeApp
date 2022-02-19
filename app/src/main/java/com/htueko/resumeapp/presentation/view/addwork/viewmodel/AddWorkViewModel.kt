@@ -61,8 +61,8 @@ class AddWorkViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val response = resumeId?.let { getResumeByIdUseCase(it) }
             response?.let { detailResume ->
-                detailResume.projects.forEach { project ->
-                    if (project.parentId == resumeId) {
+                detailResume.works.forEach { work ->
+                    if (work.parentId == resumeId) {
                         _resume.value = detailResume
                     }
                 }

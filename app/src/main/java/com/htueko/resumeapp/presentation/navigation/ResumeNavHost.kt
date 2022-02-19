@@ -96,7 +96,8 @@ fun ResumeNavHost(navHostController: NavHostController) {
                         }
                     }
                     // so backstack will be dashboard -> detail for now.
-                })
+                },
+            )
         }
         // add eduction screen
         composable(
@@ -126,8 +127,17 @@ fun ResumeNavHost(navHostController: NavHostController) {
         ) { navBackStackEntry ->
             val resumeId: Int? = navBackStackEntry.arguments?.getInt("resumeId")
             AddProjectScreen(
-                navController = navHostController,
-                resumeId = resumeId
+                resumeId = resumeId,
+                onSaveWorkClick = {
+                    // navigate back to add resume screen with newly updated resumeId
+                    // remove AddProjectScreen from backstack
+                    navHostController.apply {
+                        navigate(Screen.DetailScreen.route + "/$it") {
+                            popBackStack(Screen.DashboardScreen.route, inclusive = false)
+                        }
+                    }
+                    // so backstack will be dashboard -> detail for now.
+                },
             )
         }
         // add skill screen

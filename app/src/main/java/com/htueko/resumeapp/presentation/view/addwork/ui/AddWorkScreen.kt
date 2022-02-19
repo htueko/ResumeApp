@@ -81,7 +81,6 @@ fun AddWorkScreen(
     }
 
     // main screen
-    // main screen
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
@@ -96,7 +95,7 @@ fun AddWorkScreen(
                 .verticalScroll(rememberScrollState())
         ) {
 
-            // adding new skills section
+            // adding new works section
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
