@@ -36,10 +36,10 @@ import com.htueko.resumeapp.presentation.view.addproject.viewmodel.AddProjectVie
 @Composable
 fun AddProjectScreen(
     resumeId: Int? = null,
-    onSaveWorkClick: (Int) -> Unit,
+    onSaveProjectClick: (Int) -> Unit,
     viewModel: AddProjectViewModel = hiltViewModel()
 ) {
-// to get the state of the scaffold
+    // to get the state of the scaffold
     val scaffoldState = rememberScaffoldState()
 
     // to collect the resume as state
@@ -80,7 +80,7 @@ fun AddProjectScreen(
                     )
                 }
                 is CommonUiEvent.PopBackStackAndSendData -> {
-                    onSaveWorkClick(event.resumeId)
+                    onSaveProjectClick(event.resumeId)
                 }
             }
         }

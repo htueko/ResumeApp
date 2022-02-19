@@ -111,8 +111,17 @@ fun ResumeNavHost(navHostController: NavHostController) {
         ) { navBackStackEntry ->
             val resumeId: Int? = navBackStackEntry.arguments?.getInt("resumeId")
             AddEducationScreen(
-                navController = navHostController,
-                resumeId = resumeId
+                resumeId = resumeId,
+                onSaveEducationClick = {
+                    // navigate back to add resume screen with newly updated resumeId
+                    // remove AddEducationScreen from backstack
+                    navHostController.apply {
+                        navigate(Screen.DetailScreen.route + "/$it") {
+                            popBackStack(Screen.DashboardScreen.route, inclusive = false)
+                        }
+                    }
+                    // so backstack will be dashboard -> detail for now.
+                },
             )
         }
         // add project screen
@@ -128,7 +137,7 @@ fun ResumeNavHost(navHostController: NavHostController) {
             val resumeId: Int? = navBackStackEntry.arguments?.getInt("resumeId")
             AddProjectScreen(
                 resumeId = resumeId,
-                onSaveWorkClick = {
+                onSaveProjectClick = {
                     // navigate back to add resume screen with newly updated resumeId
                     // remove AddProjectScreen from backstack
                     navHostController.apply {
