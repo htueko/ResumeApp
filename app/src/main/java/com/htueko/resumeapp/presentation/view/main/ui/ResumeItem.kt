@@ -30,19 +30,24 @@ fun ResumeItem(
     onResumeClick: () -> Unit,
     onDeleteResumeClick: (Resume) -> Unit,
 ) {
-    val paddingModifier = MaterialTheme.spacing.medium
-    val elevationModifier = MaterialTheme.elevation.small
+    val smallPadding = MaterialTheme.spacing.small
+    val mediumPadding = MaterialTheme.spacing.medium
+    val smallElevation = MaterialTheme.elevation.small
     Card(
         modifier = modifier
             .fillMaxSize()
-            .padding(paddingModifier),
-        elevation = elevationModifier,
+            .padding(mediumPadding),
+        elevation = smallElevation,
         onClick = onResumeClick
     ) {
+        val textMobileNumber = stringResource(id = R.string.mobileNumber)
+        val textEmailAddress = stringResource(id = R.string.emailAddress)
+        val textCareerObjective = stringResource(id = R.string.careerObjective)
+        val textAddress = stringResource(id = R.string.residenceAddress)
         Column() {
             Row() {
                 Column(modifier = Modifier.weight(5f)) {
-                    TitleText(text = resume.name, modifier = Modifier.padding(elevationModifier))
+                    TitleText(text = resume.name, modifier = Modifier.padding(smallPadding))
                 }
                 Column(modifier = Modifier.weight(1f)) {
                     IconButton(onClick = { onDeleteResumeClick(resume) }) {
@@ -53,10 +58,38 @@ fun ResumeItem(
                     }
                 }
             }
-            BodyText(text = resume.mobileNumber, modifier = Modifier.padding(elevationModifier))
-            BodyText(text = resume.emailAddress, modifier = Modifier.padding(elevationModifier))
-            BodyText(text = resume.careerObjective, modifier = Modifier.padding(elevationModifier))
-            BodyText(text = resume.address, modifier = Modifier.padding(elevationModifier))
+            BodyText(
+                text = textMobileNumber,
+                modifier = Modifier.padding(start = smallPadding)
+            )
+            BodyText(
+                text = resume.mobileNumber,
+                modifier = Modifier.padding(start = smallPadding)
+            )
+            BodyText(
+                text = textEmailAddress,
+                modifier = Modifier.padding(start = smallPadding, top = smallPadding)
+            )
+            BodyText(
+                text = resume.emailAddress,
+                modifier = Modifier.padding(start = smallPadding)
+            )
+            BodyText(
+                text = textCareerObjective,
+                modifier = Modifier.padding(start = smallPadding, top = smallPadding)
+            )
+            BodyText(
+                text = resume.careerObjective,
+                modifier = Modifier.padding(start = smallPadding)
+            )
+            BodyText(
+                text = textAddress,
+                modifier = Modifier.padding(start = smallPadding, top = smallPadding)
+            )
+            BodyText(
+                text = resume.address,
+                modifier = Modifier.padding(start = smallPadding, bottom = smallPadding)
+            )
         }
     }
 
