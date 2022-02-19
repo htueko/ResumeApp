@@ -117,7 +117,10 @@ class AddSkillViewModel @Inject constructor(
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 println(resume.value.resume.resumeId)
+                // to get the last inserted skill id from database.
                 val data = insertOrUpdateSkillsUseCase(resumeId, listOf(skill))
+                // do have data (skillId) means we successfully insert the data,
+                // so send back current resumeId to the detail screen and pop back this route.
                 data?.let {
                     sendUiEvent(CommonUiEvent.PopBackStackAndSendData(resumeId))
                 }

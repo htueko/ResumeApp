@@ -143,21 +143,12 @@ fun ResumeNavHost(navHostController: NavHostController) {
                 onSaveSkillClick = {
                     // navigate back to detail screen with newly updated resumeId
                     // remove AddSkillScreen from backstack
-//                    navHostController.navigate(Screen.DetailScreen.route + "/$it") {
-//                        popUpTo(Screen.AddSkillScreen.route) {
-//                            inclusive = true
-//                        }
-//                    }
-//                    navHostController.popBackStack(
-//                        Screen.AddSkillScreen.route + "/$it",
-//                        inclusive = true
-//                    )
-//                    navHostController.popBackStack()
-//                    navHostController.navigate(Screen.DetailScreen.route + "/$it")
-                    navHostController.popBackStack(
-                        Screen.DetailScreen.route + "/$it",
-                        inclusive = true
-                    )
+                    navHostController.apply {
+                        navigate(Screen.DetailScreen.route + "/$it") {
+                            popBackStack(Screen.DashboardScreen.route, inclusive = false)
+                        }
+                    }
+                    // so backstack will be dashboard -> detail for now.
                 }
             )
         }
