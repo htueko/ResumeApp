@@ -64,13 +64,7 @@ fun AddSkillScreen(
         viewModel.uiEvent.collect { event ->
             when (event) {
                 CommonUiEvent.PopBackStack -> {
-                    // go back to detail screen with resume id
-                    // remove the skill screen from back stack
-//                    navController.navigate(route = Screen.DetailScreen.route) {
-//                        this.popUpTo(route = Screen.DetailScreen.route) {
-//                            inclusive = true
-//                        }
-//                    }
+                    // nothing to do here.
                 }
                 CommonUiEvent.ShowSnackBar -> {
                     scaffoldState.snackbarHostState.showSnackbar(

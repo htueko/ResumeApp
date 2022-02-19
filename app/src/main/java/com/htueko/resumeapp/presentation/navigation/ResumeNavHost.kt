@@ -88,11 +88,14 @@ fun ResumeNavHost(navHostController: NavHostController) {
             val resumeId: Int? = navBackStackEntry.arguments?.getInt("resumeId")
             AddResumeScreen(
                 onSaveResumeClick = {
-                    navHostController.navigate(Screen.DetailScreen.route + "/$it") {
-                        popUpTo(Screen.DetailScreen.route + "/$it") {
-                            inclusive = true
+                    // navigate back to add resume screen with newly updated resumeId
+                    // remove AddResumeScreen from backstack
+                    navHostController.apply {
+                        navigate(Screen.DetailScreen.route + "/$it") {
+                            popBackStack(Screen.DashboardScreen.route, inclusive = false)
                         }
                     }
+                    // so backstack will be dashboard -> detail for now.
                 })
         }
         // add eduction screen
