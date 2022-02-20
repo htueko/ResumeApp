@@ -5,7 +5,6 @@ package com.htueko.resumeapp.data.local
  */
 object LocalConstant {
     const val tableResume = "table_resume"
-    const val tableAddress = "table_address"
     const val tableWork = "table_work"
     const val tableSkill = "table_skill"
     const val tableEducation = "table_education"

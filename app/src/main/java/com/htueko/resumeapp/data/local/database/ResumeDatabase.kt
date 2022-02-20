@@ -10,6 +10,11 @@ import com.htueko.resumeapp.data.local.entity.ResumeEntity
 import com.htueko.resumeapp.data.local.entity.SkillEntity
 import com.htueko.resumeapp.data.local.entity.WorkEntity
 
+/**
+ * database class.
+ *
+ * @see [LocalConstant]
+ */
 @Database(
     entities = [
         EducationEntity::class,
