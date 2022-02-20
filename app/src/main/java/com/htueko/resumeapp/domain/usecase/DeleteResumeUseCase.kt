@@ -15,5 +15,4 @@ class DeleteResumeUseCase @Inject constructor(
     suspend operator fun invoke(resume: Resume) {
         localRepository.deleteResume(resume)
     }
-
 }

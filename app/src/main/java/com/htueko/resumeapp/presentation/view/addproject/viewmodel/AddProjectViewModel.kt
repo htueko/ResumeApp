@@ -179,14 +179,14 @@ class AddProjectViewModel @Inject constructor(
     }
 
     private fun onSaveButtonClick() {
-        if (!_hasProjectNameError.value && !_hasTeamSizeError.value
-            && !_hasProjectSummaryError.value && !_hasRoleError.value
-            && !_hasTechnologyError.value
+        if (!_hasProjectNameError.value && !_hasTeamSizeError.value &&
+            !_hasProjectSummaryError.value && !_hasRoleError.value &&
+            !_hasTechnologyError.value
         ) {
             // don't have any error, check again for blank input
-            if (_projectName.value.isNotBlank() && _teamSize.value.isNotBlank()
-                && _projectSummary.value.isNotBlank() && _role.value.isNotBlank()
-                && _technology.value.isNotBlank()
+            if (_projectName.value.isNotBlank() && _teamSize.value.isNotBlank() &&
+                _projectSummary.value.isNotBlank() && _role.value.isNotBlank() &&
+                _technology.value.isNotBlank()
             ) {
                 resumeId?.let {
                     val data = Project(
@@ -226,5 +226,4 @@ class AddProjectViewModel @Inject constructor(
             _uiEvent.send(event)
         }
     }
-
 }

@@ -15,5 +15,4 @@ sealed class AddEducationUserEvent {
 
     // to save the user input.
     object OnSaveClick : AddEducationUserEvent()
-
 }

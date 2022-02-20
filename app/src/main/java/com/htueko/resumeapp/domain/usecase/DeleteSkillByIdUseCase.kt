@@ -15,5 +15,4 @@ class DeleteSkillByIdUseCase @Inject constructor(
     suspend operator fun invoke(skill: Skill) {
         localRepository.deleteSkillById(skill)
     }
-
 }

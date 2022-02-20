@@ -32,7 +32,6 @@ import com.htueko.resumeapp.presentation.theme.spacing
 import com.htueko.resumeapp.presentation.view.addskill.state.AddSkillUserEvent
 import com.htueko.resumeapp.presentation.view.addskill.viewmodel.AddSkillViewModel
 
-
 @Composable
 fun AddSkillScreen(
     resumeId: Int?,
@@ -129,7 +128,6 @@ fun AddSkillScreen(
                     },
                 )
                 VerticalSpacer(height = mediumVerticalSpacer)
-
             }
 
             // existing skills column
@@ -154,11 +152,7 @@ fun AddSkillScreen(
                     }
                 }
                 VerticalSpacer(height = smallVerticalSpacer)
-
             }
-
         }
     }
 }
-
-

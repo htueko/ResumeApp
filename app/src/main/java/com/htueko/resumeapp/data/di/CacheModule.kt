@@ -34,7 +34,5 @@ abstract class CacheModule {
         fun provideResumeDao(resumeDb: ResumeDatabase): ResumeDao {
             return resumeDb.getResumeDao()
         }
-
     }
-
 }

@@ -15,5 +15,4 @@ class InsertOrUpdateProjectsUseCase @Inject constructor(
     suspend operator fun invoke(resumeId: Int, projects: List<Project>): Int? {
         return localRepository.insertOrUpdateProjects(resumeId, projects)
     }
-
 }

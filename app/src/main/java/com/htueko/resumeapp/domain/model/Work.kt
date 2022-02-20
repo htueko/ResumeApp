@@ -12,4 +12,4 @@ data class Work(
     val parentId: Int = 0,
     val companyName: String = "",
     val duration: Int = 0
-): Parcelable
+) : Parcelable

@@ -11,5 +11,4 @@ sealed class DashboardUserEvent {
 
     // to undelete a resume from main screen.
     object OnUndoDeleteResumeClick : DashboardUserEvent()
-
 }

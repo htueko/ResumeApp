@@ -11,4 +11,4 @@ data class Skill(
     val skillId: Int = 0,
     val parentId: Int = 0,
     val skillName: String = ""
-): Parcelable
+) : Parcelable

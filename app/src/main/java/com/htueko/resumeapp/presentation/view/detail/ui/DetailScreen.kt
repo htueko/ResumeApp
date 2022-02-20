@@ -27,7 +27,6 @@ import com.htueko.resumeapp.presentation.common.component.VerticalSpacer
 import com.htueko.resumeapp.presentation.theme.spacing
 import com.htueko.resumeapp.presentation.view.detail.viewmodel.DetailViewModel
 
-
 @Composable
 fun DetailScreen(
     onEditResumeClick: () -> Unit,
@@ -75,7 +74,6 @@ fun DetailScreen(
     val imageHeight = 240.dp
     val smallPadding = MaterialTheme.spacing.small
     val mediumVerticalSpacer = MaterialTheme.spacing.medium
-
 
     // detail main screen
     Scaffold(
@@ -172,8 +170,6 @@ fun DetailScreen(
                 addText = textAddWork,
                 onAddButtonClick = { onAddWorkClick() },
             )
-
         }
     }
-
 }

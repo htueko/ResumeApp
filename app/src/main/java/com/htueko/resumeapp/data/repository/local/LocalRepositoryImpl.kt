@@ -84,5 +84,4 @@ class LocalRepositoryImpl @Inject constructor(
     override fun getResumeById(resumeId: Int): Resume? {
         return localDataSource.getResumeById(resumeId)
     }
-
 }

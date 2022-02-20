@@ -39,7 +39,6 @@ import com.htueko.resumeapp.presentation.theme.spacing
 import com.htueko.resumeapp.presentation.view.addresume.state.AddResumeUserEvent
 import com.htueko.resumeapp.presentation.view.addresume.viewmodel.AddResumeViewModel
 
-
 @Composable
 fun AddResumeScreen(
     onSaveResumeClick: (Int) -> Unit,
@@ -70,12 +69,11 @@ fun AddResumeScreen(
     val errorEmailAddress = stringResource(id = R.string.error_email)
     val errorNumber = stringResource(id = R.string.error_common_number)
 
-
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         Log.d("avatar", "AddResumeScreen: $uri")
-        Log.d("avatar", "AddResumeScreen: ${uri.toString()}")
+        Log.d("avatar", "AddResumeScreen: $uri")
         viewModel.onEvent(AddResumeUserEvent.OnImageUrlChanged(uri.toString()))
     }
 
@@ -248,6 +246,5 @@ fun AddResumeScreen(
             )
             VerticalSpacer(height = mediumVerticalSpacer)
         }
-
     }
 }

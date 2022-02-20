@@ -12,5 +12,5 @@ data class Education(
     val parentId: Int = 0,
     val schoolClass: String = "",
     val passingYear: Int = 0,
-    val percentageOrCgpa: Double= 0.0
-): Parcelable
+    val percentageOrCgpa: Double = 0.0
+) : Parcelable

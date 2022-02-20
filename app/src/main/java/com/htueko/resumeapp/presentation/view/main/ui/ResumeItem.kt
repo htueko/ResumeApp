@@ -21,7 +21,6 @@ import com.htueko.resumeapp.presentation.common.component.TitleText
 import com.htueko.resumeapp.presentation.theme.elevation
 import com.htueko.resumeapp.presentation.theme.spacing
 
-
 @ExperimentalMaterialApi
 @Composable
 fun ResumeItem(
@@ -92,5 +91,4 @@ fun ResumeItem(
             )
         }
     }
-
 }

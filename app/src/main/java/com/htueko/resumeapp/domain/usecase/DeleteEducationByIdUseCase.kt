@@ -15,5 +15,4 @@ class DeleteEducationByIdUseCase @Inject constructor(
     suspend operator fun invoke(education: Education) {
         localRepository.deleteEducationById(education)
     }
-
 }

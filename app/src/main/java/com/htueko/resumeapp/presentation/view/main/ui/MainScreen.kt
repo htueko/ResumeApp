@@ -25,7 +25,6 @@ import com.htueko.resumeapp.presentation.common.commonstate.CommonUiEvent
 import com.htueko.resumeapp.presentation.view.main.state.DashboardUserEvent
 import com.htueko.resumeapp.presentation.view.main.viewmodel.DashboardViewModel
 
-
 @ExperimentalMaterialApi
 @Composable
 fun MainScreen(
@@ -76,8 +75,7 @@ fun MainScreen(
                     // workaround, if the resumeId is -1, that means to add new resume not existing one.
                     onAddResumeClick()
                 }
-            )
-            {
+            ) {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = addResume

@@ -192,5 +192,4 @@ class LocalMapper {
         }
         return data
     }
-
 }

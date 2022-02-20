@@ -32,7 +32,8 @@ fun ResumeNavHost(navHostController: NavHostController) {
                 },
                 onResumeClick = { resumeId ->
                     navHostController.navigate(Screen.DetailScreen.route + "/$resumeId")
-                })
+                }
+            )
         }
         // detail screen
         composable(
@@ -199,7 +200,5 @@ fun ResumeNavHost(navHostController: NavHostController) {
                 },
             )
         }
-
     }
-
 }

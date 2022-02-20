@@ -27,5 +27,4 @@ sealed class AddResumeUserEvent {
 
     // to save the user input.
     object OnSaveClick : AddResumeUserEvent()
-
 }

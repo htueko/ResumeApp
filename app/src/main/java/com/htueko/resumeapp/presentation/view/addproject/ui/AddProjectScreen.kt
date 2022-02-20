@@ -32,7 +32,6 @@ import com.htueko.resumeapp.presentation.theme.spacing
 import com.htueko.resumeapp.presentation.view.addproject.state.AddProjectUserEvent
 import com.htueko.resumeapp.presentation.view.addproject.viewmodel.AddProjectViewModel
 
-
 @Composable
 fun AddProjectScreen(
     resumeId: Int? = null,
@@ -198,7 +197,6 @@ fun AddProjectScreen(
                     },
                 )
                 VerticalSpacer(height = mediumVerticalSpacer)
-
             }
 
             // existing projects column
@@ -227,11 +225,7 @@ fun AddProjectScreen(
                     }
                 }
                 VerticalSpacer(height = smallVerticalSpacer)
-
             }
-
         }
-
     }
-
 }

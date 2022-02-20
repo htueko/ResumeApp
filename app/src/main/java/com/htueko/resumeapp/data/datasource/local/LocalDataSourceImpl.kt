@@ -60,7 +60,6 @@ class LocalDataSourceImpl @Inject constructor(
             }
         }
 
-
     override suspend fun getWorksByResumeId(resumeId: Int): List<Work> =
         withContext(Dispatchers.IO) {
             try {
@@ -84,7 +83,6 @@ class LocalDataSourceImpl @Inject constructor(
             }
         }
 
-
     override suspend fun insertOrUpdateEducations(
         resumeId: Int,
         educations: List<Education>
@@ -102,7 +100,6 @@ class LocalDataSourceImpl @Inject constructor(
             } catch (e: Exception) {
                 null
             }
-
         }
 
     override suspend fun insertOrUpdateProjects(resumeId: Int, projects: List<Project>): Int? =
@@ -121,7 +118,6 @@ class LocalDataSourceImpl @Inject constructor(
             }
         }
 
-
     override suspend fun insertOrUpdateSkills(resumeId: Int, skills: List<Skill>): Int? =
         withContext(Dispatchers.IO) {
             try {
@@ -134,7 +130,6 @@ class LocalDataSourceImpl @Inject constructor(
             }
         }
 
-
     override suspend fun insertOrUpdateWorks(resumeId: Int, works: List<Work>): Int? =
         withContext(Dispatchers.IO) {
             try {
@@ -146,7 +141,6 @@ class LocalDataSourceImpl @Inject constructor(
                 null
             }
         }
-
 
     override suspend fun deleteResumeCascadeByResumeId(resume: Resume) {
         withContext(Dispatchers.IO) {
@@ -202,5 +196,4 @@ class LocalDataSourceImpl @Inject constructor(
         val response = resumeDao.getResumeById(resumeId)
         return response?.let { localMapper.mapToResumeModel(it) }
     }
-
 }

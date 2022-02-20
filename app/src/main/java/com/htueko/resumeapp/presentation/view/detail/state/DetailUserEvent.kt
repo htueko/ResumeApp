@@ -25,5 +25,4 @@ sealed class DetailUserEvent {
 
     // to edit the works.
     data class OnWorksEditClick(val works: List<Work>) : DetailUserEvent()
-
 }

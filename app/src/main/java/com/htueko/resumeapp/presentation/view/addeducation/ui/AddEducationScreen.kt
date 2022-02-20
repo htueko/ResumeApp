@@ -32,7 +32,6 @@ import com.htueko.resumeapp.presentation.theme.spacing
 import com.htueko.resumeapp.presentation.view.addeducation.state.AddEducationUserEvent
 import com.htueko.resumeapp.presentation.view.addeducation.viewmodel.AddEducationViewModel
 
-
 @Composable
 fun AddEducationScreen(
     resumeId: Int? = null,
@@ -164,7 +163,6 @@ fun AddEducationScreen(
                     },
                 )
                 VerticalSpacer(height = mediumVerticalSpacer)
-
             }
 
             // existing educations column
@@ -192,9 +190,6 @@ fun AddEducationScreen(
                 }
                 VerticalSpacer(height = smallVerticalSpacer)
             }
-
         }
-
     }
-
 }

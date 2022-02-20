@@ -15,5 +15,4 @@ class InsertOrUpdateEducationsUseCase @Inject constructor(
     suspend operator fun invoke(resumeId: Int, educations: List<Education>): Int? {
         return localRepository.insertOrUpdateEducations(resumeId, educations)
     }
-
 }

@@ -12,5 +12,4 @@ sealed class AddWorkUserEvent {
 
     // to save the user input.
     object OnSaveClick : AddWorkUserEvent()
-
 }

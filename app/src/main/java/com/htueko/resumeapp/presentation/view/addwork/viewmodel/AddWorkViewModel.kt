@@ -151,5 +151,4 @@ class AddWorkViewModel @Inject constructor(
             _uiEvent.send(event)
         }
     }
-
 }

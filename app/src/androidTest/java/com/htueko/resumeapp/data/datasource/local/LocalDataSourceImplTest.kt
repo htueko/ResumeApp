@@ -20,7 +20,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
-
 @RunWith(AndroidJUnit4::class)
 @SmallTest
 class LocalDataSourceImplTest {
@@ -146,7 +145,7 @@ class LocalDataSourceImplTest {
     }
 
     @Test
-    fun deleteResumeReturnTrue() = runTest{
+    fun deleteResumeReturnTrue() = runTest {
         dao.insertOrUpdateResume(testResume)
         dao.insertOrUpdateResume(testSecondResume)
         val response = dao.getResumeById(testSecondResume.resumeId)
@@ -162,5 +161,4 @@ class LocalDataSourceImplTest {
         val remainedResume = dao.getResumeById(testSecondResume.resumeId)
         assertThat(remainedResume).isEqualTo(testSecondResume)
     }
-
 }

@@ -109,7 +109,6 @@ class AddResumeViewModel @Inject constructor(
                 _totalYearsOfExperience.value = it.resume.totalYearsOfExperience.toString()
                 _address.value = it.resume.address
             }
-
         }
     }
 
@@ -227,15 +226,19 @@ class AddResumeViewModel @Inject constructor(
     }
 
     private fun isSaveButtonEnable() {
-        _hasError.value = !(!hasNameError.value || !hasMobileNumberError.value
-                || !hasEmailAddressError.value || !hasCareerObjectiveError.value
-                || !hasTotalYearsOfExperienceError.value || !hasAddressError.value)
+        _hasError.value = !(
+            !hasNameError.value || !hasMobileNumberError.value ||
+                !hasEmailAddressError.value || !hasCareerObjectiveError.value ||
+                !hasTotalYearsOfExperienceError.value || !hasAddressError.value
+            )
     }
 
     private fun hasAnyBlankInput(): Boolean {
-        return (_name.value.isBlank() || _mobileNumber.value.isBlank()
-                || _emailAddress.value.isBlank() || _careerObjective.value.isBlank()
-                || _totalYearsOfExperience.value.isBlank() || _address.value.isBlank())
+        return (
+            _name.value.isBlank() || _mobileNumber.value.isBlank() ||
+                _emailAddress.value.isBlank() || _careerObjective.value.isBlank() ||
+                _totalYearsOfExperience.value.isBlank() || _address.value.isBlank()
+            )
     }
 
     private fun onSaveButtonClick() {
@@ -278,5 +281,4 @@ class AddResumeViewModel @Inject constructor(
             _uiEvent.send(event)
         }
     }
-
 }

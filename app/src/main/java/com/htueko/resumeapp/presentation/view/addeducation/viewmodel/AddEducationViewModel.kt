@@ -135,12 +135,12 @@ class AddEducationViewModel @Inject constructor(
     }
 
     private fun onSaveButtonClick() {
-        if (!_hasSchoolNameError.value && !_hasPassingYearError.value
-            && !_hasPercentageOrCgpaError.value
+        if (!_hasSchoolNameError.value && !_hasPassingYearError.value &&
+            !_hasPercentageOrCgpaError.value
         ) {
             // don't have any error, check again for blank input
-            if (_schoolName.value.isNotBlank() && _passingYear.value.isNotBlank()
-                && _percentageOrCgpa.value.isNotBlank()
+            if (_schoolName.value.isNotBlank() && _passingYear.value.isNotBlank() &&
+                _percentageOrCgpa.value.isNotBlank()
             ) {
                 resumeId?.let {
                     val data = Education(
@@ -178,5 +178,4 @@ class AddEducationViewModel @Inject constructor(
             _uiEvent.send(event)
         }
     }
-
 }

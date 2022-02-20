@@ -1,6 +1,5 @@
 package com.htueko.resumeapp.presentation.view.addproject.state
 
-
 /**
  * a model that represented everything that user can do on add project screen.
  */
@@ -22,5 +21,4 @@ sealed class AddProjectUserEvent {
 
     // to save the user input.
     object OnSaveClick : AddProjectUserEvent()
-
 }

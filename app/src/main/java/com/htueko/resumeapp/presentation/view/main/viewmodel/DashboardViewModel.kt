@@ -43,7 +43,7 @@ class DashboardViewModel @Inject constructor(
     // to get all resume from database
     private fun getResumes() {
         viewModelScope.launch {
-            withContext(Dispatchers.IO){
+            withContext(Dispatchers.IO) {
                 getResumeUseCase()
                     .collect { list ->
                         _resumes.value = list
@@ -92,6 +92,4 @@ class DashboardViewModel @Inject constructor(
             _uiEvent.send(event)
         }
     }
-
-
 }

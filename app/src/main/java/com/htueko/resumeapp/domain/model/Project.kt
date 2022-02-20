@@ -11,8 +11,8 @@ data class Project(
     val projectId: Int = 0,
     val parentId: Int = 0,
     val projectName: String = "",
-    val teamSize: Int  = 0,
+    val teamSize: Int = 0,
     val projectSummary: String = "",
     val role: String = "",
     val technology: String = ""
-): Parcelable
+) : Parcelable

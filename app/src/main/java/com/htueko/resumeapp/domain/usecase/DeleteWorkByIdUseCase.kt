@@ -15,5 +15,4 @@ class DeleteWorkByIdUseCase @Inject constructor(
     suspend operator fun invoke(work: Work) {
         localRepository.deleteWorkById(work)
     }
-
 }

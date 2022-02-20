@@ -43,5 +43,4 @@ interface LocalDataSource {
     suspend fun deleteWorkById(work: Work)
 
     fun getResumeById(resumeId: Int): Resume?
-
 }

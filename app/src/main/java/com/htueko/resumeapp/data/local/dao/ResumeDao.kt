@@ -222,6 +222,4 @@ abstract class ResumeDao {
         deleteWorksByParentId(resumeId)
         deleteResumeById(resumeId)
     }
-
-
 }

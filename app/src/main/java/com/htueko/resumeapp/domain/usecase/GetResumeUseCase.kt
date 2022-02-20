@@ -16,5 +16,4 @@ class GetResumeUseCase @Inject constructor(
     operator fun invoke(): Flow<List<Resume>> {
         return localRepository.getResumes()
     }
-
 }

@@ -128,5 +128,4 @@ class AddSkillViewModel @Inject constructor(
             _uiEvent.send(event)
         }
     }
-
 }

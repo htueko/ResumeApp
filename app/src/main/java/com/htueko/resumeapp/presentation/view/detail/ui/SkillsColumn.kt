@@ -4,9 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AddCircle
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.Dp
-import com.htueko.resumeapp.domain.model.Project
 import com.htueko.resumeapp.domain.model.Skill
-import com.htueko.resumeapp.presentation.common.component.BodyText
 import com.htueko.resumeapp.presentation.common.component.OutlinePrimaryButton
 import com.htueko.resumeapp.presentation.common.component.TitleText
 import com.htueko.resumeapp.presentation.common.component.VerticalSpacer

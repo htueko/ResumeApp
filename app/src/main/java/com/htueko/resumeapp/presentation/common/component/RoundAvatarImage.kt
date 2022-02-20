@@ -13,7 +13,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
-import com.htueko.resumeapp.R
 
 /**
  * Image view with round corner and border.
@@ -48,5 +47,4 @@ fun RoundAvatarImage(
             .clip(CircleShape)
             .border(2.dp, Color.Gray, CircleShape)
     )
-
 }

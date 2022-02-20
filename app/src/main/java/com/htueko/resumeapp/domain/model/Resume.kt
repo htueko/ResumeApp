@@ -16,4 +16,4 @@ data class Resume(
     val careerObjective: String = "",
     val totalYearsOfExperience: Int = 0,
     val address: String = "",
-): Parcelable
+) : Parcelable

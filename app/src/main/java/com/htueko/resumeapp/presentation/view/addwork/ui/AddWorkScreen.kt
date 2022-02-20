@@ -32,7 +32,6 @@ import com.htueko.resumeapp.presentation.theme.spacing
 import com.htueko.resumeapp.presentation.view.addwork.state.AddWorkUserEvent
 import com.htueko.resumeapp.presentation.view.addwork.viewmodel.AddWorkViewModel
 
-
 @Composable
 fun AddWorkScreen(
     resumeId: Int? = null,
@@ -147,7 +146,6 @@ fun AddWorkScreen(
                     },
                 )
                 VerticalSpacer(height = mediumVerticalSpacer)
-
             }
 
             // existing works column
@@ -173,11 +171,7 @@ fun AddWorkScreen(
                     }
                 }
                 VerticalSpacer(height = smallVerticalSpacer)
-
             }
-
         }
-
     }
-
 }

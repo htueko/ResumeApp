@@ -19,4 +19,4 @@ data class DetailResume(
     val projects: List<Project> = emptyList(),
     val skills: List<Skill> = emptyList(),
     val works: List<Work> = emptyList()
-): Parcelable
+) : Parcelable

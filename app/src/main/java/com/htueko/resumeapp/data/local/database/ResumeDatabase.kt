@@ -22,7 +22,8 @@ import com.htueko.resumeapp.data.local.entity.WorkEntity
         ResumeEntity::class,
         SkillEntity::class,
         WorkEntity::class,
-    ], version = LocalConstant.DB_VERSION, exportSchema = false
+    ],
+    version = LocalConstant.DB_VERSION, exportSchema = false
 )
 abstract class ResumeDatabase : RoomDatabase() {
     abstract fun getResumeDao(): ResumeDao

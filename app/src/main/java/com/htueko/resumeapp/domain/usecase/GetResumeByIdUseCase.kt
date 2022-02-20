@@ -30,8 +30,5 @@ class GetResumeByIdUseCase @Inject constructor(
         } else {
             null
         }
-
-
     }
-
 }

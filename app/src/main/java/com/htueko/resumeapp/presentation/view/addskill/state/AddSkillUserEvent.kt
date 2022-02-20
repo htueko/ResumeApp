@@ -9,5 +9,4 @@ sealed class AddSkillUserEvent {
 
     // to save the user input.
     object OnSaveClick : AddSkillUserEvent()
-
 }

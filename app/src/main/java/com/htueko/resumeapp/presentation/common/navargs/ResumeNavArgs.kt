@@ -10,4 +10,4 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class ResumeNavArgs(
     val resumeId: Int,
-): Parcelable
+) : Parcelable
