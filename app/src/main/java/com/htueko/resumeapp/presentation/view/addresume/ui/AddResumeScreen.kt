@@ -1,7 +1,15 @@
 package com.htueko.resumeapp.presentation.view.addresume.ui
 
+import android.net.Uri
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -14,14 +22,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.htueko.resumeapp.R
 import com.htueko.resumeapp.presentation.common.commonstate.CommonUiEvent
 import com.htueko.resumeapp.presentation.common.component.ButtonPrimary
+import com.htueko.resumeapp.presentation.common.component.RoundAvatarImage
 import com.htueko.resumeapp.presentation.common.component.TextFieldPrimary
 import com.htueko.resumeapp.presentation.common.component.VerticalSpacer
 import com.htueko.resumeapp.presentation.theme.spacing
@@ -60,12 +71,21 @@ fun AddResumeScreen(
     val errorNumber = stringResource(id = R.string.error_common_number)
 
 
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        Log.d("avatar", "AddResumeScreen: $uri")
+        Log.d("avatar", "AddResumeScreen: ${uri.toString()}")
+        viewModel.onEvent(AddResumeUserEvent.OnImageUrlChanged(uri.toString()))
+    }
+
     // string to shows
     val toolbarTitle = data?.name ?: stringResource(id = R.string.resume)
     val errorRequiredFields = stringResource(id = R.string.errorRequiredFields)
 
     // dimens
     val smallPadding = MaterialTheme.spacing.small
+    val imageHeight = 240.dp
     val smallVerticalSpacer = MaterialTheme.spacing.small
     val mediumVerticalSpacer = MaterialTheme.spacing.medium
 
@@ -102,6 +122,29 @@ fun AddResumeScreen(
                 .padding(smallPadding)
                 .verticalScroll(rememberScrollState())
         ) {
+
+            // Image view column
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(imageHeight)
+                    .padding(mediumVerticalSpacer)
+                    .clickable { launcher.launch("image/*") },
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                if (avatarUrl.isNotBlank()) {
+                    RoundAvatarImage(
+                        imageUrl = avatarUrl,
+                        contentDescription = data?.name
+                    )
+                } else {
+                    RoundAvatarImage(
+                        drawableResId = R.drawable.ic_launcher_foreground
+                    )
+                }
+            }
+            VerticalSpacer(height = mediumVerticalSpacer)
 
             // name text field
             VerticalSpacer(height = mediumVerticalSpacer)
