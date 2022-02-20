@@ -5,10 +5,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AddCircle
+import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.htueko.resumeapp.presentation.common.component.BodyText
 import com.htueko.resumeapp.presentation.common.component.OutlinePrimaryButton
 import com.htueko.resumeapp.presentation.common.component.TitleText
 
@@ -17,7 +19,7 @@ fun TitleRow(
     titleText: String,
     buttonText: String,
     contentDescription: String? = null,
-    imageVector: ImageVector = Icons.Outlined.AddCircle,
+    imageVector: ImageVector = Icons.Outlined.Edit,
     onButtonClick: () -> Unit,
 ) {
     Row(
@@ -25,7 +27,7 @@ fun TitleRow(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.Top,
     ) {
-        TitleText(
+        BodyText(
             text = titleText,
             modifier = Modifier.alignByBaseline()
         )
