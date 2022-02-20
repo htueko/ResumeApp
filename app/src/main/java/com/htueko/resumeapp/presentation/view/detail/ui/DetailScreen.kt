@@ -2,6 +2,7 @@ package com.htueko.resumeapp.presentation.view.detail.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -12,6 +13,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -24,6 +27,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.htueko.resumeapp.R
 import com.htueko.resumeapp.presentation.common.component.BodyText
 import com.htueko.resumeapp.presentation.common.component.ButtonPrimary
+import com.htueko.resumeapp.presentation.common.component.OutlinePrimaryButton
 import com.htueko.resumeapp.presentation.common.component.RoundAvatarImage
 import com.htueko.resumeapp.presentation.common.component.TitleText
 import com.htueko.resumeapp.presentation.common.component.VerticalSpacer
@@ -117,7 +121,26 @@ fun DetailScreen(
             VerticalSpacer(height = mediumVerticalSpacer)
 
             // Resume properties section
-            TitleText(text = textResume)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.Top,
+            ) {
+                TitleText(
+                    text = textResume,
+                    modifier = Modifier.alignByBaseline()
+                )
+                OutlinePrimaryButton(
+                    modifier = Modifier.alignByBaseline(),
+                    text = textEditResume,
+                    contentDescription = textEditResume,
+                    imageVector = Icons.Outlined.Edit,
+                    onClick = {
+                        // to navigate the add resume screen with resume id,
+                        onEditResumeClick()
+                    }
+                )
+            }
             VerticalSpacer(height = smallVerticalSpacer)
             resume.let {
                 BodyText(text = it.name)
@@ -126,15 +149,6 @@ fun DetailScreen(
                 BodyText(text = it.careerObjective)
                 BodyText(text = it.totalYearsOfExperience.toString() + " years")
                 BodyText(text = it.address)
-                VerticalSpacer(height = smallVerticalSpacer)
-                // to edit the resume
-                ButtonPrimary(
-                    text = textEditResume,
-                    onClick = {
-                        // to navigate the add resume screen with resume id,
-                        onEditResumeClick()
-                    },
-                )
                 VerticalSpacer(height = mediumVerticalSpacer)
             }
 
