@@ -14,6 +14,7 @@ import com.htueko.resumeapp.domain.model.Work
 /**
  * to map between entity and model
  */
+@Suppress("TooManyFunctions")
 class LocalMapper {
 
     fun mapToResumeEntity(resume: Resume): ResumeEntity {

@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+@Suppress("TooManyFunctions")
 @HiltViewModel
 class AddResumeViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,

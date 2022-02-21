@@ -7,6 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.htueko.resumeapp.presentation.navigation.screen.Screen
 import com.htueko.resumeapp.presentation.view.addeducation.ui.AddEducationScreen
 import com.htueko.resumeapp.presentation.view.addproject.ui.AddProjectScreen
 import com.htueko.resumeapp.presentation.view.addresume.ui.AddResumeScreen
@@ -15,6 +16,7 @@ import com.htueko.resumeapp.presentation.view.addwork.ui.AddWorkScreen
 import com.htueko.resumeapp.presentation.view.detail.ui.DetailScreen
 import com.htueko.resumeapp.presentation.view.main.ui.MainScreen
 
+@Suppress("LongMethod")
 @ExperimentalMaterialApi
 @Composable
 fun ResumeNavHost(navHostController: NavHostController) {

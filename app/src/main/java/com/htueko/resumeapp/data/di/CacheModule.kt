@@ -12,6 +12,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+@Suppress("UtilityClassWithPublicConstructor")
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class CacheModule {

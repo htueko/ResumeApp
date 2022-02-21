@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+@Suppress("TooManyFunctions", "ComplexCondition")
 @HiltViewModel
 class AddProjectViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,

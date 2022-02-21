@@ -32,6 +32,7 @@ import com.htueko.resumeapp.presentation.theme.spacing
 import com.htueko.resumeapp.presentation.view.addskill.state.AddSkillUserEvent
 import com.htueko.resumeapp.presentation.view.addskill.viewmodel.AddSkillViewModel
 
+@Suppress("LongMethod")
 @Composable
 fun AddSkillScreen(
     resumeId: Int?,

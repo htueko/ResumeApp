@@ -27,6 +27,7 @@ import com.htueko.resumeapp.presentation.common.component.VerticalSpacer
 import com.htueko.resumeapp.presentation.theme.spacing
 import com.htueko.resumeapp.presentation.view.detail.viewmodel.DetailViewModel
 
+@Suppress("LongMethod")
 @Composable
 fun DetailScreen(
     onEditResumeClick: () -> Unit,

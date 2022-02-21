@@ -1,3 +1,6 @@
+// to suppress magic number test for detekt
+@file:Suppress("MagicNumber")
+
 package com.htueko.resumeapp.presentation.theme
 
 import androidx.compose.ui.graphics.Color

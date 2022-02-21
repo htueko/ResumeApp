@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.Flow
 /**
  * Data access object to perform operation related to resume app.
  */
+@Suppress("TooManyFunctions")
 @Dao
 abstract class ResumeDao {
 

@@ -32,6 +32,7 @@ import com.htueko.resumeapp.presentation.theme.spacing
 import com.htueko.resumeapp.presentation.view.addwork.state.AddWorkUserEvent
 import com.htueko.resumeapp.presentation.view.addwork.viewmodel.AddWorkViewModel
 
+@Suppress("LongMethod")
 @Composable
 fun AddWorkScreen(
     resumeId: Int? = null,

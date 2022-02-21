@@ -21,6 +21,7 @@ import com.htueko.resumeapp.presentation.common.component.TitleText
 import com.htueko.resumeapp.presentation.theme.elevation
 import com.htueko.resumeapp.presentation.theme.spacing
 
+@Suppress("LongMethod", "MagicNumber")
 @ExperimentalMaterialApi
 @Composable
 fun ResumeItem(

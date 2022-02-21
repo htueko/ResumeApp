@@ -15,6 +15,7 @@ import javax.inject.Inject
  * @see [localDataSource] data source for local database.
  * @see [LocalRepository] contract to implemented in this class.
  */
+@Suppress("TooManyFunctions")
 class LocalRepositoryImpl @Inject constructor(
     private val localDataSource: LocalDataSource
 ) : LocalRepository {

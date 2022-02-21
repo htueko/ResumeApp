@@ -20,6 +20,7 @@ import javax.inject.Inject
  * @see [resumeDao] data access object for room database.
  * @see [localMapper] to map the data from and to between domain and data layer for local database.
  */
+@Suppress("TooManyFunctions", "EmptyCatchBlock", "TooGenericExceptionCaught", "SwallowedException")
 class LocalDataSourceImpl @Inject constructor(
     private val resumeDao: ResumeDao,
     private val localMapper: LocalMapper,

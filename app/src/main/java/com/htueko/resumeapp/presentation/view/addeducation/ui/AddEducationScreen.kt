@@ -32,6 +32,7 @@ import com.htueko.resumeapp.presentation.theme.spacing
 import com.htueko.resumeapp.presentation.view.addeducation.state.AddEducationUserEvent
 import com.htueko.resumeapp.presentation.view.addeducation.viewmodel.AddEducationViewModel
 
+@Suppress("LongMethod")
 @Composable
 fun AddEducationScreen(
     resumeId: Int? = null,

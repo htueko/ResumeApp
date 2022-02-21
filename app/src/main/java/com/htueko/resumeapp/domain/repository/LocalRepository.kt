@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
 /**
  * contract for repository pattern for local database
  */
+@Suppress("TooManyFunctions")
 interface LocalRepository {
 
     fun getResumes(): Flow<List<Resume>>

@@ -25,6 +25,7 @@ import com.htueko.resumeapp.presentation.common.commonstate.CommonUiEvent
 import com.htueko.resumeapp.presentation.view.main.state.DashboardUserEvent
 import com.htueko.resumeapp.presentation.view.main.viewmodel.DashboardViewModel
 
+@Suppress("LongMethod")
 @ExperimentalMaterialApi
 @Composable
 fun MainScreen(

@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
 /**
  * single source of data for local database contract.
  */
+@Suppress("TooManyFunctions")
 interface LocalDataSource {
 
     fun getResumes(): Flow<List<Resume>>

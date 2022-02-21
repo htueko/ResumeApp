@@ -39,6 +39,7 @@ import com.htueko.resumeapp.presentation.theme.spacing
 import com.htueko.resumeapp.presentation.view.addresume.state.AddResumeUserEvent
 import com.htueko.resumeapp.presentation.view.addresume.viewmodel.AddResumeViewModel
 
+@Suppress("LongMethod")
 @Composable
 fun AddResumeScreen(
     onSaveResumeClick: (Int) -> Unit,
