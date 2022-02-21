@@ -14,12 +14,14 @@ import com.htueko.resumeapp.data.local.entity.ResumeEntity
 import com.htueko.resumeapp.data.local.entity.SkillEntity
 import com.htueko.resumeapp.data.local.entity.WorkEntity
 import com.htueko.resumeapp.data.mapper.LocalMapper
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
+@ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
 @SmallTest
 class LocalDataSourceImplTest {
@@ -109,37 +111,37 @@ class LocalDataSourceImplTest {
     }
 
     @Test
-    fun getEducationsReturnTrue() {
+    fun getEducationsReturnTrue() = runTest {
         dao.insertOrUpdateResume(testResume)
         dao.insertOrUpdateEducations(listOf(testEducation))
-        val response = dao.getResumeWithEducations()
+        val response = dao.getResumeWithEducations(testResume.resumeId)
         assertThat(response[0].educations[0].parentId).isEqualTo(testResume.resumeId)
         assertThat(response[0].educations[0]).isEqualTo(testEducation)
     }
 
     @Test
-    fun getProjectsReturnTrue() {
+    fun getProjectsReturnTrue() = runTest {
         dao.insertOrUpdateResume(testResume)
         dao.insertOrUpdateProjects(listOf(testProject))
-        val response = dao.getResumeWithProjects()
+        val response = dao.getResumeWithProjects(testResume.resumeId)
         assertThat(response[0].projects[0].parentId).isEqualTo(testResume.resumeId)
         assertThat(response[0].projects[0]).isEqualTo(testProject)
     }
 
     @Test
-    fun getSkillsReturnTrue() {
+    fun getSkillsReturnTrue() = runTest {
         dao.insertOrUpdateResume(testResume)
         dao.insertOrUpdateSkills(listOf(testSkill))
-        val response = dao.getResumeWithSkills()
+        val response = dao.getResumeWithSkills(testResume.resumeId)
         assertThat(response[0].skills[0].parentId).isEqualTo(testResume.resumeId)
         assertThat(response[0].skills[0]).isEqualTo(testSkill)
     }
 
     @Test
-    fun getWorksReturnTrue() {
+    fun getWorksReturnTrue() = runTest {
         dao.insertOrUpdateResume(testResume)
         dao.insertOrUpdateWorks(listOf(testWork))
-        val response = dao.getResumeWithWorks()
+        val response = dao.getResumeWithWorks(testResume.resumeId)
         assertThat(response[0].works[0].parentId).isEqualTo(testResume.resumeId)
         assertThat(response[0].works[0]).isEqualTo(testWork)
     }
@@ -157,7 +159,7 @@ class LocalDataSourceImplTest {
             assertThat(data[1].resumeId).isEqualTo(testResume.resumeId)
         }
         assertThat(response).isEqualTo(testSecondResume)
-        dao.deleteResume(testResume)
+        dao.deleteResumeWithCascadeById(testResume.resumeId)
         val remainedResume = dao.getResumeById(testSecondResume.resumeId)
         assertThat(remainedResume).isEqualTo(testSecondResume)
     }
