@@ -101,7 +101,7 @@ tasks.dokkaHtml.configure {
             suppressInheritedMembers.set(true)
         }
     }
-    outputDirectory.set(file("documentation/html"))
+    outputDirectory.set(file("../docs/"))
 }
 
 dependencies {
