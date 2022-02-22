@@ -13,8 +13,10 @@ import com.htueko.resumeapp.data.local.entity.ProjectEntity
 import com.htueko.resumeapp.data.local.entity.ResumeEntity
 import com.htueko.resumeapp.data.local.entity.SkillEntity
 import com.htueko.resumeapp.data.local.entity.WorkEntity
-import com.htueko.resumeapp.data.mapper.LocalMapper
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.asExecutor
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
@@ -28,7 +30,9 @@ class LocalDataSourceImplTest {
 
     private lateinit var database: ResumeDatabase
     private lateinit var dao: ResumeDao
-    private val localMapper = LocalMapper()
+
+    private val testDispatcher = UnconfinedTestDispatcher()
+    private val testScope = TestScope(testDispatcher)
 
     @Before
     fun setup() {
@@ -36,6 +40,8 @@ class LocalDataSourceImplTest {
             ApplicationProvider.getApplicationContext(),
             ResumeDatabase::class.java
         )
+            .setTransactionExecutor(testDispatcher.asExecutor())
+            .setQueryExecutor(testDispatcher.asExecutor())
             .allowMainThreadQueries()
             .build()
         dao = database.getResumeDao()
@@ -147,7 +153,7 @@ class LocalDataSourceImplTest {
     }
 
     @Test
-    fun deleteResumeReturnTrue() = runTest {
+    fun deleteResumeReturnTrue() = testScope.runTest {
         dao.insertOrUpdateResume(testResume)
         dao.insertOrUpdateResume(testSecondResume)
         val response = dao.getResumeById(testSecondResume.resumeId)
