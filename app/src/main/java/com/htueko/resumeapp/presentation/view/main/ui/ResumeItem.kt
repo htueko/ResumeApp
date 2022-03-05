@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.htueko.resumeapp.R
 import com.htueko.resumeapp.domain.model.Resume
+import com.htueko.resumeapp.presentation.common.component.AvatarImage
 import com.htueko.resumeapp.presentation.common.component.BodyText
 import com.htueko.resumeapp.presentation.common.component.TitleText
 import com.htueko.resumeapp.presentation.theme.elevation
@@ -45,6 +46,10 @@ fun ResumeItem(
         val textCareerObjective = stringResource(id = R.string.careerObjective)
         val textAddress = stringResource(id = R.string.residenceAddress)
         Column() {
+            AvatarImage(
+                modifier = Modifier.padding(mediumPadding),
+                imageAvatar = resume.avatarUrl
+            )
             Row() {
                 Column(modifier = Modifier.weight(5f)) {
                     TitleText(text = resume.name, modifier = Modifier.padding(smallPadding))

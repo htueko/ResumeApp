@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.htueko.resumeapp.R
+import com.htueko.resumeapp.presentation.common.component.AvatarImage
 import com.htueko.resumeapp.presentation.common.component.RoundAvatarImage
 import com.htueko.resumeapp.presentation.common.component.VerticalSpacer
 import com.htueko.resumeapp.presentation.theme.spacing
@@ -91,6 +92,10 @@ fun DetailScreen(
                 .verticalScroll(rememberScrollState()),
         ) {
             // Image view column
+            AvatarImage(
+                modifier = Modifier.padding(mediumPadding),
+                imageAvatar = resume.avatarUrl
+            )
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
